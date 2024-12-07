@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte - Sillage Parfumerie{% endblock %}
+
+{% block body %}
+   <div class="container p-4">
+
+{# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Mon compte", "route_path": path('home.index')},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                {% include 'account/_nav_account.html.twig' %}
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 col-lg-9">
+
+                    <h2>Mon compte</h2>
+                <div class="row text-center">
+                    {# <div class="col-4 p-2" >
+                        {% include 'components/_icon_grid.html.twig' with {
+                            'route': 'order.index',
+                            'background': '#bc9d95',
+                            'imagePath': 'svg/order.svg',
+                            'title': 'Mes commandes'
+                        } %}
+                    </div> #}
+                    <div class="col-4 p-2" >
+                        {% include 'components/_icon_grid.html.twig' with {
+                            'route': 'address.index',
+                            'background': '#bc9d95',
+                            'imagePath': 'svg/addresses2.svg',
+                            'title': 'Gérer mes adresses'
+                        } %}
+                    </div>
+                    <div class="col-4 p-2" >
+                        {% include 'components/_icon_grid.html.twig' with {
+                            'route': 'account.password.change',
+                            'background': '#bc9d95',
+                            'imagePath': 'svg/change_password.svg',
+                            'title': 'Modifier mot de passe'
+                        } %}
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+{% endblock %}

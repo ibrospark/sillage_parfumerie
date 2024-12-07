@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre adresse{% endblock %}
+
+{% block body %}
+<div class="container p-4">
+    {# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+{% set breadcrumbs = [
+    {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Vos adresses", "route_path": path('address.index')},
+    {"page_name": "Modifier votre adresse", "route_path": path('home.index')},
+    
+] %}
+{% include 'components/_breadcrumb.html.twig' 
+    with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+%} 
+{# ------------------------------------------------------------------------------------------------ #}
+
+       <div class="row">
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 gap-1">
+                {% include 'account/_nav_account.html.twig' %}
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 col-lg-9 gap-1">
+                <h2>Modifier votre adresse</h2>
+              <div class="mb-4"><a href="{{ path('address.index') }} " class="spkdv_primary_btn_outline"><i class="fa fa-arrow-left"></i> Retourner en arrière</a></div>
+            
+              {{form_start(form)}}
+                <div class="row">
+                    <div class="col-md-12">{{form_row(form.name)}}</div>
+                    <div class="col-md-6">{{form_row(form.firstname)}}</div>
+                    <div class="col-md-6">{{form_row(form.lastname)}}</div>
+                    <div class="col-md-6">{{form_row(form.address)}}</div>
+                    <div class="col-md-6">{{form_row(form.postal)}}</div>
+                    <div class="col-md-6">{{form_row(form.city)}}</div>
+                    <div class="col-md-6">{{form_row(form.country)}}</div>
+                    <div class="col-md-6">{{form_row(form.phone)}}</div>
+                    <div class="col-md-6">{{form_row(form.company)}}</div>
+                    <div class="col-md-12">{{form_row(form.submit)}}</div>
+                </div>
+            {{form_end(form)}}
+            </div>
+        </div>
+
+
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+# easy_admin:
+#   # config/packages/easy_admin.yaml
+#   dashboard:
+#     # Configuration du tableau de bord
+#     role: "ROLE_ADMIN"

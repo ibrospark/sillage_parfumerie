@@ -1,0 +1,97 @@
+{# templates/components/_header.html.twig #}
+{# <div style="position:fixed;top:0px;right:0px;left:0px;z-index:99;"> #}
+  <div class="px-3 py-1 spkdv_header_top">
+      <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <ul class="nav col-12 col-md-12 mb-2 justify-content-start mb-md-0">
+      <li><a href="{{ path('blog.index') }}" class="nav-link px-4 link-secondary">Blog</a></li>
+    </ul>
+      
+      </div>
+
+
+      {% if is_granted('ROLE_USER') %}
+      <div class="text-white" style="font-size:0.8em;"> Bienvenue {{ app.user.firstname }}, vous êtes actuellement connecté(e)! </div>
+{% endif %}
+
+
+  
+
+      </div>
+
+  </div>
+  <div class="p-3 pt-4 spkdv_header_middle">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+      <div class="col-md-4 mb-2 mb-md-0">
+
+        <form action="{{ path('search.show') }}" method="get">
+            <input type="text" name="s" value="{{ app.request.query.get('s', '') }}" placeholder="Rechercher un produit">
+            <button type="submit">Rechercher</button>
+        </form>
+        
+      </div>
+      
+      <div class="col-md-4 mb-2 mb-md-0 text-center">
+        <a href="{{ path('home.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <img src="{{ asset('img/logo_sillage_parfumerie.svg') }}" width="200" alt="Logo Sillage"/>
+        </a>
+      </div>
+      
+      <div class="col-md-4 text-center">
+      <div class="d-flex justify-content-end">
+          <div class="mx-4">
+            <a href="#">
+              <object type="image/svg+xml" data="{{ asset('svg/heart.svg') }}" width="20px" aria-label="Favoris">
+                Your browser does not support SVG
+              </object>
+            </a>
+          </div>
+{% if is_granted('ROLE_USER') %}
+<div class="mx-4">
+  <a href="{{path('account.index')}}">
+    <img src="{{ asset('svg/user.svg') }}" width="20px"/>
+  </a>
+</div>
+{% else %}
+<div class="mx-4">
+  <a href="{{path('app_login')}}">
+    <img src="{{ asset('svg/user.svg') }}" width="20px"/>
+  </a>
+</div>
+{% endif %}
+  
+          <div class="mx-4">
+            <a href="{{path('cart.index')}}">
+              <img src="{{ asset('svg/shopping_bag.svg') }}" width="20px"/>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <ul class="nav col-12 col-md-12 mb-2 justify-content-center mb-md-0 pt-3">
+        <li><a href="{{ path('brand.index') }}" class="nav-link px-5 link-secondary">MARQUES</a></li>
+        <li><a href="{{ path('product.index') }}" class="nav-link px-5">PARFUMS</a></li>
+        <li><a href="{{ path('olfactoryfamily.index') }}" class="nav-link px-5">FAMILLES OLFACTIVES</a></li>
+        <li><a href="#" class="nav-link px-5">BOX SILLAGE</a></li>
+        <li><a href="#" class="nav-link px-5">OFFRES EXCLUSIVES</a></li>
+      </ul>    
+  </div>
+{# </div> #}
+<div class="p-2">
+{% include 'components/_flash.html.twig' %}
+</div>
+                {# {% include 'components/_navbar.html.twig'  %} #}
+
+
+{# With parameters in base.html.twig #}
+{# templates/base.html.twig #}
+{# {% include 'components/_header.html.twig' with {
+    'username': app.user ? app.user.username : null
+} %}  #}
+{# ------------------------------------------------------------- #}
+
+{# {% if username %}
+    <li class="nav-item">
+        <span class="nav-link text-white">Bonjour, {{ username }}!</span>
+    </li>
+{% endif %} #}

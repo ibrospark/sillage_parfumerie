@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{brand.name}}{% endblock %}
+
+{% block body %}
+<div class="container p-4">
+{# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Marques", "route_path": path('brand.index')},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+    
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <img src='{{ asset('img/brands/' ~ brand.coverUrl) }}' style="width:100%;"/>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <center> 
+                <img src='{{ asset('img/brands/' ~ brand.logoUrl) }}'style="max-width:80%;max-height:100px;"/>
+                <h1 class="text-center">{{ brand.name }}</h1>
+            </center>
+             <p class="p-4">
+                {{ brand.excerpt }}
+            </p>
+        </div>
+        <div class="spkdv_product_grid">
+            <div class="row">
+                {% for product in pagination %}
+                    {% include 'product/_product_grid_template.html.twig' 
+                        with {
+                        'product': product ? product : null
+                        } 
+                    %} 
+                {% else %}
+                    <div class="alert alert-warning">
+                        Aucun produit pour le moment
+                    </div>
+                {% endfor %} 
+            </div>
+        </div>
+        <div class="col-12 text-center p-5">
+            <h1> Tout savoir de {{ brand.name }}  </h1>
+            <p>
+                {{ brand.description }}
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

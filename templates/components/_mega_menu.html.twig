@@ -1,0 +1,30 @@
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <div class="mega-menu">
+        {% for category in categories %}
+            <div>
+                <h5>{{ category.name }}</h5>
+                <ul class="list-unstyled">
+                    {% for option in category.options %}
+                        <li><a class="dropdown-item" href="{{ option.url }}">{{ option.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{# {% macro mega_menu(categories) %}
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="mega-menu">
+            {% for category in categories %}
+                <div>
+                    <h5>{{ category.name }}</h5>
+                    <ul class="list-unstyled">
+                        {% for option in category.options %}
+                            <li><a class="dropdown-item" href="{{ option.url }}">{{ option.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %} #}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{title_page}}{% endblock %}
+
+{% block body %}
+
+
+<div class="container p-4">
+{# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Marques", "route_path": path('brand.index')},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+{# TITLE------------------------------------------------------------------------------------------------ #}
+  {% include 'components/_title_with_subtitle.html.twig' 
+    with {
+      'title': 'Maison de parfums',
+      'subtitle': ' Une sélection pointue de parfums exclusifs,<br>
+        profusion de senteurs subtiles. Prenez le temps, sentez différemment...'
+    } 
+  %}
+{# ------------------------------------------------------------------------------------------------ #}
+    
+{% set current_letter = '' %}
+
+<div class="border p-4 mb-5" style="position:relative;">
+    <div class="row p-2" style="position:absolute;bottom:-2em;right:2em;left:2em; background:#fff;">
+        {% for brand in brands|sort((a, b) => a.name <=> b.name) %}
+            {% set first_letter = brand.name|slice(0, 1)|upper %}
+            {% if first_letter != current_letter %}
+                <div class="col">
+                <a href="#{{ first_letter }}">
+                    <h5>{{ first_letter }}</h5>
+                </a>
+                </div>
+                {% set current_letter = first_letter %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+    <div class="row">
+        {% for brand in brands|sort((a, b) => a.name <=> b.name) %}
+            {% set first_letter = brand.name|slice(0, 1)|upper %}
+          
+            {% if first_letter != current_letter %}
+                {% if loop.index > 1 %}
+                    <hr> <!-- Optional separator for different letters -->
+                {% endif %}
+                <h1 id="{{ first_letter }}">{{ first_letter }}</h1>
+                {% set current_letter = first_letter %}
+            {% endif %}
+
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 p-3 text-uppercase">
+                <a href="{{ path('brand.show', {'id': brand.id}) }}">{{ brand.name }}</a>
+            </div>
+        {% else %}
+            <div class="col-12">
+                Aucune marque
+            </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+
+<nav class="nav justify-content-center">
+    {% for olfactoryFamily in olfactoryFamilies %}
+        <a href="{{ path('olfactoryfamily.show', {'id': olfactoryFamily.id}) }}" class="nav-link text-uppercase">
+        {{ olfactoryFamily.name }}
+        </a>
+    {% else %}
+        <div class="alert alert-warning">
+            Aucune famille olfactive pour le moment
+        </div>
+    {% endfor %}
+</nav>

@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{title_page}}
+{% endblock %}
+
+{% block body %}
+<!-- Swiper --> 
+
+<div class="swiper spkdv_Swiper">
+    <div class="swiper-wrapper">
+        {% for slide in slides %}
+            <div class="swiper-slide" style="position: relative; width: 100%; height: 80vh; overflow: hidden;">
+                <video autoplay muted loop playsinline class="video-cover" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                    <source src="{{ slide.getVideoUrl }}" type="video/mp4">
+                </video>
+                <div style="position: absolute; bottom: 10vh; background: #fff; color: #000; padding: 20px; z-index: 1;">
+                   
+                   <h2>{{ slide.title | raw }}</h2>
+                    {{ slide.description | raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<!-- Initialize Swiper -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".spkdv_Swiper", {
+        pagination: {
+            el: ".swiper-pagination",
+        },
+    });
+
+    var videos = document.querySelectorAll('.video-cover');
+    videos.forEach(function(video) {
+        video.addEventListener('ended', function() {
+            swiper.slideNext();
+        });
+    });
+</script>
+
+
+<div class="container p-4" style="overflow:hidden;">
+{# ICON WITH TEXT------------------------------------------------------------------------------------------------ #}
+
+  {% set iconsWithText = [
+    {
+        "text": "Détaillant Officiel provenance Certifiée",
+        "icon": "<object type='image/svg+xml' data='" ~  asset('svg/official.svg') ~ "' width='40px' aria-label='Favoris'>
+              Your browser does not support SVG
+            </object>",
+        "positionIcon": "",
+    },
+    {
+        "text": "Nos échantillons TRY ME pour tester les parfums sans modération",
+        "icon": "<object type='image/svg+xml' data='" ~  asset('svg/echantillon.svg') ~ "' width='40px' aria-label='Favoris'>
+              Your browser does not support SVG
+            </object>",
+        "positionIcon": "",
+    },
+    {
+        "text": "Livraison internationale nos parfums voyagent loin",
+        "icon": "<object type='image/svg+xml' data='" ~  asset('svg/international.svg') ~ "' width='40px' aria-label='Favoris'>
+              Your browser does not support SVG
+            </object>",
+        "positionIcon": "",
+    }
+    
+  ] %}
+  {% include 'components/_icon_with_text.html.twig'
+  with {
+    'iconsWithText': iconsWithText ? iconsWithText : null,
+    'colSpan': 'col-4',
+  } %}
+{# TITLE------------------------------------------------------------------------------------------------ #}
+  {% include 'components/_title_with_subtitle.html.twig' 
+    with {
+      'title': 'Soyez différent, sentez unique !',
+      'subtitle': ''
+    } 
+  %}
+{# ------------------------------------------------------------------------------------------------ #}
+
+
+
+
+<div class="swiper-container spkdv_swiper">
+    <div class="swiper-wrapper">
+        {% for brand in brands %}
+            <div class="swiper-slide">
+                {% include 'brand/_brand_grid_template.html.twig' with { 'brand': brand } %}
+            </div>
+        {% endfor %}
+          <!-- Add Pagination -->
+     
+    </div>
+            <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+</div>
+
+
+
+
+{# TITLE------------------------------------------------------------------------------------------------ #}
+  {% include 'components/_title_with_subtitle.html.twig' 
+    with {
+      'title': 'L\'automne est là ! ',
+      'subtitle': 'Dénichez votre nouvel indispensable !'
+    } 
+  %}
+{# ------------------------------------------------------------------------------------------------ #}
+<div class="spkdv_product_grid">
+    <div class="spkdv_product_grid_swiper swiper-container">
+        <div class="swiper-wrapper">
+            {% for product in featured_products %}
+                <div class="swiper-slide">
+                    {% include 'product/_product_swiper_template.html.twig' 
+                        with {
+                        'product': product ? product : null
+                        } 
+                    %} 
+                </div>
+            {% else %}
+                <div class="alert alert-warning swiper-slide">
+                    Aucun produit pour le moment
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+</div>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper('.spkdv_product_grid_swiper', {
+        slidesPerView: 4.5, // 4.5 slides on desktop
+        spaceBetween: 5, // Space between slides
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1.5, // 1.5 slides on mobile
+            },
+            768: {
+                slidesPerView: 3.5, // 3.5 slides on tablet
+            },
+            1024: {
+                slidesPerView: 4.5, // 4.5 slides on desktop
+            },
+        },
+    });
+</script>
+<script>
+    var swiper = new Swiper('.spkdv_swiper', {
+        slidesPerView: 3,
+        spaceBetween: 10, // Espace entre les slides
+        breakpoints: {
+                        640: {
+                slidesPerView: 1.5, // 1.5 slides on mobile
+            },
+            768: {
+                slidesPerView: .5, // 3.5 slides on tablet
+            },
+            1024: {
+                slidesPerView: 2.2, // 4.5 slides on desktop
+            },
+
+
+        },
+    });
+</script>
+    <style>
+        .swiper-container {
+            width: 100%;
+            height: auto;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            width: 100%; /* Assure que la carte prend toute la largeur du slide */
+        }
+    </style>
+
+   </div>
+{% endblock %}

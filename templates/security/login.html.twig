@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="container p-4">
+{# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+{% set breadcrumbs = [
+    {"page_name": "Accueil", "route_path": path('home.index')},
+    {"page_name": "Connexion", "route_path": path('app_login')},
+] %}
+{% include 'components/_breadcrumb.html.twig' 
+    with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+%}    
+
+{% if app.user %}
+    <div class="mb-3">
+    Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="spkdv_primary_btn_outline">Déconnexion</a>
+    </div>
+{% else %}
+
+   <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 border p-5">
+            <form method="post">
+                {# {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}  #}
+                {# TITLE------------------------------------------------------------------------------------------------ #}
+                {% include 'components/_title_with_subtitle.html.twig' 
+                    with {
+                        'title': 'Connexion',
+                        'subtitle': 'Vous avez déjà un compte ? Ravi de vous revoir !'
+                    } 
+                %}
+                <label for="inputEmail">E-mail</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="d-flex align-item-center my-3">
+                    <div class="checkbox px-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                        </label>
+                    </div>   
+                    <div>|</div>
+                    <div class="px-3">
+                        <a href="{{path('app_forgot_password_request')}}">Mot de passe oublié !</a>
+                    </div>
+                </div>
+            
+        
+                <button class="spkdv_primary_btn" type="submit">
+                    Connexion
+                </button>
+            
+            </form>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6  d-flex flex-column p-5">
+            {# TITLE------------------------------------------------------------------------------------------------ #}
+            {% include 'components/_title_with_subtitle.html.twig' 
+                with {
+                    'title': 'Inscription',
+                    'subtitle': 'Nouveau sur Sillage Parfumerie ? Bienvenue !<br> Créez votre compte en quelques minutes'
+                } 
+            %}
+            <a href="{{path('app_register')}}" class="spkdv_primary_btn">Créer mon compte</a>
+        </div>
+   </div>
+{% endif %}
+</div>
+{% endblock %}

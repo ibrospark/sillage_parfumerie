@@ -1,0 +1,10 @@
+<div class="col-12 col-sm-12 col-md-6 col-lg-6 p-3">
+    <a href="{{ path('blog.show', {id: blog.id}) }}">
+        <div>
+            <div class="spkdv_blog_image" style="background-image: url('{{ asset('img/blog/' ~ blog.imageUrl) }}');width: 100%;height: 250px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
+            <h3>{{ blog.title }}</h3>
+            <a href="" class="spkdv_primary_btn_outline my-3">Consulter l'article</a>
+        </div>
+    </a>
+</div>
+

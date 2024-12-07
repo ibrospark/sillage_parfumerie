@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block body %}
+<div class="container p-4">
+    {# BREADCRUMBS #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Blog", "route_path": path('blog.index')},
+        {"page_name": blog.title, "route_path": null},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs} %}
+
+    {# TITLE #}
+    {% include 'components/_title_with_subtitle.html.twig' with {
+        'title': blog.title,
+        'subtitle': ''
+    } %}
+
+    <img src="{{ asset('img/blog/' ~ blog.imageUrl) }}" class="img-fluid mb-4" alt="{{ blog.title }}">
+    <p>{{ blog.content | raw }}</p>
+    <p class="text-muted">Publié le {{ blog.createdAt | date('d/m/Y') }}</p>
+
+    <p>Auteurs :
+        {{ authors | join(', ') }}
+    </p>
+</div>
+{% endblock %}

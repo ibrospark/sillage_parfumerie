@@ -1,0 +1,85 @@
+{# ICON WITH TEXT------------------------------------------------------------------------------------------------ #}
+{% set iconsWithText = [
+    {
+        "text": "Echantillons à tester sans modération",
+        "icon": "<img src='" ~ asset('svg/echantillon.svg') ~ "' width='40px' aria-label='Echantillons' alt='Echantillons'>",
+        "positionIcon": "top",
+    },
+    {
+        "text": "Emballage soigné & petit mot personnalisé",
+        "icon": "<img src='" ~ asset('svg/emballage.svg') ~ "' width='40px' aria-label='Emballage' alt='Emballage'>",
+        "positionIcon": "top",
+    },
+    {
+        "text": "Livraison offerte dès 60€ d'achat en France métropolitaine",
+        "icon": "<img src='" ~ asset('svg/delivery.svg') ~ "' width='40px' aria-label='Livraison' alt='Livraison'>",
+        "positionIcon": "top",
+    },
+    {
+        "text": "Détaillant officiel Provenance certifiée",
+        "icon": "<img src='" ~ asset('svg/official.svg') ~ "' width='40px' aria-label='Officiel' alt='Officiel'>",
+        "positionIcon": "top",
+    }
+] %}
+
+{% set contactItems = [
+    {
+        'title': 'Sillage vile',
+        'icon': "<img src='" ~ asset('svg/store.svg') ~ "' width='40px' aria-label='store' alt='store'>", 
+        'text': '12 Av Nelson Mandela, Dakar, Sénégal',
+        'positionIcon': 'top'
+    },
+    {
+        'title': 'Sillage Almadies',
+        'icon': "<img src='" ~ asset('svg/store.svg') ~ "' width='40px' aria-label='store' alt='store'>", 
+        'text': '17 Route des Almadies, Dakar, Sénégal',
+        'positionIcon': 'top'
+    },
+    {
+        'title': 'Téléphone',
+        'icon': "<img src='" ~ asset('svg/phone.svg') ~ "' width='40px' aria-label='phone' alt='phone'>", 
+        'text': '+221 338425555 / +221 338683517',
+        'positionIcon': 'top'
+    },
+    {
+        'title': 'Envoyez nous un mail !',
+        'icon': "<img src='" ~ asset('svg/envelope.svg') ~ "' width='40px' aria-label='store' alt='store'>", 
+        'text': 'contact@sillageparfumerie.com',
+        'positionIcon': 'top'
+    }
+] %}
+
+<div class="footer_top">
+    {% include 'components/_icon_with_text.html.twig'
+    with {
+        'iconsWithText': iconsWithText ? iconsWithText : null,
+        'colSpan': 'col-6 col-sm-6 col-md-4 col-lg-3',
+    } %}
+</div>
+
+<footer class="py-5">
+    {% include 'components/_icon_with_text.html.twig'
+    with {
+        'iconsWithText': contactItems ? contactItems : null,
+        'colSpan': 'col-6 col-sm-6 col-md-4 col-lg-3',
+    } %}
+    <hr>
+    <div class="row">
+        <div class="col-4 px-5 text-center">
+            <a href="{{ path('home.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <img src='{{ asset('img/logo_sillage_parfumerie.svg') }}' width='200'/>
+            </a>
+        </div>
+ <div class="col-6">
+    {# <div class="fw-bold fs-3">À propos de</div> #}
+    <div class="d-flex justify-content-between flex-wrap">
+        <a href="" style="font-size:0.8em;" class="nav-link-secondary">Qui sommes-nous</a>
+        <a href="" style="font-size:0.8em;" class="nav-link-secondary">Nos boutiques</a>
+        <a href="" style="font-size:0.8em;" class="nav-link-secondary">Blog</a>
+        <a href="" style="font-size:0.8em;" class="nav-link-secondary">Termes et conditions</a>
+        <a href="" style="font-size:0.8em;" class="nav-link-secondary">Livraison et retours</a>
+    </div>
+</div>
+ 
+    </div>
+</footer>

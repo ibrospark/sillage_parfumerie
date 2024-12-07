@@ -1,0 +1,20 @@
+{# templates/components/brand_card.html.twig #}
+<div>
+    <div class="row g-0">
+        <div>
+            <a href="{{path('brand.show', { 'id':brand.id }) }}">
+                <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" class="img-fluid rounded-start" alt="{{ brand.name }}">
+            </a>
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <a href="{{path('brand.show', { 'id':brand.id }) }}">{{ brand.name }}</a>
+                </h2>
+                {# <p -text">{{ brand.description }}</p> #}
+                <br>
+                <a href="{{path('brand.show', { 'id':brand.id }) }}" class="spkdv_primary_btn_outline">Je me laisse tenter</a>
+            </div>
+        </div>
+    </div>
+</div>

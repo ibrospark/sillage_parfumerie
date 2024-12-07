@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{  product.name }}{% endblock %}
+
+{% block body %}
+<div class="container p-4">
+
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Parfums", "route_path": path('product.index')},
+        {"page_name": product.name, "route_path": path('product.show', { 'id': product.id })}
+    ] %}
+
+
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-6 justify-content-center" style="padding:20px!important;">
+            <center><img src="{{ asset('img/products/' ~ product.imageUrl) }}" style="width:90%;"/></center>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6" style="padding:20px!important;">
+            <div style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:0.8em;">
+                <h1 style="font-size:2.5em;">{{ product.name }}</h1>
+                <div class="row" style="font-size:2.5em;font-weight:800;">
+                    {% if brand is not empty %}
+                        <div class="col-6"> 
+                            <a href="{{ path('brand.index') }}/{{ brand.id }}">{{ brand.name }}</a>
+                        </div>
+                    {% endif %}
+                    <div class="col-6 text-center">{{ product.regularPrice }} €</div>
+                </div>
+            </div>
+            <div class="row text-center my-3" style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:1.1em;">
+                {% if product.headNote %}
+                <div class="col-4">
+                    <div class="card-text">
+                        <strong>Tête</strong><br>
+                        {{ product.headNote }}
+                    </div>
+                </div>
+                {% endif %}
+                {% if product.heartNote %}
+                <div class="col-4">
+                    <div class="card-text">
+                        <strong>Coeur</strong><br>
+                        {{ product.heartNote }}
+                    </div>
+                </div>
+                {% endif %}
+                {% if product.backgroundNote %}
+                <div class="col-4">
+                    <div class="card-text">
+                        <strong>Fond</strong><br>
+                        {{ product.backgroundNote }}
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="row text-center" style="font-size:font-weight:800;">
+                {% if product.stockQuantity is not null %}
+                <div class="col-6"> 
+                    <strong>Quantité disponible : </strong> <br>{{ product.stockQuantity }}    
+                </div>
+                {% endif %}
+                {% if product.capacity %}
+                <div class="col-6"> 
+                    <strong>Contenance : </strong> <br>{{ product.capacity }}    
+                </div>
+                {% endif %}
+             
+            </div>
+            <div class="row">
+               <div class="col-12 p-5">
+                    <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn" style="display:inline-block;width:100%;">Ajouter au panier</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 text-center p-4">
+            <h1>Description</h1>
+            {{ product.description }}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

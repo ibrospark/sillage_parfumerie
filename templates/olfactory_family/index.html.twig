@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Famille olfactive{% endblock %}
+
+{% block body %}
+    <div class="container p-4">
+        {# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+        {% set breadcrumbs = [
+            {"page_name": "Accueil", "route_path": path('home.index')},
+            {"page_name": "Familles olfactives", "route_path": path('olfactoryfamily.index')},
+        ] %}
+        {% include 'components/_breadcrumb.html.twig' 
+            with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+        %}
+        {# TITLE------------------------------------------------------------------------------------------------ #}
+        {% include 'components/_title_with_subtitle.html.twig' 
+        with {
+        'title': 'Les familles olfactives',
+        'subtitle': 'La parfumerie dispose d\'un éventail des matières premières d\'environ 1500 ingrédients.
+        Aussi, si chaque parfum a une odeur qui lui est propre,
+        il est possible de classer ces derniers dans des catégories que l\'on nomme familles olfactives.'
+        } 
+        %}
+        {# ------------------------------------------------------------------------------------------------ #}
+        <div class="row">
+            {% for olfactory_family in olfactory_families %}
+                {% include 'olfactory_family/_olfactory_family_grid_template.html.twig' with {'olfactory_family': olfactory_family }  %}
+            {% else %}
+                <div class="alert alert-warning">
+                    Aucune famille olfactive n'a été trouvée
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+# stfalcon_tinymce:
+#   themes: "modern"
+#   plugins:
+#     - "advlist"
+#     - "autolink"
+#     - "link"
+#     - "image"
+#     - "media"
+#     - "table"
+#     - "paste"
+#     - "fullscreen"
+#   toolbar: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media"

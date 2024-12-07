@@ -1,0 +1,23 @@
+{# templates/order_confirmation.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de Commande{% endblock %}
+
+{% block body %}
+    <h1>Confirmation de votre commande</h1>
+
+    <p>Merci pour votre commande !</p>
+    <p>ID de la commande : {{ order.id }}</p>
+    <p>Date de création : {{ order.createdAt|date('d/m/Y H:i') }}</p>
+    <p>Méthode de paiement : {{ order.paymentMethod }}</p>
+    <p>Transporteur : {{ order.carrier }}</p>
+    <p>Adresse : {{ order.address }}</p>
+    
+    <h2>Détails de votre commande :</h2>
+    <ul>
+        {% for product in order.products %}
+            <li>{{ product.name }} ({{ product.quantity }}) - {{ product.price|number_format(2, ',', ' ') }} €</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

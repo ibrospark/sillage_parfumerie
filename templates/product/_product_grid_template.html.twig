@@ -1,0 +1,47 @@
+<div class="col-6 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+    <a href="{{ path('product.show', {'id': product.id}) }}">
+        <div class="card d-flex flex-column product_card" style="height: 100%;">
+            <div class="image_container" style="position: relative;">
+                <img src="{{ asset('img/products/' ~ product.imageUrl) }}" class="card-img-top" style="width:100%;"/>
+                <div class="hover_buttons">
+                    <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn">Ajouter au panier</a>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <div class="row flex-grow-1">
+                    <div class="col-8">
+                        <h5>{{ product.name }}</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="card-text text-center fs-5 regular_price">
+                            {# <strong>{{ product.regularPrice }} €</strong> #}
+                            <strong>{{(product.regularPrice / 100 )|number_format(2,',', '.')}} €</strong>
+                        </div>
+                    </div>
+                </div>
+                {# --------------------------NOTES OLFACTIVES BEGIN -------------------------- #}
+                <div class="row text-center mt-auto" style="border-top: 1px solid #eae9e9; padding-top: 15px; font-size:0.8em;">
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Tête</strong><br>
+                            {{ product.headNote }}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Coeur</strong><br>
+                            {{ product.heartNote }}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Fond</strong><br>
+                            {{ product.backgroundNote }}
+                        </div>
+                    </div>
+                </div>
+                {# --------------------------NOTES OLFACTIVES END -------------------------- #}
+            </div>
+        </div>
+    </a>
+</div>

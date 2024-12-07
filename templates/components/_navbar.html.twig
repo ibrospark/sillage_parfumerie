@@ -1,0 +1,121 @@
+    <style>
+        /* Personnalisation du Mega Menu */
+        .dropdown-menu {
+            display: none; /* Masquer le menu par défaut */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%; /* Prend 100% de la largeur */
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Pour s'assurer que le menu reste visible */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block; /* Afficher le menu au survol */
+        }
+
+        .mega-menu {
+            display: flex;
+            flex-wrap: wrap; /* Pour que les éléments se replient s'ils ne rentrent pas */
+            justify-content: space-between;
+            gap: 20px; /* Espacement entre les colonnes */
+        }
+
+        .mega-menu > div {
+            flex: 1 1 calc(25% - 20px); /* Les colonnes prennent environ 25% de la largeur avec un espacement de 20px */
+            min-width: 200px; /* Taille minimale pour éviter qu'elles soient trop petites */
+        }
+
+        .mega-menu h5 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .mega-menu ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .mega-menu li {
+            margin-bottom: 5px;
+        }
+
+        .mega-menu a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .mega-menu a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+{% set categories = [
+    {
+        'name': 'Catégorie 1',
+        'options': [
+            {'name': 'Option 1', 'url': '/option1'},
+            {'name': 'Option 2', 'url': '/option2'},
+            {'name': 'Option 3', 'url': '/option3'},
+        ]
+    },
+] %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    MARQUES
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="mega-menu">
+                        <div>
+                            <h5>TOUTES LES MARQUES</h5>
+                            <ul class="list-unstyled">
+                                {% for option in category.options %}
+                                    <li><a class="dropdown-item" href="{{ option.url }}">{{ option.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    PARFUMS
+                </a>
+                {# Inclusion du Mega Menu réutilisable #}
+                {% include 'components/_mega_menu.html.twig' with { 'categories': categories } %}
+            </li>
+        </ul>
+    </div>
+</nav>
+{# Macro
+{% import 'components/mega_menu_macros.html.twig' as megaMenu %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menu
+                </a>
+                {{ megaMenu.mega_menu(categories) }}
+            </li>
+        </ul>
+    </div>
+</nav> #}

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer vos adresses{% endblock %}
+
+{% block body %}
+  <div class="container p-4">
+  {# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Mon compte", "route_path": path('account.index')},
+        {"page_name": "Gérer vos adresses", "route_path": null},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+
+{# ------------------------------------------------------------------------------------------------ #}
+       <div class="row">
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                {% include 'account/_nav_account.html.twig' %}
+            </div>
+            <div class="col-12 col-sm-12 col-md-9 col-lg-9">
+              <h2>Gérer vos adresses</h2>
+              <div class="mb-4"><a href="{{ path('address.new') }} " class="spkdv_primary_btn_outline"><i class="fa fa-plus"></i> Ajouter une nouvelle adresse</a></div>
+              <div class="row">
+      {% for address in addresses %}
+        <div class="col-lg-4 col-md-6 col-12 mb-4 p-2">  {# 3 on large screens, 2 on medium, 1 on small #}
+      
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ address.name }} {{ address.firstname }} {{ address.lastname }}</h5>
+              <p class="card-text"><strong>Société :</strong> {{ address.company }}</p>
+              <p class="card-text"><strong>Adresse :</strong> {{ address.address }}</p>
+              <p class="card-text"><strong>Code postal :</strong> {{ address.postal }}</p>
+              <p class="card-text"><strong>ville :</strong> {{ address.city }}</p>
+              <p class="card-text"><strong>Pays :</strong> {{ address.country }}</p>
+              <p class="card-text"><strong>Téléphone :</strong> {{ address.phone }}</p>
+              <div class="d-flex justify-content-start gap-2">
+                <a href="{{ path('address.edit', {'id': address.id}) }}" class="btn btn-warning">Modifier</a>
+                    {{ include('address/_delete_form.html.twig') }}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="col-12">
+          <div class="alert alert-warning text-center">Vous n'avez aucune adresse pour le momment</div>
+        </div>
+      {% endfor %}
+    </div>
+            </div>
+        </div>
+  
+  </div>
+{% endblock %}

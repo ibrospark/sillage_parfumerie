@@ -1,0 +1,12 @@
+<nav class="nav flex-column p-3" style="border:1px solid #dddddd;">
+  <div>   Bienvenue dans votre espace membre {{ app.user.firstname }}. </div>
+    <hr>
+    <a class="nav-link" href="{{ path('account.index') }}">Tableau de bord</a>
+    {# <a class="nav-link" href="{{ path('order.index') }}">Mes commandes</a> #}
+    <a class="nav-link" href="{{ path('address.index') }}">Gérer mes adresses</a>
+    <a class="nav-link" href="{{ path('account.password.change') }}">Modifier mot de passe</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="nav-link spkdv_primary_btn_outline  text-center" href="{{ path('admin') }}">Espace d'administration</a>
+    {% endif %} 
+    <a class="nav-link spkdv_primary_btn " href="{{ path('app_logout') }}">Déconnexion</a> 
+</nav>

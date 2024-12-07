@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation de Commande{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    <div class="container p-4">
+    {# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Panier d'achat", "route_path": path('cart.index')},
+
+        {"page_name": "Validaton de commande", "route_path": null},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-9 col-lg-9">
+                <h1>Validation de Commande</h1> 
+                    <div>
+                        <span style="font-weight:800;font-size:1.5em;">Adresse</span>
+                        <hr>
+                        {{ form_row(form.address) }}
+                    </div>
+                    <div>
+                        <span style="font-weight:800;font-size:1.5em;">Transporteur</span>
+                        <hr>
+                        {{ form_row(form.carrier) }}
+                    </div>
+                    <div>
+                        <span style="font-weight:800;font-size:1.5em;">Méthode de Paiement</span>
+                        <hr>
+                        {{ form_row(form.paymentMethod) }}
+                    </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <button class="spkdv_primary_btn_outline" type="submit">Confirmer ma commande</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}  
+{% endblock %}

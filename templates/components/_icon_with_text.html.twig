@@ -1,0 +1,35 @@
+{# templates/components/icon_with_text.html.twig #}
+<div class="row">
+    {% for iconWithText in iconsWithText %}
+        <div class="{{ colSpan }} p-3">
+            <div class="row align-items-center justify-content-center">
+                            
+                {% if iconWithText.positionIcon == 'top' %}
+                    <div class="col-12 text-center">{{ iconWithText.icon|raw }}</div>
+                        {% if iconWithText.title is defined and iconWithText.title is not empty %}
+                    <div class="col-12 text-center">
+                        <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
+                    </div>
+                {% endif %}
+                    <div class="col-12 text-center">{{ iconWithText.text|raw }}</div>
+                {% elseif iconWithText.positionIcon == 'right' %}
+                    <div class="col-10">{{ iconWithText.text|raw }}</div>
+                        {% if iconWithText.title is defined and iconWithText.title is not empty %}
+                    <div class="col-12 text-center">
+                        <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
+                    </div>
+                {% endif %}
+                    <div class="col-2">{{ iconWithText.icon|raw }}</div>
+                {% else %}
+                    <div class="col-2">{{ iconWithText.icon|raw }}</div>
+                        {% if iconWithText.title is defined and iconWithText.title is not empty %}
+                    <div class="col-12 text-center">
+                        <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
+                    </div>
+                {% endif %}
+                    <div class="col-10">{{ iconWithText.text|raw }}</div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,12 @@
+<div class="col-6 col-sm-6 col-md-6 col-lg-4 p-2">
+    <a href="{{ path('olfactoryfamily.show', {'id': olfactory_family.id}) }}" style="color: #fff !important;">
+        <div class="position-relative p-4" style="background-image: url('{{ asset('img/olfactory_families/' ~ olfactory_family.getImageUrl) }}'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 400px;">
+            <div class="spkdv_hover_content">
+                {{ olfactory_family.description | raw }}
+            </div>
+            <div style="position:absolute;bottom:5%;left:5%;right:5%;">
+                <h1 class="text-white text-center">{{ olfactory_family.name }}</h1>
+            </div>
+        </div>
+    </a>
+</div>

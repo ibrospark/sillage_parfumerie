@@ -1,0 +1,7 @@
+{% set alignment = alignment is defined ? alignment : 'center' %}
+{% set alignmentClass = alignment == 'left' ? 'text-start' : (alignment == 'right' ? 'text-end' : 'text-center') %}
+
+<div class="{{ alignmentClass }} my-5">
+    <h1 class="fw-bold">{{ title|raw }}</h1>
+    <p class="text-muted">{{ subtitle|raw }}</p>
+</div>
