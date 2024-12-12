@@ -1,0 +1,54 @@
+/* Masquer le menu par défaut */
+.dropdown-menu {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%; /* S'assure que le dropdown prend toute la largeur */
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 0px;
+}
+
+/* Affichage du menu au survol */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    display: flex;
+    left: 10%;
+    width: 70vw; /* S'assure que le mega-menu prend 100% de la largeur du dropdown */
+}
+
+.mega-menu{
+    width: 80%;
+}
+.mega-menu h5 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mega-menu ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.mega-menu li {
+    margin-bottom: 5px;
+}
+
+.mega-menu a {
+    text-decoration: none;
+    color: #000;
+}
+
+.mega-menu a:hover {
+    text-decoration: underline;
+}
+
+
+.navbar-nav{
+    background-color: #fce8e7;
+}

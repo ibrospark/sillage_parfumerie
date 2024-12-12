@@ -15,10 +15,7 @@ class Page
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -29,37 +26,30 @@ class Page
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\Column]
-    private ?bool $is_published = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $position = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_url = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $content = null;
+
+    #[ORM\Column]
+    private ?bool $is_in_menu = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): static
+    public function setTitle(string $title): static
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): static
-    {
-        $this->content = $content;
+        $this->title = $title;
 
         return $this;
     }
@@ -81,16 +71,44 @@ class Page
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        if ($this->created_at === null) {
+            $this->created_at = new \DateTimeImmutable();
+        }
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updated_at = new \DateTimeImmutable();
+    }
+
+
+    public function getImageUrl(): ?string
+    {
+        return $this->image_url;
+    }
+
+    public function setImageUrl(?string $image_url): static
+    {
+        $this->image_url = $image_url;
+
+        return $this;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
     }
 
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
@@ -100,27 +118,30 @@ class Page
         return $this;
     }
 
-    public function isPublished(): ?bool
+    public function getContent(): ?string
     {
-        return $this->is_published;
+        return $this->content;
     }
 
-    public function setPublished(bool $is_published): static
+    public function setContent(string $content): static
     {
-        $this->is_published = $is_published;
+        $this->content = $content;
 
         return $this;
     }
-
-    public function getPosition(): ?string
+    // Accesseur (getter) pour isInMenu
+    public function getIsInMenu(): bool
     {
-        return $this->position;
+        return $this->is_in_menu;
     }
 
-    public function setPosition(string $position): static
+    // Modificateur (setter) pour is_in_menu
+    public function setIsInMenu(bool $is_in_menu): self
     {
-        $this->position = $position;
-
+        $this->is_in_menu = $is_in_menu;
         return $this;
     }
+
+
+
 }

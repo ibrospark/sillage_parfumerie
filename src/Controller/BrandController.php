@@ -55,4 +55,5 @@ final class BrandController extends AbstractController
             'title_page' => 'Nos marques de parfums',
         ]);
     }
+
 }

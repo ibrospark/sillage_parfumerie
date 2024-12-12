@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -44,7 +45,22 @@ class ProductCrudController extends AbstractCrudController
             DateTimeField::new('updated_at', 'Mis à jour le')->setFormat('dd-MM-yyyy HH:mm')->hideOnForm(),
             BooleanField::new('featured', 'Produit en Vedette')->setHelp('Afficher ce produit comme vedette')->hideOnIndex(),
             BooleanField::new('is_in_home', 'Produit en Page d\'Accueil')->setHelp('Afficher ce produit sur la page d\'accueil')->hideOnIndex(),
-        ];
+            ChoiceField::new('visibilityTypes')
+                ->setChoices([
+                    'Exclusivité' => 'Exclusivité',
+                    'En vedette' => 'En vedette',
+                    'Promotion' => 'Promotion',
+                    'Édition limitée' => 'Édition limitée',
+                    'Aucun' => 'Aucun',
+                    'Nouveauté' => 'Nouveauté',
+                    'Baisse de prix' => 'Baisse de prix',
+                    'Sélection du mois' => 'Sélection du mois',
+                    'Best-seller' => 'Best-seller'
+                ])
+                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+                ->allowMultipleChoices()
+                ->autocomplete()
+            ];
     }
 
     public function configureCrud(Crud $crud): Crud

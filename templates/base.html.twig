@@ -21,7 +21,8 @@
     
     {# CSS Personnel --------------------------------------------------------------- #}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('css/mega_menu.css') }}">
+
     {# Font Awesome --------------------------------------------------------------- #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -37,14 +38,42 @@
             <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
             <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>       
     {% endblock %}
+
 </head>
 <body>
+
     {# Header --------------------------------------------------------------- #}
     {% include 'components/_header.html.twig' %}
     
     {# Main Body --------------------------------------------------------------- #}
     {% block body %}{% endblock %}
-    
+   <style>
+    .whatsapp-button {
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366; /* Couleur WhatsApp */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+}
+
+.whatsapp-button img {
+  width: 35px;
+  height: 35px;
+}
+
+   
+   </style> 
+    <a href="https://wa.me/11234567890" target="_blank" class="whatsapp-button">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+</a>
+
     {# Footer --------------------------------------------------------------- #}
     {% include 'components/_footer.html.twig' %}
     

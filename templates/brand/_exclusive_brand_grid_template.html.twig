@@ -1,0 +1,23 @@
+{# templates/components/brand_card.html.twig #}
+<div style="position:relative;">
+        <div>
+            <a href="{{path('brand.show', { 'id':brand.id }) }}">
+                <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" class="img-fluid rounded-start" alt="{{ brand.name }}">
+            </a>
+        </div>
+         <!-- Contenu texte au-dessus de l'image -->
+        <div style="position: absolute; left:10%; top: 10%;  background: #ffffff; color: #000; padding: 20px; z-index: 1; width: 80%;">
+                            <img src="{{ asset('img/brands/' ~ brand.logoUrl) }}" style="max-height:150px" class="img-fluid rounded-start" alt="{{ brand.name }}">
+
+        </div>
+        <div>
+            <div>
+                <h2>
+                    <a href="{{path('brand.show', { 'id':brand.id }) }}">{{ brand.name }}</a>
+                </h2>
+                {# <p -text">{{ brand.description }}</p> #}
+                <br>
+                <a href="{{path('brand.show', { 'id':brand.id }) }}" class="spkdv_primary_btn_outline">J'en profite</a>
+            </div>
+        </div>
+</div>

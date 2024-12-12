@@ -1,0 +1,40 @@
+{# templates/pages/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Pages{% endblock %}
+
+{% block body %}
+    <div class="container p-4">
+        {# BREADCRUMBS #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Pages", "route_path": path('product.index')},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs} %}
+
+    {# TITLE #}
+    {% include 'components/_title_with_subtitle.html.twig' with {
+        'title': "Pages",
+        'subtitle': ''
+    } %}
+<div class="row">
+            {% for page in pages %}
+        <div class="col-lg-6 col-md-6">
+        <a href="{{ path('page.show', {slug: page.slug}) }}">
+        <div class="div">
+              <div class="spkdv_blog_image" style="background-image: url('{{ asset('img/pages/' ~ page.imageUrl) }}');width: 100%;height: 300px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>
+
+  <h3>{{ page.title }}</h3>
+            <br>
+        </div>
+</a>
+        </div>
+        {% else %}
+            <div class="alert alert-warning">Aucune page trouvée.</div>
+        {% endfor %}
+</div>
+
+
+    </div>
+{% endblock %}

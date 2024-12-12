@@ -7,6 +7,7 @@ use App\Entity\Address;
 use App\Entity\Carrier;
 use App\Entity\OrderItem;
 use App\Entity\PaymentMethod;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\Collection;

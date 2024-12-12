@@ -37,6 +37,13 @@ class Brand
     #[ORM\Column(type: Types::TEXT)]
     private ?string $excerpt = null;
 
+    // Utilisation d'un tableau pour stocker plusieurs types de visibilité
+    #[ORM\Column(type: "array", nullable: true)]
+    private ?array $visibility_types = [];
+
+    #[ORM\Column]
+    private ?bool $is_in_menu = null;
+    
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -141,4 +148,29 @@ class Brand
     {
         return $this->name ?: ''; // Assure que même si name est null, on retourne une chaîne vide
     }
+    public function getVisibilityTypes(): ?array
+    {
+        return $this->visibility_types;
+    }
+
+    public function setVisibilityTypes(?array $visibility_types): self
+    {
+        $this->visibility_types = $visibility_types;
+        return $this;
+    }
+
+    // Accesseur (getter) pour isInMenu
+    public function getIsInMenu(): bool
+    {
+        return $this->is_in_menu;
+    }
+
+    // Modificateur (setter) pour is_in_menu
+    public function setIsInMenu(bool $is_in_menu): self
+    {
+        $this->is_in_menu = $is_in_menu;
+        return $this;
+    }
+
+
 }

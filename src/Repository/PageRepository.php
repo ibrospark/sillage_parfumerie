@@ -40,4 +40,12 @@ class PageRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findOneBySlug(string $slug): ?Page
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

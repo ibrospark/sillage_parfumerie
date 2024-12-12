@@ -81,4 +81,9 @@ class PaymentMethod
         $this->fee = $fee;
         return $this;
     }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
 }

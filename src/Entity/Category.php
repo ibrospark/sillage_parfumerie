@@ -22,11 +22,21 @@ class Category
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    // Utilisation d'un tableau pour stocker plusieurs types de visibilité
+    #[ORM\Column(type: "array", nullable: true)]
+    private ?array $visibility_types = [];
+
     /**
      * @var Collection<int, Product>
      */
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
     private Collection $products;
+
+    #[ORM\Column]
+    private ?bool $is_in_menu = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $image_url = null;
 
     public function __construct()
     {
@@ -91,8 +101,45 @@ class Category
 
         return $this;
     }
+    public function getVisibilityTypes(): ?array
+    {
+        return $this->visibility_types;
+    }
+
+    public function setVisibilityTypes(?array $visibility_types): self
+    {
+        $this->visibility_types = $visibility_types;
+        return $this;
+    }
     public function __toString(): string
     {
         return $this->name ?: ''; // Assure que même si name est null, on retourne une chaîne vide
     }
+
+     // Accesseur (getter) pour isInMenu
+     public function getIsInMenu(): bool
+     {
+         return $this->is_in_menu;
+     }
+ 
+     // Modificateur (setter) pour is_in_menu
+     public function setIsInMenu(bool $is_in_menu): self
+     {
+         $this->is_in_menu = $is_in_menu;
+         return $this;
+     }
+
+     public function getImageUrl(): ?string
+     {
+         return $this->image_url;
+     }
+
+     public function setImageUrl(string $image_url): static
+     {
+         $this->image_url = $image_url;
+
+         return $this;
+     }
+ 
+ 
 }

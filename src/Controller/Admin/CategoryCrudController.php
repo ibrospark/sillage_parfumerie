@@ -8,6 +8,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;  // Importation de CheckboxListField
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;  // Importation de CheckboxListField
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;  // Importation de CheckboxListField
 
 class CategoryCrudController extends AbstractCrudController
 {
@@ -22,6 +25,29 @@ class CategoryCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(), // Masque l'ID lors de la création/modification
             TextField::new('name', 'Nom de la catégorie'), // Champ pour le nom
             TextEditorField::new('description', 'Description'), // Champ pour la description
+            ChoiceField::new('visibilityTypes')
+            ->setChoices([
+                'Exclusivité' => 'Exclusivité',
+                'En vedette' => 'En vedette',
+                'Promotion' => 'Promotion',
+                'Édition limitée' => 'Édition limitée',
+                'Aucun' => 'Aucun',
+                'Nouveauté' => 'Nouveauté',
+                'Baisse de prix' => 'Baisse de prix',
+                'Sélection du mois' => 'Sélection du mois',
+                'Best-seller' => 'Best-seller'
+            ])
+            ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+            ->allowMultipleChoices()
+            ->autocomplete(),
+            ImageField::new('image_url', 'Image')
+            ->setBasePath('img/categories')
+            ->setUploadDir('public/img/categories')
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->setRequired(false),
+            BooleanField::new('is_in_menu')->setLabel('Afficher dans le menu') // Ajout du champ isInMenu
+
+   
         ];
     }
 

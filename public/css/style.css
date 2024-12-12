@@ -83,7 +83,8 @@ footer a {
 }
 
 .footer_top {
-    background-color: #fce8e7;
+    /* background-color: #fce8e7; */
+    background-color: #f1f5fd;
 }
 
 .footer_top2 {
@@ -282,3 +283,4 @@ h6 {
     color: #5b1823;
     /* Couleur pour les éléments utilisant la classe text-primary */
 }
+

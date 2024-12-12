@@ -32,4 +32,21 @@ class HomeController extends AbstractController
             'brands' => $brands
         ]);
     }
+
+    #[Route('/exclusive', name: 'exclusive.index')]
+    public function exclusive(BrandRepository $brandsRepository): Response
+    {
+        $visibilityTypes = [ 'Exclusivité'];  // Par exemple, vous pouvez remplacer par des types de visibilité dynamiques
+    
+        // Utilisez la variable correcte ($brandsRepository)
+        $brands = $brandsRepository->findByVisibilityTypes($visibilityTypes);
+    
+        // Mélanger les marques de manière aléatoire
+        shuffle($brands);
+    
+        return $this->render('brand/exclusive.html.twig', [
+            'brands' => $brands,
+        ]);
+    }
+    
 }

@@ -52,6 +52,10 @@ class Product
     #[ORM\Column]
     private ?int $status = 1;
 
+    // Utilisation d'un tableau pour stocker plusieurs types de visibilité
+    #[ORM\Column(type: "array", nullable: true)]
+    private ?array $visibility_types = [];
+    
     #[ORM\Column]
     private ?bool $featured = false;
 
@@ -81,6 +85,7 @@ class Product
         // Initialisation des timestamps
         $this->created_at = new \DateTimeImmutable();
         $this->updated_at = new \DateTimeImmutable();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,7 +224,16 @@ class Product
         $this->status = $status;
         return $this;
     }
+    public function getVisibilityTypes(): ?array
+    {
+        return $this->visibility_types;
+    }
 
+    public function setVisibilityTypes(?array $visibility_types): self
+    {
+        $this->visibility_types = $visibility_types;
+        return $this;
+    }
     public function isFeatured(): ?bool
     {
         return $this->featured;
@@ -300,5 +314,35 @@ class Product
     public function __toString(): string
     {
         return $this->name ?? 'Product'; // Fallback to 'Product' if name is null
+    }
+
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): static
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems->add($orderItem);
+            $orderItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): static
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getProduct() === $this) {
+                $orderItem->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }

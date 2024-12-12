@@ -1,15 +1,38 @@
+{# templates/contact/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Contactez-nous{% endblock %}
-
 {% block body %}
-    <div class="container p-4">
-        <h3 class="mb-3">Envoyez nous votre message</h3>
-        {{form(form)}}
-        {% for message in app.flashes('notice') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
+ <div class="container p-4">
+     {# BREADCRUMBS #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Contactez-nous", "route_path": path('product.index')},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs} %}
+
+    {# TITLE #}
+    {% include 'components/_title_with_subtitle.html.twig' with {
+        'title': 'Contactez-nous',
+        'subtitle': 'Laissez nous un message par E-mail!
+        '
+    } %}
+
+ <div class="col-lg-6 border p-4 mx-auto">
+
+    {{ form_start(form) }}
+        {{ form_row(form.subject) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.attachment) }}
+        {{ form_row(form.message) }}
+        {{ form_row(form.gdprConsent) }}
+
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    {{ form_end(form) }}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+ </div>
+  
+ </div>
 {% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos offres exclusives{% endblock %}
+
+{% block body %}
+<div class="container p-4">
+{# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
+    {% set breadcrumbs = [
+        {"page_name": "Accueil", "route_path": path('home.index')},
+        {"page_name": "Exclusivite", "route_path": path('brand.index')},
+    ] %}
+    {% include 'components/_breadcrumb.html.twig' 
+        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
+    %} 
+    {# TITLE------------------------------------------------------------------------------------------------ #}
+  {% include 'components/_title_with_subtitle.html.twig' 
+    with {
+      'title': 'Exclusivité',
+      'subtitle': ''
+    } 
+  %}
+{# ------------------------------------------------------------------------------------------------ #}
+    <div class="row">
+        {% for brand in brands %}
+            <div class="col-4">
+                {% include 'brand/_exclusive_brand_grid_template.html.twig' with { 'brand': brand } %}
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
