@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Entity\OlfactoryNote;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+
 namespace App\Repository;
 
 use App\Model\Search;
@@ -25,16 +26,15 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // Récupère les produits en vedette, triés par date de création (les plus récents en premier)
-    public function findFeaturedProducts(): array
+    public function findByVisibilityTypes(array $visibilityTypes): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.featured = :featured')
-            ->setParameter('featured', true)
-            ->orderBy('p.created_at', 'DESC')
-            ->getQuery()
-            ->getResult();
+        // Création de la requête DQL
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.visibility_types LIKE :type')
+            ->setParameter('type', '%' . implode('%', $visibilityTypes) . '%');
+        return $qb->getQuery()->getResult();
     }
+
 
     // Trouve la marque d'un produit à partir de son ID
     public function findBrandByProductId(int $productId)
@@ -270,11 +270,11 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('maxPrice', $search->getMaxPrice());
         }
 
-        // Filtre pour les produits en vedette
-        if ($search->isFeatured()) {
-            $query->andWhere('p.featured = :featured')
-                ->setParameter('featured', true);
-        }
+        // // Filtre pour les produits en vedette
+        // if ($search->isFeatured()) {
+        //     $query->andWhere('p.featured = :featured')
+        //         ->setParameter('featured', true);
+        // }
 
         return $query->getQuery()->getResult();
     }
@@ -283,13 +283,12 @@ class ProductRepository extends ServiceEntityRepository
     public function searchProducts($query)
     {
         $qb = $this->createQueryBuilder('p');
-        
+
         if ($query) {
             $qb->andWhere('p.name LIKE :query')
-               ->setParameter('query', '%' . $query . '%');
+                ->setParameter('query', '%' . $query . '%');
         }
 
         return $qb->getQuery()->getResult();
     }
-    
 }

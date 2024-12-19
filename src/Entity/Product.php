@@ -55,12 +55,6 @@ class Product
     // Utilisation d'un tableau pour stocker plusieurs types de visibilité
     #[ORM\Column(type: "array", nullable: true)]
     private ?array $visibility_types = [];
-    
-    #[ORM\Column]
-    private ?bool $featured = false;
-
-    #[ORM\Column]
-    private ?bool $is_in_home = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -79,6 +73,19 @@ class Product
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
     private Collection $orderItems; // À ajouter dans Product
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $season = null;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $occasion = null;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $intensity = null;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $gender = null;
+
 
     public function __construct()
     {
@@ -234,27 +241,6 @@ class Product
         $this->visibility_types = $visibility_types;
         return $this;
     }
-    public function isFeatured(): ?bool
-    {
-        return $this->featured;
-    }
-
-    public function setFeatured(bool $featured): static
-    {
-        $this->featured = $featured;
-        return $this;
-    }
-
-    public function isInHome(): ?bool
-    {
-        return $this->is_in_home;
-    }
-
-    public function setInHome(bool $is_in_home): static
-    {
-        $this->is_in_home = $is_in_home;
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -333,16 +319,58 @@ class Product
 
         return $this;
     }
-
-    public function removeOrderItem(OrderItem $orderItem): static
+    public function getSeason(): ?string
     {
-        if ($this->orderItems->removeElement($orderItem)) {
-            // set the owning side to null (unless already changed)
-            if ($orderItem->getProduct() === $this) {
-                $orderItem->setProduct(null);
-            }
-        }
+        return $this->season;
+    }
 
+    public function setSeason(string $season): static
+    {
+        $this->season = $season;
         return $this;
     }
+
+    public function getOccasion(): ?string
+    {
+        return $this->occasion;
+    }
+
+    public function setOccasion(string $occasion): static
+    {
+        $this->occasion = $occasion;
+        return $this;
+    }
+
+    public function getIntensity(): ?string
+    {
+        return $this->intensity;
+    }
+
+    public function setIntensity(string $intensity): static
+    {
+        $this->intensity = $intensity;
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): static
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+    // public function removeOrderItem(OrderItem $orderItem): static
+    // {
+    //     if ($this->orderItems->removeElement($orderItem)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($orderItem->getProduct() === $this) {
+    //             $orderItem->setProduct(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
 }

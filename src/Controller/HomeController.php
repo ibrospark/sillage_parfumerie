@@ -15,7 +15,12 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home.index')]
     public function index(ProductRepository $productRepository, SliderRepository $sliderRepository, BrandRepository $brandsRepository): Response
     {
-        $featured_products = $productRepository->findFeaturedProducts();
+
+        // Exemple de tableau de types de visibilité
+        $visibilityTypes = ['is_in_home'];
+
+        // Récupération des produits correspondants
+        $products = $productRepository->findByVisibilityTypes($visibilityTypes);
         $brands = $brandsRepository->findAll();
         $slides = $sliderRepository->findAll();
 
@@ -27,7 +32,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'title_page' => 'Accueil - Sillage parfumerie',
-            'featured_products' => $featured_products,
+            'featured_products' => $products,
             'slides' => $slides,
             'brands' => $brands
         ]);
@@ -36,17 +41,16 @@ class HomeController extends AbstractController
     #[Route('/exclusive', name: 'exclusive.index')]
     public function exclusive(BrandRepository $brandsRepository): Response
     {
-        $visibilityTypes = [ 'Exclusivité'];  // Par exemple, vous pouvez remplacer par des types de visibilité dynamiques
-    
+        $visibilityTypes = ['Exclusivité'];  // Par exemple, vous pouvez remplacer par des types de visibilité dynamiques
+
         // Utilisez la variable correcte ($brandsRepository)
         $brands = $brandsRepository->findByVisibilityTypes($visibilityTypes);
-    
+
         // Mélanger les marques de manière aléatoire
         shuffle($brands);
-    
+
         return $this->render('brand/exclusive.html.twig', [
             'brands' => $brands,
         ]);
     }
-    
 }
