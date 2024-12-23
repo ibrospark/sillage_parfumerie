@@ -23,21 +23,21 @@ class MenuService
         // Inclure les pages si nécessaire
         if ($includePages) {
             $pages = $this->entityManager->getRepository(Page::class)
-                ->findByVisibilityTypes(['is_in_home', 'Exclusivité']);  // Filtre les catégories qui sont dans le menu
+                ->findByVisibilityTypes(['is_in_menu']);  // Filtre les catégories qui sont dans le menu
             $menuItems['pages'] = $pages;
         }
 
         // Inclure les catégories si nécessaire
         if ($includeCategories) {
             $categories = $this->entityManager->getRepository(Category::class)
-                ->findByVisibilityTypes(['is_in_home', 'Exclusivité']);  // Filtre les catégories qui sont dans le menu
+                ->findByVisibilityTypes(['is_in_menu']);  // Filtre les catégories qui sont dans le menu
             $menuItems['categories'] = $categories;
         }
 
         // Inclure les marques si nécessaire
         if ($includeBrands) {
             $brands = $this->entityManager->getRepository(Brand::class)
-                ->findByVisibilityTypes(['is_in_home']);  // Filtre les catégories qui sont dans le menu
+                ->findByVisibilityTypes(['is_in_menu']);  // Filtre les catégories qui sont dans le menu
             $menuItems['brands'] = $brands;
         }
 

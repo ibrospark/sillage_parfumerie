@@ -1,0 +1,13 @@
+{# title_responsive.twig #}
+{% set alignment = 'text-left' %}
+{# Appliquer la classe d'alignement dynamiquement en fonction du paramètre 'alignment' #}
+<div class="{{ alignment }} py-2">
+    <!-- Affichage sur les écrans de type Laptop (large) -> h2 -->
+    <h3 class="d-none d-lg-block">{{ content }}</h3>
+
+    <!-- Affichage sur les écrans de type Tablette (medium) -> h3 -->
+    <h4 class="d-none d-md-block d-lg-none">{{ content }}</h4>
+
+    <!-- Affichage sur les écrans de type Mobile (small) -> h4 -->
+    <h5 class="d-block d-md-none">{{ content }}</h5>
+</div>

@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -31,6 +33,10 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Votre prénom doit contenir au moins {{ limit }} caractères',
                         'max' => 255,
                     ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-ZÀ-ÿ\s-]+$/',
+                        'message' => 'Le prénom ne doit contenir que des lettres, des espaces et des tirets.',
+                    ]),
                 ],
                 'attr' => [
                     'placeholder' => 'Jean',
@@ -46,6 +52,10 @@ class RegistrationFormType extends AbstractType
                         'min' => 2,
                         'minMessage' => 'Votre nom de famille doit contenir au moins {{ limit }} caractères',
                         'max' => 255,
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-ZÀ-ÿ\s-]+$/',
+                        'message' => 'Le nom de famille ne doit contenir que des lettres, des espaces et des tirets.',
                     ]),
                 ],
                 'attr' => [
@@ -73,11 +83,11 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options'  => [
                     'label' => 'Mot de passe',
-                    'attr' => ['placeholder' => 'Saisir mot de passe '],
+                    'attr' => ['placeholder' => 'Saisir mot de passe'],
                 ],
                 'second_options' => [
                     'label' => 'Répétez mot de passe',
-                    'attr' => ['placeholder' => 'Confirmer mot de passe '],
+                    'attr' => ['placeholder' => 'Confirmer mot de passe'],
                 ],
                 'mapped' => false,
                 'attr' => [
@@ -88,10 +98,26 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Veuillez renseigner un mot de passe',
                     ]),
                     new Length([
-                        'min' => 4,
+                        'min' => 8,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                         'max' => 4096,
                     ]),
+                    new Regex([
+                        'pattern' => '/[A-Z]/',
+                        'message' => 'Le mot de passe doit contenir au moins une majuscule.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[a-z]/',
+                        'message' => 'Le mot de passe doit contenir au moins une minuscule.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/[0-9]/',
+                        'message' => 'Le mot de passe doit contenir au moins un chiffre.',
+                    ]),
+                    // new Regex([
+                    //     'pattern' => '/[\W_]/',
+                    //     'message' => 'Le mot de passe doit contenir au moins un caractère spécial.',
+                    // ]),
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
@@ -100,6 +126,10 @@ class RegistrationFormType extends AbstractType
                     new IsTrue([
                         'message' => 'Vous devez accepter nos termes.',
                     ]),
+                ],
+                'label' => 'J\'ai lu et j\'accepte les termes',
+                'label_attr' => [
+                    'class' => 'form-check-label' // Optionnel, pour ajouter une classe CSS
                 ],
             ]);
     }

@@ -26,7 +26,7 @@ class Address
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $company = null;
+    private ?string $company = '';
 
     #[ORM\Column(length: 255)]
     private ?string $address = null;
@@ -91,9 +91,9 @@ class Address
         return $this->company;
     }
 
-    public function setCompany(string $company): static
+    public function setCompany(?string $company): static
     {
-        $this->company = $company;
+        $this->company = $company ?? '';
 
         return $this;
     }

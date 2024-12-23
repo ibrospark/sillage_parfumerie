@@ -23,7 +23,7 @@
                 <h1 class="text-center">{{ brand.name }}</h1>
             </center>
              <p class="p-4">
-                {{ brand.excerpt }}
+                {{ brand.excerpt | raw }}
             </p>
         </div>
         <div class="spkdv_product_grid">
@@ -44,7 +44,7 @@
         <div class="col-12 text-center p-5">
             <h1> Tout savoir de {{ brand.name }}  </h1>
             <p>
-                {{ brand.description }}
+                {{ brand.description | raw }}
             </p>
         </div>
     </div>

@@ -27,6 +27,10 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     var swiper = new Swiper(".spkdv_Swiper", {
+             autoplay: {
+            delay: 6000, // Intervalle de 6 secondes (6000 ms)
+            disableOnInteraction: false, // Permet de continuer l'autoplay même si l'utilisateur interagit avec le swiper
+        },
         pagination: {
             el: ".swiper-pagination",
         },
@@ -70,7 +74,7 @@
   {% include 'components/_icon_with_text.html.twig'
   with {
     'iconsWithText': iconsWithText ? iconsWithText : null,
-    'colSpan': 'col-4',
+    'colSpan': 'col-6 col-lg-4 col-md4',
   } %}
 {# TITLE------------------------------------------------------------------------------------------------ #}
   {% include 'components/_title_with_subtitle.html.twig' 
@@ -86,7 +90,7 @@
     <div class="swiper-wrapper">
         {% for brand in brands %}
             <div class="swiper-slide">
-                {% include 'brand/_brand_grid_template.html.twig' with { 'brand': brand } %}
+                {% include 'brand/_exclusive_brand_grid_template.html.twig' with { 'brand': brand } %}
             </div>
         {% endfor %}
     </div>
@@ -151,6 +155,11 @@
     var swiper = new Swiper('.spkdv_swiper', {
         slidesPerView: 3,
         spaceBetween: 10, // Espace entre les slides
+        autoplay: {
+            delay: 6000, // Intervalle de 6 secondes (6000 ms)
+            disableOnInteraction: false, // Permet de continuer l'autoplay même si l'utilisateur interagit avec le swiper
+        },
+        loop: true, // Active le loop (lecture infinie)
         breakpoints: {
             320: {
                 slidesPerView: 1.5, // 1.5 slides sur mobile
@@ -164,6 +173,7 @@
         },
     });
 </script>
+
 
 <style>
     .swiper-container {

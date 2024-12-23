@@ -51,6 +51,7 @@ class BrandCrudController extends AbstractCrudController
                 ->setChoices([
                     'Aucun' => 'Aucun',
                     'Dans la page d\'accueil' => 'is_in_home',
+                    'Dans la menu de navigation' => 'is_in_menu',
                     'Exclusivité' => 'Exclusivité',
                     'Promotion' => 'Promotion',
                     'Édition limitée' => 'Édition limitée',

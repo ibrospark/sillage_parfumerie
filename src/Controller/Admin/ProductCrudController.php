@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -175,11 +176,18 @@ class ProductCrudController extends AbstractCrudController
                 ->setHelp('Sélectionnez le statut.')
                 ->autocomplete()
                 ->setFormTypeOption('empty_data', ['0'])
-                ->setRequired(false)
-                ->hideOnIndex(),
+                ->onlyOnIndex(),
             // CREATED AND UPDATED DATE
             DateTimeField::new('created_at', 'Créé le')->onlyOnIndex(),
             DateTimeField::new('updated_at', 'Mis à jour le')->onlyOnIndex(),
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des parfums')
+            ->setDefaultSort(['created_at' => 'DESC']);  // Trier par 'created_at' de manière décroissante
     }
 }
