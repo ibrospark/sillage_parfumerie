@@ -14,7 +14,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -26,83 +28,156 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IntegerField::new('id')->onlyOnIndex(),
-            TextField::new('name', 'Nom du produit'),
-            TextareaField::new('description', 'Description')
-                ->hideOnIndex(),
-            MoneyField::new('regular_price', 'Prix régulier')
-                ->setCurrency('XOF'),
-            MoneyField::new('sale_price', 'Prix promotionnel')
-                ->setCurrency('XOF'),
-            IntegerField::new('stock_quantity', 'Quantité en stock'),
-            TextField::new('capacity', 'Capacité'),
-            TextField::new('weight', 'Poids'),
+            // IMAGE
             ImageField::new('image_url', 'Image')
                 ->setBasePath('img/products')
                 ->setUploadDir('public/img/products')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
+            // ID
+            IntegerField::new('id')->onlyOnIndex(),
+            // NAME
+            TextField::new('name', 'Nom du produit'),
+
+            SlugField::new('slug')
+                ->setTargetFieldName('name'),
+            // SHORT DESCRIPTION
+            // DESCRIPTION
+            TextEditorField::new('description', 'Description')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
+            // REGULAR PRICE
+            MoneyField::new('regular_price', 'Prix régulier')
+                ->setFormTypeOption('empty_data', "0.0")
+                ->setCurrency('XOF')
+                ->setRequired(false),
+            // SALE PRICE
+            MoneyField::new('sale_price', 'Prix promotionnel')
+                ->setFormTypeOption('empty_data', "0.0")
+                ->setCurrency('XOF')
+                ->setRequired(false),
+            // STOCK QUANTITY
+            IntegerField::new('stock_quantity', 'Qté.Stock')
+                ->setFormTypeOption('empty_data', "0")
+                ->setRequired(false),
+
+            // CAPACITY
+            TextField::new('capacity', 'Contenance')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
+
+            // WEIGHT
+            TextField::new('weight', 'Poids')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
+
+
+
+            // TAXONOMIES
             AssociationField::new('brand', 'Marque'),
             AssociationField::new('category', 'Catégorie'),
-            AssociationField::new('olfactoryFamily', 'Famille olfactive'),
-
-            AssociationField::new('head_note', 'Note de tête'),
-            AssociationField::new('heart_note', 'Note de cœur'),
-            AssociationField::new('background_note', 'Note de fond'),
-
-            ChoiceField::new('visibilityTypes')
+            AssociationField::new('olfactoryFamily', 'Famille.olf'),
+            // OLFACTORIES NOTES
+            AssociationField::new('head_note', 'Note de tête')
+                ->hideOnIndex(),
+            AssociationField::new('heart_note', 'Note de cœur')
+                ->hideOnIndex(),
+            AssociationField::new('background_note', 'Note de fond')
+                ->hideOnIndex(),
+            // PRODUCT VISIBILITY
+            ChoiceField::new('visibilityTypes', 'Visibilité')
                 ->setChoices([
+                    'Aucun' => 'Aucun',
+                    'Dans la page d\'accueil' => 'is_in_home',
                     'Exclusivité' => 'Exclusivité',
                     'Promotion' => 'Promotion',
                     'Édition limitée' => 'Édition limitée',
-                    'Aucun' => 'Aucun',
                     'Nouveauté' => 'Nouveauté',
-                    'Baisse de prix' => 'Baisse de prix',
                     'Sélection du mois' => 'month_selection',
                     'Best-seller' => 'best_seller',
                     'En vedette' => 'featured',
-                    'Dans la page d\'accueil' => 'is_in_home'
                 ])
                 ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
                 ->allowMultipleChoices()
                 ->autocomplete(),
-
-
+            // SEASON
             ChoiceField::new('season', 'Saison')
                 ->setChoices([
                     'Printemps' => 'Printemps',
                     'Été' => 'Été',
                     'Automne' => 'Automne',
                     'Hiver' => 'Hiver',
+                    'Autre' => 'Autre',
                 ])
                 ->setHelp('Sélectionnez la saison.')
-                ->autocomplete(),
+                ->autocomplete()
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', ['Autre'])
+                ->setRequired(false),
+
+
+            // OCCASION
             ChoiceField::new('occasion', 'Occasion')
                 ->setChoices([
                     'Toute occasion' => 'Toute occasion',
                     'Parfum de jour' => 'Parfum de jour',
                     'Parfum de soirée' => 'Parfum de soirée',
-
-
+                    'Autre' => 'Autre',
                 ])
                 ->setHelp('Sélectionnez l\'occasion.')
-                ->autocomplete(),
+                ->autocomplete()
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', ['Autre'])
+                ->setRequired(false),
+
+
+            // INTENSITY
             ChoiceField::new('intensity', 'Intensité')
                 ->setChoices([
                     'Discret' => 'Discret',
                     'Modéré' => 'Modéré',
                     'Puissant' => 'Puissant',
+                    'Autre' => 'Autre',
                 ])
                 ->setHelp('Sélectionnez l\'intensité.')
-                ->autocomplete(),
+                ->autocomplete()
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', ['Autre'])
+                ->setRequired(false),
+
+
+
+            // GENDER
             ChoiceField::new('gender', 'Genre')
                 ->setChoices([
                     'Homme' => 'Homme',
                     'Femme' => 'Femme',
                     'Unisexe' => 'Unisexe',
+                    'Autre' => 'Autre',
                 ])
                 ->setHelp('Sélectionnez le genre.')
-                ->autocomplete(),
+                ->autocomplete()
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', ['Autre'])
+                ->setRequired(false),
+
+
+            // STATUS
+            ChoiceField::new('status', 'Statut')
+                ->setChoices([
+                    'Inactif' => '0',
+                    'Actif' => '1',
+                    'Brouillon' => '2',
+                ])
+                ->setHelp('Sélectionnez le statut.')
+                ->autocomplete()
+                ->setFormTypeOption('empty_data', ['0'])
+                ->setRequired(false)
+                ->hideOnIndex(),
+            // CREATED AND UPDATED DATE
             DateTimeField::new('created_at', 'Créé le')->onlyOnIndex(),
             DateTimeField::new('updated_at', 'Mis à jour le')->onlyOnIndex(),
         ];

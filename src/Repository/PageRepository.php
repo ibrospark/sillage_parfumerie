@@ -15,6 +15,19 @@ class PageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Page::class);
     }
+    public function findByVisibilityTypes(array $visibilityTypes): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        // On ajoute une condition pour chaque type de visibilité
+        foreach ($visibilityTypes as $index => $type) {
+            $qb->orWhere('p.visibility_types LIKE :type' . $index)
+                ->setParameter('type' . $index, '%' . $type . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     //    /**
     //     * @return Page[] Returns an array of Page objects

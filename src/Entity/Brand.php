@@ -19,6 +19,9 @@ class Brand
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -28,11 +31,11 @@ class Brand
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'brand')]
     private Collection $products;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cover_url = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cover_url = '';
 
-    #[ORM\Column(length: 255)]
-    private ?string $logo_url = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logo_url = '';
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $excerpt = null;
@@ -41,9 +44,7 @@ class Brand
     #[ORM\Column(type: "array", nullable: true)]
     private ?array $visibility_types = [];
 
-    #[ORM\Column]
-    private ?bool $is_in_menu = null;
-    
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -62,6 +63,18 @@ class Brand
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }
@@ -113,22 +126,22 @@ class Brand
         return $this->cover_url;
     }
 
-    public function setCoverUrl(string $cover_url): static
+    public function setCoverUrl(?string $cover_url): self
     {
-        $this->cover_url = $cover_url;
-
+        $this->cover_url = $cover_url ?? 'empty.jpg';
         return $this;
     }
+
 
     public function getLogoUrl(): ?string
     {
         return $this->logo_url;
     }
 
-    public function setLogoUrl(string $logo_url): static
-    {
-        $this->logo_url = $logo_url;
 
+    public function setLogoUrl(?string $logo_url): self
+    {
+        $this->logo_url = $logo_url ?? 'empty.jpg';
         return $this;
     }
 
@@ -158,19 +171,4 @@ class Brand
         $this->visibility_types = $visibility_types;
         return $this;
     }
-
-    // Accesseur (getter) pour isInMenu
-    public function getIsInMenu(): bool
-    {
-        return $this->is_in_menu;
-    }
-
-    // Modificateur (setter) pour is_in_menu
-    public function setIsInMenu(bool $is_in_menu): self
-    {
-        $this->is_in_menu = $is_in_menu;
-        return $this;
-    }
-
-
 }

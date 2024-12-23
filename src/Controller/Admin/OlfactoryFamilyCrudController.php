@@ -23,13 +23,16 @@ class OlfactoryFamilyCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Désignation'),
-            TextEditorField::new('description', 'Description')->hideOnIndex(),
+            TextEditorField::new('description', 'Description')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
             ImageField::new('image_url', 'URL de l\'Image')
                 ->setBasePath('img/olfactory_families/')
                 ->setUploadDir('public/img/olfactory_families/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            AssociationField::new('product', 'Produits')->hideOnForm(), // Ajustez le nom de la relation si nécessaire
+            // AssociationField::new('product', 'Produits')->hideOnForm(), // Ajustez le nom de la relation si nécessaire
         ];
     }
 

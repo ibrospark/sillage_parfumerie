@@ -25,16 +25,18 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
-
     public function findByVisibilityTypes(array $visibilityTypes): array
     {
-        // Création de la requête DQL
-        $qb = $this->createQueryBuilder('p')
-            ->where('p.visibility_types LIKE :type')
-            ->setParameter('type', '%' . implode('%', $visibilityTypes) . '%');
+        $qb = $this->createQueryBuilder('p');
+
+        // On ajoute une condition pour chaque type de visibilité
+        foreach ($visibilityTypes as $index => $type) {
+            $qb->orWhere('p.visibility_types LIKE :type' . $index)
+                ->setParameter('type' . $index, '%' . $type . '%');
+        }
+
         return $qb->getQuery()->getResult();
     }
-
 
     // Trouve la marque d'un produit à partir de son ID
     public function findBrandByProductId(int $productId)

@@ -33,9 +33,9 @@ class BrandRepository extends ServiceEntityRepository
     /**
      * Récupérer les produits d'une marque donnée.
      */
-    
 
-       /**
+
+    /**
      * Filtrer les marques par types de visibilité (en utilisant LIKE).
      *
      * @param array $visibilityTypes
@@ -43,14 +43,17 @@ class BrandRepository extends ServiceEntityRepository
      */
     public function findByVisibilityTypes(array $visibilityTypes): array
     {
-        // Création de la requête DQL
-        $qb = $this->createQueryBuilder('b')
-            ->where('b.visibility_types LIKE :type')
-            ->setParameter('type', '%'.implode('%', $visibilityTypes).'%'); // Recherche les types dans le tableau
+        $qb = $this->createQueryBuilder('b');
+
+        // On ajoute une condition pour chaque type de visibilité
+        foreach ($visibilityTypes as $index => $type) {
+            $qb->orWhere('b.visibility_types LIKE :type' . $index)
+                ->setParameter('type' . $index, '%' . $type . '%');
+        }
 
         return $qb->getQuery()->getResult();
     }
-    
+
     public function findProductsByBrand(int $brandId)
     {
         return $this->createQueryBuilder('b')

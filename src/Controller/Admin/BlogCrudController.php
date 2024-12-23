@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -25,23 +26,33 @@ class BlogCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title', 'Titre'),
-            TextEditorField::new('content', 'Contenu')->hideOnIndex(),
+            SlugField::new('slug')->setTargetFieldName('title'),
+            TextEditorField::new('content', 'Contenu')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
             ImageField::new('image_url', 'URL de l\'Image')
                 ->setBasePath('img/blog/')
                 ->setUploadDir('public/img/blog/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            AssociationField::new('author', 'Auteurs')
-                ->setFormTypeOption('multiple', true)
-                ->setFormTypeOption('expanded', true), // Affiche les auteurs sous forme de cases à cocher
+            // AssociationField::new('author', 'Auteurs')
+            //     ->setFormTypeOption('multiple', true)
+            //     ->setFormTypeOption('expanded', true), // Affiche les auteurs sous forme de cases à cocher
             DateTimeField::new('created_at', 'Date de Création')->hideOnForm(),
             DateTimeField::new('updated_at', 'Date de Mise à Jour')->hideOnForm(),
+            // STATUS
             ChoiceField::new('status', 'Statut')
                 ->setChoices([
-                    'Brouillon' => 0,
-                    'Publié' => 1,
-                    'Archivé' => 2,
-                ]),
+                    'Inactif' => '0',
+                    'Actif' => '1',
+                    'Brouillon' => '2',
+                ])
+                ->setHelp('Sélectionnez le statut.')
+                ->autocomplete()
+                ->setFormTypeOption('empty_data', ['0'])
+                ->setRequired(false)
+                ->hideOnIndex(),
         ];
     }
 

@@ -41,9 +41,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Address>
      */
-    #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'user')]
-    private Collection $addresses;
 
+    #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'user', cascade: ['remove'])]
+    private Collection $addresses;
 
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
@@ -145,7 +145,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function setVerified(bool $isVerified): static
+    public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
 

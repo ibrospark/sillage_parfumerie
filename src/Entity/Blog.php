@@ -20,11 +20,16 @@ class Blog
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image_url = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_url = '';
+
 
     /**
      * @var Collection<int, User>
@@ -95,12 +100,12 @@ class Blog
         return $this->image_url;
     }
 
-    public function setImageUrl(string $image_url): static
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->image_url = $image_url;
-
+        $this->image_url = $imageUrl ?? 'empty.jpg';
         return $this;
     }
+
 
     /**
      * @return Collection<int, User>
@@ -161,6 +166,19 @@ class Blog
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 
     public function __toString(): string
     {

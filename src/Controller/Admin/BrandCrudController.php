@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;  // Importation de CheckboxListField
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;  // Importation de CheckboxListField
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 
 
 class BrandCrudController extends AbstractCrudController
@@ -25,9 +26,16 @@ class BrandCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('name', 'Désignation'),
-            TextEditorField::new('description', 'Description')->hideOnIndex(),
-            TextEditorField::new('excerpt', 'Extrait')->hideOnIndex(),
+            TextField::new('name', 'Nom de la marque'),
+            SlugField::new('slug')->setTargetFieldName('name'),
+            TextEditorField::new('description', 'Description')
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false)
+                ->hideOnIndex(),
+            TextEditorField::new('excerpt', 'Extrait')
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false)
+                ->hideOnIndex(),
             ImageField::new('cover_url', 'URL de la Couverture')
                 ->setBasePath('img/brands/')
                 ->setUploadDir('public/img/brands/')
@@ -39,24 +47,22 @@ class BrandCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
             AssociationField::new('products', 'Produits')->hideOnForm(), // Assuming 'products' is the correct relation name
-            ChoiceField::new('visibilityTypes')
-            ->setChoices([
-                'Exclusivité' => 'Exclusivité',
-                'En vedette' => 'En vedette',
-                'Promotion' => 'Promotion',
-                'Édition limitée' => 'Édition limitée',
-                'Aucun' => 'Aucun',
-                'Nouveauté' => 'Nouveauté',
-                'Baisse de prix' => 'Baisse de prix',
-                'Sélection du mois' => 'Sélection du mois',
-                'Best-seller' => 'Best-seller'
-            ])
-            ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
-            ->allowMultipleChoices()
-            ->autocomplete(),
-            BooleanField::new('is_in_menu')->setLabel('Afficher dans le menu') // Ajout du champ isInMenu
+            ChoiceField::new('visibilityTypes', 'Visibilité')
+                ->setChoices([
+                    'Aucun' => 'Aucun',
+                    'Dans la page d\'accueil' => 'is_in_home',
+                    'Exclusivité' => 'Exclusivité',
+                    'Promotion' => 'Promotion',
+                    'Édition limitée' => 'Édition limitée',
+                    'Nouveauté' => 'Nouveauté',
+                    'Sélection du mois' => 'month_selection',
+                    'Best-seller' => 'best_seller',
+                    'En vedette' => 'featured',
+                ])
+                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+                ->allowMultipleChoices()
+                ->autocomplete(),
 
-   
         ];
     }
 

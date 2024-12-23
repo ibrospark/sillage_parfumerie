@@ -29,13 +29,15 @@ class Page
 
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image_url = null;
+    private ?string $image_url = '';
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?bool $is_in_menu = null;
+    // Utilisation d'un tableau pour stocker plusieurs types de visibilité
+    #[ORM\Column(type: "array", nullable: true)]
+    private ?array $visibility_types = [];
+
 
     public function getId(): ?int
     {
@@ -97,10 +99,9 @@ class Page
         return $this->image_url;
     }
 
-    public function setImageUrl(?string $image_url): static
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->image_url = $image_url;
-
+        $this->image_url = $imageUrl ?? 'empty.jpg';
         return $this;
     }
 
@@ -129,19 +130,15 @@ class Page
 
         return $this;
     }
-    // Accesseur (getter) pour isInMenu
-    public function getIsInMenu(): bool
+
+    public function getVisibilityTypes(): ?array
     {
-        return $this->is_in_menu;
+        return $this->visibility_types;
     }
 
-    // Modificateur (setter) pour is_in_menu
-    public function setIsInMenu(bool $is_in_menu): self
+    public function setVisibilityTypes(?array $visibility_types): self
     {
-        $this->is_in_menu = $is_in_menu;
+        $this->visibility_types = $visibility_types;
         return $this;
     }
-
-
-
 }

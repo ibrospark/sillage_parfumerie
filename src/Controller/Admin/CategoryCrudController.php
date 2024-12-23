@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;  // Importation de CheckboxListField
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;  // Importation de CheckboxListField
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;  // Importation de CheckboxListField
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;  // Importation de SlugField
 
 class CategoryCrudController extends AbstractCrudController
 {
@@ -24,30 +25,29 @@ class CategoryCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(), // Masque l'ID lors de la création/modification
             TextField::new('name', 'Nom de la catégorie'), // Champ pour le nom
-            TextEditorField::new('description', 'Description'), // Champ pour la description
-            ChoiceField::new('visibilityTypes')
-            ->setChoices([
-                'Exclusivité' => 'Exclusivité',
-                'En vedette' => 'En vedette',
-                'Promotion' => 'Promotion',
-                'Édition limitée' => 'Édition limitée',
-                'Aucun' => 'Aucun',
-                'Nouveauté' => 'Nouveauté',
-                'Baisse de prix' => 'Baisse de prix',
-                'Sélection du mois' => 'Sélection du mois',
-                'Best-seller' => 'Best-seller'
-            ])
-            ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
-            ->allowMultipleChoices()
-            ->autocomplete(),
+            SlugField::new('slug')->setTargetFieldName('name'),
+            ChoiceField::new('visibilityTypes', 'Visibilité') // Champ pour la visibilité
+                ->setChoices([
+                    'Aucun' => 'Aucun',
+                    'Dans la page d\'accueil' => 'is_in_home',
+                    'Exclusivité' => 'Exclusivité',
+                    'Promotion' => 'Promotion',
+                    'Édition limitée' => 'Édition limitée',
+                    'Nouveauté' => 'Nouveauté',
+                    'Sélection du mois' => 'month_selection',
+                    'Best-seller' => 'best_seller',
+                    'En vedette' => 'featured',
+                ])
+                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+                ->allowMultipleChoices()
+                ->autocomplete(),
             ImageField::new('image_url', 'Image')
-            ->setBasePath('img/categories')
-            ->setUploadDir('public/img/categories')
-            ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false),
-            BooleanField::new('is_in_menu')->setLabel('Afficher dans le menu') // Ajout du champ isInMenu
+                ->setBasePath('img/categories')
+                ->setUploadDir('public/img/categories')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false),
 
-   
+
         ];
     }
 

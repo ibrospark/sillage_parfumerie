@@ -22,8 +22,8 @@ class OlfactoryFamily
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image_url = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_url = '';
 
     /**
      * @var Collection<int, Product>
@@ -70,10 +70,10 @@ class OlfactoryFamily
         return $this->image_url;
     }
 
-    public function setImageUrl(string $image_url): static
-    {
-        $this->image_url = $image_url;
 
+    public function setImageUrl(?string $imageUrl): self
+    {
+        $this->image_url = $imageUrl ?? 'empty.jpg';
         return $this;
     }
 

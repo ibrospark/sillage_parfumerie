@@ -15,7 +15,18 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+    public function findByVisibilityTypes(array $visibilityTypes): array
+    {
+        $qb = $this->createQueryBuilder('c');
 
+        // On ajoute une condition pour chaque type de visibilité
+        foreach ($visibilityTypes as $index => $type) {
+            $qb->orWhere('c.visibility_types LIKE :type' . $index)
+                ->setParameter('type' . $index, '%' . $type . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */

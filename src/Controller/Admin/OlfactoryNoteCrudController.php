@@ -23,15 +23,18 @@ class OlfactoryNoteCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Désignation'),
-            TextEditorField::new('description', 'Description')->hideOnIndex(),
+            TextEditorField::new('description', 'Description')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
             ImageField::new('imageUrl', 'URL de l\'Image')
                 ->setBasePath('img/olfactory_notes/')
                 ->setUploadDir('public/img/olfactory_notes/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            AssociationField::new('products_head_note', 'Produits (Tête)')->hideOnForm(), // Adjust relationship names as needed
-            AssociationField::new('products_heart_note', 'Produits (Cœur)')->hideOnForm(),
-            AssociationField::new('products_background_note', 'Produits (Fond)')->hideOnForm(),
+            // AssociationField::new('products_head_note', 'Produits (Tête)')->hideOnForm(), // Adjust relationship names as needed
+            // AssociationField::new('products_heart_note', 'Produits (Cœur)')->hideOnForm(),
+            // AssociationField::new('products_background_note', 'Produits (Fond)')->hideOnForm(),
         ];
     }
 

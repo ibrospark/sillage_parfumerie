@@ -19,6 +19,9 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -37,8 +40,8 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $weight = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image_url = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_url = '';
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Brand $brand = null;
@@ -49,8 +52,8 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?OlfactoryFamily $olfactoryFamily = null;
 
-    #[ORM\Column]
-    private ?int $status = 1;
+    #[ORM\Column(type: "string", nullable: true)]
+    private ?string $status = null;
 
     // Utilisation d'un tableau pour stocker plusieurs types de visibilité
     #[ORM\Column(type: "array", nullable: true)]
@@ -86,14 +89,14 @@ class Product
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $gender = null;
 
-
     public function __construct()
     {
         // Initialisation des timestamps
-        $this->created_at = new \DateTimeImmutable();
-        $this->updated_at = new \DateTimeImmutable();
+        $this->created_at = new \DateTimeImmutable(); // Date actuelle lors de la création
+        $this->updated_at = new \DateTimeImmutable(); // Initialisé à la même valeur au départ
         $this->orderItems = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -110,6 +113,19 @@ class Product
         $this->name = $name;
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 
     public function getDescription(): ?string
     {
@@ -182,9 +198,9 @@ class Product
         return $this->image_url;
     }
 
-    public function setImageUrl(string $image_url): static
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->image_url = $image_url;
+        $this->image_url = $imageUrl ?? 'empty.jpg';
         return $this;
     }
 
@@ -221,16 +237,17 @@ class Product
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(int $status): static
+    public function setStatus(?string $status): self
     {
-        $this->status = $status;
+        $this->status = $status ?? '0';
         return $this;
     }
+
     public function getVisibilityTypes(): ?array
     {
         return $this->visibility_types;

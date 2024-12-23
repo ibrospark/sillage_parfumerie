@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;  // Importation de CheckboxListField
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class PageCrudController extends AbstractCrudController
 {
@@ -26,14 +27,27 @@ class PageCrudController extends AbstractCrudController
             SlugField::new('slug')->setTargetFieldName('title'),
             TextEditorField::new('content'),
             ImageField::new('image_url', 'Image')
-            ->setBasePath('img/pages')
-            ->setUploadDir('public/img/pages')
-            ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false),
+                ->setBasePath('img/pages')
+                ->setUploadDir('public/img/pages')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(true),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
-            BooleanField::new('is_in_menu')->setLabel('Afficher dans le menu') // Ajout du champ isInMenu
-
+            ChoiceField::new('visibilityTypes', 'Visibilité')
+                ->setChoices([
+                    'Aucun' => 'Aucun',
+                    'Dans la page d\'accueil' => 'is_in_home',
+                    'Exclusivité' => 'Exclusivité',
+                    'Promotion' => 'Promotion',
+                    'Édition limitée' => 'Édition limitée',
+                    'Nouveauté' => 'Nouveauté',
+                    'Sélection du mois' => 'month_selection',
+                    'Best-seller' => 'best_seller',
+                    'En vedette' => 'featured',
+                ])
+                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+                ->allowMultipleChoices()
+                ->autocomplete(),
         ];
     }
 }
