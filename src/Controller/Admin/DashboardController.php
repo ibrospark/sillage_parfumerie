@@ -14,6 +14,8 @@ use App\Entity\Category;
 use App\Entity\OlfactoryFamily;
 use App\Controller\Admin\BrandCrudController;
 use App\Entity\Blog;
+use App\Entity\ProductVariation;
+
 use App\Entity\OlfactoryNote;
 use App\Entity\PaymentMethod;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +65,11 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
 
         // yield MenuItem::section('Produits');
-        yield MenuItem::linkToCrud('Produits', 'fas fa-box', Product::class);
+        yield MenuItem::subMenu('Gestion des produits', 'fas fa-box')->setSubItems([
+            MenuItem::linkToCrud('Produits', 'fas fa-box', Product::class),
+            MenuItem::linkToCrud('Variations', 'fas fa-box', ProductVariation::class),
+        ]);;
+
         yield MenuItem::subMenu('Taxonomies', 'fas fa-tags')->setSubItems([
             MenuItem::linkToCrud('Catégories', 'fas fa-folder', Category::class),
             MenuItem::linkToCrud('Familles olfactives', 'fas fa-leaf', OlfactoryFamily::class),
@@ -78,6 +84,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Blog', 'fas fa-book-open', Blog::class);
         yield MenuItem::linkToCrud('Page', 'fas fa-file', Page::class);
         yield MenuItem::linkToCrud('Sliders', 'fas fa-sliders-h', Slider::class);
-        
     }
 }

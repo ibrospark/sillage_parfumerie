@@ -29,12 +29,7 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            // IMAGE
-            ImageField::new('image_url', 'Image')
-                ->setBasePath('img/products')
-                ->setUploadDir('public/img/products')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setRequired(false),
+
             // ID
             IntegerField::new('id')->onlyOnIndex(),
             // NAME
@@ -48,6 +43,19 @@ class ProductCrudController extends AbstractCrudController
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', '')
                 ->setRequired(false),
+            // IMAGE
+            ImageField::new('image_url', 'Image')
+                ->setBasePath('img/products')
+                ->setUploadDir('public/img/products')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false),
+            // VARIATIONS
+            AssociationField::new('productVariations') // Ajout de la gestion des variations
+                ->setCrudController(ProductVariationCrudController::class) // Lien vers le CRUD de ProductVariation
+                ->setFormTypeOption('by_reference', false) // Permet d'ajouter des variations sans quitter la page
+                ->setFormTypeOption('required', false) // Le champ n'est pas obligatoire
+                ->onlyOnForms(),
+
             // REGULAR PRICE
             MoneyField::new('regular_price', 'Prix régulier')
                 ->setFormTypeOption('empty_data', "0.0")
@@ -175,8 +183,8 @@ class ProductCrudController extends AbstractCrudController
                 ])
                 ->setHelp('Sélectionnez le statut.')
                 ->autocomplete()
-                ->setFormTypeOption('empty_data', ['0'])
-                ->onlyOnIndex(),
+                ->setFormTypeOption('empty_data', ['0']),
+
             // CREATED AND UPDATED DATE
             DateTimeField::new('created_at', 'Créé le')->onlyOnIndex(),
             DateTimeField::new('updated_at', 'Mis à jour le')->onlyOnIndex(),

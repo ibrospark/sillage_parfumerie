@@ -89,12 +89,19 @@ class Product
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $gender = null;
 
+    /**
+     * @var Collection<int, ProductVariation>
+     */
+    #[ORM\OneToMany(targetEntity: ProductVariation::class, mappedBy: 'product')]
+    private Collection $productVariations;
+
     public function __construct()
     {
         // Initialisation des timestamps
         $this->created_at = new \DateTimeImmutable(); // Date actuelle lors de la création
         $this->updated_at = new \DateTimeImmutable(); // Initialisé à la même valeur au départ
         $this->orderItems = new ArrayCollection();
+        $this->productVariations = new ArrayCollection();
     }
 
 
@@ -390,4 +397,34 @@ class Product
 
     //     return $this;
     // }
+
+    /**
+     * @return Collection<int, ProductVariation>
+     */
+    public function getProductVariations(): Collection
+    {
+        return $this->productVariations;
+    }
+
+    public function addProductVariation(ProductVariation $productVariation): static
+    {
+        if (!$this->productVariations->contains($productVariation)) {
+            $this->productVariations->add($productVariation);
+            $productVariation->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductVariation(ProductVariation $productVariation): static
+    {
+        if ($this->productVariations->removeElement($productVariation)) {
+            // set the owning side to null (unless already changed)
+            if ($productVariation->getProduct() === $this) {
+                $productVariation->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
 }
