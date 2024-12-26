@@ -40,7 +40,6 @@ class ProductVariationCrudController extends AbstractCrudController
 
             // CAPACITY
             TextField::new('capacity', 'Contenance')
-                ->hideOnIndex()
                 ->setFormTypeOption('empty_data', '')
                 ->setRequired(false),
 

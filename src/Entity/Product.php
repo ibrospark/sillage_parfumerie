@@ -92,7 +92,7 @@ class Product
     /**
      * @var Collection<int, ProductVariation>
      */
-    #[ORM\OneToMany(targetEntity: ProductVariation::class, mappedBy: 'product')]
+    #[ORM\OneToMany(targetEntity: ProductVariation::class, mappedBy: 'product', cascade: ['remove'])]
     private Collection $productVariations;
 
     public function __construct()
