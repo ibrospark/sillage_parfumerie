@@ -23,7 +23,13 @@ class ProductVariationCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('product', "Nom du produit principal"),
+            // CAPACITY
+            TextField::new('capacity', 'Contenance')
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false),
+
             // REGULAR PRICE
+
             MoneyField::new('regular_price', 'Prix régulier')
                 ->setFormTypeOption('empty_data', "0.0")
                 ->setCurrency('XOF')
@@ -38,10 +44,6 @@ class ProductVariationCrudController extends AbstractCrudController
                 ->setFormTypeOption('empty_data', "0")
                 ->setRequired(false),
 
-            // CAPACITY
-            TextField::new('capacity', 'Contenance')
-                ->setFormTypeOption('empty_data', '')
-                ->setRequired(false),
 
             // IMAGE
             ImageField::new('image_url', 'Image')
