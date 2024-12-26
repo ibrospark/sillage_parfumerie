@@ -30,7 +30,7 @@ class ProductCrudController extends AbstractCrudController
     {
         return [
 
-            // ID
+            // ID 
             IntegerField::new('id')->onlyOnIndex(),
             // NAME
             TextField::new('name', 'Nom du produit'),
