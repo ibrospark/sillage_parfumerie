@@ -57,14 +57,14 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Sillage Parfumerie');
+            ->setTitle('<center><img src="img/icon2.png" class="rounded-5" height="100px">
+                        </center>')
+            ->setFaviconPath('img/icon1.png');
     }
 
     public function configureMenuItems(): iterable
     {
-        // yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
 
-        // yield MenuItem::section('Produits');
         yield MenuItem::subMenu('Gestion des produits', 'fas fa-box')->setSubItems([
             MenuItem::linkToCrud('Produits', 'fas fa-box', Product::class),
             MenuItem::linkToCrud('Variations', 'fas fa-box', ProductVariation::class),
@@ -84,5 +84,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Blog', 'fas fa-book-open', Blog::class);
         yield MenuItem::linkToCrud('Page', 'fas fa-file', Page::class);
         yield MenuItem::linkToCrud('Sliders', 'fas fa-sliders-h', Slider::class);
+        yield MenuItem::linkToUrl('Retourner sur le site', 'fas fa-arrow-left', '/');
+        yield MenuItem::linkToLogout('Déconnexion', 'fa fa-power-off');
     }
 }
