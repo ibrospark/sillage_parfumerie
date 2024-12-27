@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Search
+class FilterProduct
 {
     private ?string $string = null;
     private array $categories = [];

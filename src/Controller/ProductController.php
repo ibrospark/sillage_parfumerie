@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Model\Search;
 use App\Entity\Product;
-use App\Form\SearchType;
 use App\Repository\ProductRepository;
 use App\Repository\OlfactoryFamilyRepository;
+use App\Form\FilterProductType;
 use App\Repository\BrandRepository;
+use App\Model\FilterProduct;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +28,8 @@ final class ProductController extends AbstractController
         // Fetch all olfactory families and brands
         $olfactoryFamilies = $olfactoryFamilyRepository->findAll();
         $brands = $brandRepository->findAll();
-        $search = new Search();
-        $form = $this->createForm(SearchType::class, $search, [
+        $filter = new FilterProduct();
+        $form = $this->createForm(FilterProductType::class, $filter, [
             'categories' => [], // Populate with available categories if needed
             'olfactory_notes' => [], // Populate with available olfactory notes if needed
             'olfactory_families' => $olfactoryFamilies,
@@ -41,7 +41,7 @@ final class ProductController extends AbstractController
         // Using a ternary operator for pagination
         $pagination = $form->isSubmitted() && $form->isValid()
             ? $paginator->paginate(
-                $productRepository->findWithSearch($search),
+                $productRepository->multipleFilterProduct($filter),
                 $request->query->getInt('page', 1),
                 26
             )
