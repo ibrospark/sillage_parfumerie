@@ -1,16 +1,58 @@
-{% set menuItems = get_menu_items(true, true, true) %}
+{% block mega_menu %}
+    <li class="nav-item dropdown">
+        <a class="nav-link px-5 dropdown-toggle" href="{{ path(menu_path) }}" id="navbarDropdown{{ menu_id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ menu_label }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown{{ menu_id }}">
+            <div class="mega-menu p-3">
+                <div class="row">
+                    {# Première colonne : affichage des premiers éléments #}
+                    <div class="col-12 col-md-4 mb-3">
+                        <h5>{{ first_column_label }}</h5>
+                        <ul class="list-unstyled">
+                            {% for item in menu_items|slice(5) %}
+                                <li><a class="dropdown-item" href="{{ path(menu_item_path, {'id': item.id}) }}">{{ item.name }}</a></li>
+                            {% endfor %}
 
-<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <div class="mega-menu">
-        {% for category in menuItems.categories %}
-            <div>
-                <h5>{{ category.name }}</h5>
-                <ul class="list-unstyled">
-                    {# {% for option in category.options %}
-                        <li><a class="dropdown-item" href="{{ option.url }}">{{ option.name }}</a></li>
-                    {% endfor %} #}
-                </ul>
+                            <div class="my-3">
+                                {# Bouton adapté en fonction du type - category ou brand #}
+                                {% if content_type == 'brand' %}
+                                    <a href="{{ path('brand.index') }}" class="spkdv_primary_btn_outline">
+                                        Voir toutes les marques
+                                    </a>
+                                {% elseif content_type == 'category' %}
+                                    <a href="{{ path('product.index') }}" class="spkdv_primary_btn_outline ">
+                                        Voir toutes les parfums
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </ul>
+                    </div>
+
+                    {# Deuxième colonne : affichage des éléments restants #}
+                    <div class="col-12 col-md-8">
+                        <h6>{{ second_column_label }}</h6>
+                        <div class="row">
+                            {% for item in menu_items|slice(0,5) %}
+                                <div class="col-6 col-sm-4 col-md-4 col-lg-4 p-1">
+                                    <a href="{{ path(menu_item_path, {'id': item.id}) }}">
+                                        <div class="brand-container" style="
+                                            position: relative; height: 150px; width: 100%;
+                                            background-image: url('{{ asset('img/' ~ menu_image_folder ~ '/' ~ (content_type == 'brand' ? item.coverUrl : item.imageUrl)) }}');
+                                            background-size: cover;
+                                            background-position: center;">
+                                            
+                                            <div class="overlay-text" style="position: absolute; left: 10%; bottom: 10%; background: rgba(255, 255, 255, 0.7); color: #000; padding: 10px; z-index: 1; width: 80%;">
+                                                <h6>{{ item.name | raw }}</h6>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-    </div>
-</div>
+        </div>
+    </li>
+{% endblock %}

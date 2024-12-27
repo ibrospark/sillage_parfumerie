@@ -14,6 +14,9 @@ class SecurityController extends AbstractController
     {
         // Vérifiez si l'utilisateur est déjà connecté
         if ($this->getUser()) {
+            // Ajoutez un message flash de succès
+            $this->addFlash('success', 'Bienvenue ! Vous êtes maintenant connecté.');
+
             return $this->redirectToRoute('account.index'); // Redirigez vers une page de votre choix
         }
 
@@ -32,6 +35,7 @@ class SecurityController extends AbstractController
             'error' => $error,
         ]);
     }
+
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void

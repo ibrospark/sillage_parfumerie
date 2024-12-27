@@ -4,89 +4,33 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav col-12 justify-content-center p-2">
 
-            <!-- Menu Marques -->
-            <li class="nav-item dropdown">
-                <a class="nav-link px-5 dropdown-toggle" href="{{ path('brand.index') }}" id="navbarDropdownBrands" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    MARQUES
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownBrands">
-                    <div class="mega-menu">
-                        <div class="row">
-                            <!-- Première colonne : les 5 premières marques -->
-                            <div class="col-4">
-                                <h5>NOS MARQUES</h5>
-                                <ul class="list-unstyled">
-                                    {% for brand in menuItems.brands|slice(0, 5) %}
-                                        <li><a class="dropdown-item" href="{{ path('brand.show', {'id': brand.id}) }}">{{ brand.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <!-- Deuxième colonne : les marques à partir de la 6ème -->
-                            <div class="col-8">
-                                <h6>NOS DERNIERES MARQUES</h6>
-                                    <div class="row">
-                                        {% for brand in menuItems.brands|slice(5) %}
-                                            <div class="col-6 col-md-4 col-lg-4 p-1">
-                                                <a href="{{ path('brand.show', {'id': brand.id}) }}">
-                                                           <div class="brand-container" style="
-                                                            position: relative; height: 150px; width:100%;
-                                                            background-image: url('{{ asset('img/brands/' ~ brand.coverUrl) }}'); 
-                                                            background-size: cover;
-                                                            background-position: center;">
-                                                            <!-- Utilisation de l'image comme fond d'arrière-plan -->
-                                                    
-                                                            <!-- Contenu texte au-dessus de l'image -->
-                                                            <div style="position: absolute; left:10%; bottom: 10%;  background: rgba(255, 255, 255, 0.7); color: #000; padding: 20px; z-index: 1; width: 80%;">
-                                                                <h6>{{ brand.name | raw }}</h6>
-                                                            </div>
-                                                        </div>
-                                                </a>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            {# Menu Marques #}
+            {% include 'components/_mega_menu.html.twig' with {
+                menu_path: 'brand.index',
+                menu_id: 'Brands',
+                menu_label: 'MARQUES',
+                first_column_label: 'NOS MARQUES',
+                second_column_label: 'NOS DERNIERES MARQUES',
+                menu_items: menuItems.brands,
+                menu_item_path: 'brand.show',
+                menu_image_folder: 'brands',
+                content_type: 'brand'
 
-            <!-- Menu Marques -->
-            <li class="nav-item dropdown">
-                <a class="nav-link px-5 dropdown-toggle" href="{{ path('product.index') }}" id="navbarDropdownBrands" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    PARFUMS
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownBrands">
-                    <div class="mega-menu">
-                        <div class="row">
-                         
-                            <!-- Deuxième colonne : les marques à partir de la 6ème -->
-                            <div class="col-12">
-                                <h6>NOS PARFUMS</h6>
-                                    <div class="row">
-                                        {% for category in menuItems.categories %}
-                                            <div class="col-6 col-md-4 col-lg-4 p-1">
-                                                <a href="{{ path('category.show', {'id': category.id }) }}">
-                                                           <div class="brand-container" style="
-                                                            position: relative; height: 150px; width:100%;
-                                                            background-image: url('{{ asset('img/categories/' ~ category.imageUrl) }}'); 
-                                                            background-size: cover;
-                                                            background-position: center;">
-                                                            <!-- Utilisation de l'image comme fond d'arrière-plan -->
-                                                    
-                                                            <!-- Contenu texte au-dessus de l'image -->
-                                                            <div style="position: absolute; left:10%; bottom: 10%;  background: rgba(255, 255, 255, 0.7); color: #000; padding: 20px; z-index: 1; width: 80%;">
-                                                                <h6>{{ category.name | raw }}</h6>
-                                                            </div>
-                                                        </div>
-                                                </a>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            } %}
+
+            {# Menu Parfums #}
+            {% include 'components/_mega_menu.html.twig' with {
+                menu_path: 'product.index',
+                menu_id: 'Products',
+                menu_label: 'PARFUMS',
+                first_column_label: 'NOS PARFUMS',
+                second_column_label: '',
+                menu_items: menuItems.categories,
+                menu_item_path: 'category.show',
+                menu_image_folder: 'categories',
+                content_type: 'category'  
+
+            } %}
 
             <!-- Autres liens -->
             <li><a href="{{ path('olfactoryfamily.index') }}" class="nav-link px-5">FAMILLES OLFACTIVES</a></li>

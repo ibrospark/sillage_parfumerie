@@ -1,25 +1,12 @@
 {% set flashTypes = ['success', 'error', 'warning', 'info'] %} 
-{# Définition des différents types de messages flash à traiter #}
-
 {% for type in flashTypes %}
     {% set messages = app.flashes(type) %}
-    {# Récupère les messages flash pour chaque type de message #}
-
-    {% if messages is defined and messages | length > 0 %}
-        {# Vérifie si des messages sont définis et s'il y en a au moins un #}
-        
+    {% if messages is defined and messages | length > 0 %}        
         <div id="message-container">
-            {# Conteneur pour afficher les messages flashs #}
-
             {% for message in messages %}
-                {# Boucle sur chaque message à afficher #}
-
-                <div class="alert alert-{{ type == 'error' ? 'danger' : type }}" role="alert">
-                    {# Si le type est "error", utilise la classe "danger" sinon utilise le type correspondant (success, warning, info) #}
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} rounded-0 m-3" role="alert">
                     {{ message }}
-                    {# Affiche le contenu du message #}
                 </div>
-
             {% endfor %}
         </div>
     {% endif %}
