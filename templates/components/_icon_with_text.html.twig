@@ -3,30 +3,35 @@
     {% for iconWithText in iconsWithText %}
         <div class="{{ colSpan }} p-3">
             <div class="row align-items-center justify-content-center">
-                            
-                {% if iconWithText.positionIcon == 'top' %}
+                
+                {# Vérifier si positionIcon est définie, sinon par défaut 'top' #}
+                {% set positionIcon = iconWithText.positionIcon is defined ? iconWithText.positionIcon : 'top' %}
+                
+                {% if positionIcon == 'top' %}
                     <div class="col-12 text-center">{{ iconWithText.icon|raw }}</div>
-                        {% if iconWithText.title is defined and iconWithText.title is not empty %}
-                    <div class="col-12 text-center">
-                        <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
-                    </div>
-                {% endif %}
+                    {% if iconWithText.title is defined and iconWithText.title is not empty %}
+                        <div class="col-12 text-center">
+                            <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
+                        </div>
+                    {% endif %}
                     <div class="col-12 text-center">{{ iconWithText.text|raw }}</div>
-                {% elseif iconWithText.positionIcon == 'right' %}
+                
+                {% elseif positionIcon == 'right' %}
                     <div class="col-10">{{ iconWithText.text|raw }}</div>
-                        {% if iconWithText.title is defined and iconWithText.title is not empty %}
-                    <div class="col-12 text-center">
-                        <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
-                    </div>
-                {% endif %}
+                    {% if iconWithText.title is defined and iconWithText.title is not empty %}
+                        <div class="col-12 text-center">
+                            <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
+                        </div>
+                    {% endif %}
                     <div class="col-2">{{ iconWithText.icon|raw }}</div>
+                
                 {% else %}
                     <div class="col-2">{{ iconWithText.icon|raw }}</div>
-                        {% if iconWithText.title is defined and iconWithText.title is not empty %}
-                    <div class="col-12 text-center">
-                        <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
-                    </div>
-                {% endif %}
+                    {% if iconWithText.title is defined and iconWithText.title is not empty %}
+                        <div class="col-12 text-center">
+                            <span style="font-size:1.3em;font-weight:800;">{{ iconWithText.title|raw }}</span> {# Titre affiché si défini #}
+                        </div>
+                    {% endif %}
                     <div class="col-10">{{ iconWithText.text|raw }}</div>
                 {% endif %}
             </div>

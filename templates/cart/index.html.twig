@@ -9,11 +9,11 @@
             {"page_name": "Accueil", "route_path": path('home.index')},
             {"page_name": "Produits", "route_path": path('product.index')},
             {"page_name": "Panier", "route_path": path('product.index')},
-
         ] %}
         {% include 'components/_breadcrumb.html.twig' 
             with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
         %}
+        
         {# TITLE------------------------------------------------------------------------------------------------ #}
         {% include 'components/_title_with_subtitle.html.twig' 
             with {
@@ -21,8 +21,9 @@
             'subtitle': 'Voici les articles que vous avez ajoutés'
             } 
         %}
+        
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="col-12 col-md-8">
                 {# TABLEAU PRODUCTS ------------------------------------------------------------------------------------------------ #}
                 {% if totalQuantity > 0 %}
                     <table class="table">
@@ -44,18 +45,32 @@
                                     {% endif %}
                                     {{ item.product.name }}
                                 </td>
-                                <td class="align-middle">{{ item.product.regularPrice|number_format(0, '.', ',') }} €</td>
+                                <td class="align-middle">
+                                    {% if item.product.salePrice %}
+                                        <div class="text-muted" style="text-decoration: line-through;">
+                                            {{ item.product.regularPrice|number_format(2, ',', '.') }} €
+                                        </div>
+                                        <strong>{{ item.product.salePrice|number_format(2, ',', '.') }} €</strong>
+                                    {% else %}
+                                        <strong>{{ item.product.regularPrice|number_format(2, ',', '.') }} €</strong>
+                                    {% endif %}
+                                </td>
                                 <td class="text-center align-middle">
-                                    <a title="Enlever 1 article" href="{{ path('remove.cart_item', {id: item.product.id}) }}">
-                                        <img src="{{ asset('svg/close.svg') }}" height='10px' alt="">
+                                    <a title="Enlever 1 article" href="{{ path('remove.cart_item', {id: item.product.id}) }}" class="btn btn-sm btn-outline-secondary">
+                                        -
                                     </a>
                                     {{ item.quantity }}
-                                    <a title="Ajouter 1 article" href="{{ path('cart.add', {id: item.product.id}) }}">
-                                        {# <img src="{{ asset('svg/close.svg') }}" height='10px' alt=""> #} 
+                                    <a title="Ajouter 1 article" href="{{ path('cart.add', {id: item.product.id}) }}" class="btn btn-sm btn-outline-secondary">
                                         +
                                     </a>
                                 </td>
-                                <td class="align-middle">{{ (item.quantity * item.product.regularPrice)|number_format(0, '.', ',') }} €</td>
+                                <td class="align-middle">
+                                    {% if item.product.salePrice %}
+                                        {{ (item.quantity * item.product.salePrice)|number_format(2, ',', '.') }} €
+                                    {% else %}
+                                        {{ (item.quantity * item.product.regularPrice)|number_format(2, ',', '.') }} €
+                                    {% endif %}
+                                </td>
                                 <td class="align-middle">
                                     <a title="Supprimer cet article" href="{{ path('remove.cart_item', {id: item.product.id}) }}" class="text-danger">
                                         <i class="bi bi-trash"></i>
@@ -64,14 +79,12 @@
                             </tr>
                         {% endfor %}
                         </tbody>
-                
                     </table>
                 {% endif %}
-                {# TITLE------------------------------------------------------------------------------------------------ #}
-                {# <a class="mb-3 d-block text-center" href="{{ path('product.index') }}">Continuez mes achats</a> #}
-
+                
+                {# Bouton pour réinitialiser le panier ------------------------------------------------------------------------------------------------ #}
                 {% if totalQuantity > 0 %}
-                    <div class="d-flex gap-2 justify-content-end">
+                    <div class="d-flex justify-content-end">
                         <a href="{{ path('remove.cart') }}" class="spkdv_primary_btn_outline">Réinitialiser mon panier</a>
                     </div>
                 {% else %}
@@ -80,23 +93,24 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                <table class="table fw-bold"  style="width: 100%;">
+            
+            {# RÉSUMÉ DU PANIER ET TOTAL------------------------------------------------------------------------------------------------ #}
+            <div class="col-12 col-md-4">
+                <table class="table fw-bold" style="width: 100%;">
                     <tbody>
                         <tr>
                             <td>{{ totalQuantity }} article(s)</td>
-                            <td class="text-end">{{ totalPrice|number_format(0, '.', ',') }} €</td>
+                            <td class="text-end">{{ totalPrice|number_format(2, ',', '.') }} €</td>
                         </tr>
                         {% if totalQuantity > 0 %}
                         <tr>
                             <td>Livraison</td>
                             <td class="text-end">à déterminer</td>
-                        </tr>  
+                        </tr>
                         {% endif %}
-
                         <tr>
                             <td>TOTAL TTC</td>
-                            <td class="text-end">{{ totalPrice|number_format(0, '.', ',') }} €</td>
+                            <td class="text-end">{{ totalPrice|number_format(2, ',', '.') }} €</td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -107,38 +121,28 @@
                                 {% endif %}
                                 <br>
                                 <div>
-                                    {# ICON WITH TEXT------------------------------------------------------------------------------------------------ #}
+                                    {# ICONES D'AVANTAGES ------------------------------------------------------------------------------------------------ #}
                                     {% set iconsWithText = [
                                         {
                                             "text": "Service client à votre écoute",
-                                            "icon": "<object type='image/svg+xml' data='" ~  asset('svg/official.svg') ~ "' width='40px' aria-label='Favoris'>
-                                                Your browser does not support SVG
-                                                </object>",
-                                            "positionIcon": "top",
+                                            "icon": "<object type='image/svg+xml' data='" ~ asset('svg/official.svg') ~ "' width='40px'></object>",
                                         },
                                         {
                                             "text": "Emballage cadeau soigné",
-                                            "icon": "<object type='image/svg+xml' data='" ~  asset('svg/emballage.svg') ~ "' width='40px' aria-label='Favoris'>
-                                                Your browser does not support SVG
-                                                </object>",
-                                            "positionIcon": "top",
+                                            "icon": "<object type='image/svg+xml' data='" ~ asset('svg/emballage.svg') ~ "' width='40px'></object>",
                                         },
                                         {
                                             "text": "Paiement sécurisé",
-                                            "icon": "<object type='image/svg+xml' data='" ~  asset('svg/payment.svg') ~ "' width='40px' aria-label='Favoris'>
-                                                Your browser does not support SVG
-                                                </object>",
-                                            "positionIcon": "top",
-                                            
+                                            "icon": "<object type='image/svg+xml' data='" ~ asset('svg/payment.svg') ~ "' width='40px'></object>",
                                         }
-                                        
                                     ] %}
 
                                     {% include 'components/_icon_with_text.html.twig'
-                                    with {
-                                        'iconsWithText': iconsWithText ? iconsWithText : null,
-                                        'colSpan': 'col-4',
-                                    } %}
+                                        with {
+                                            'iconsWithText': iconsWithText,
+                                            'colSpan': 'col-4',
+                                        }
+                                    %}
                                 </div>
                             </td>
                         </tr>

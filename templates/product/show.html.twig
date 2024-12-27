@@ -11,72 +11,81 @@
         {"page_name": product.name, "route_path": path('product.show', { 'id': product.id })}
     ] %}
 
-    {% include 'components/_breadcrumb.html.twig' 
-        with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 
-    %} 
+    {% include 'components/_breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs} %}
+
     <div class="row justify-content-center">
-        <div class="col-12 col-sm-12 col-md-6 justify-content-center" style="padding:20px!important;">
-            <center><img src="{{ asset('img/products/' ~ product.imageUrl) }}" style="width:90%;"/></center>
+        <div class="col-12 col-sm-12 col-md-6 p-4 text-center">
+            <img src="{{ asset('img/products/' ~ product.imageUrl) }}" class="img-fluid" />
         </div>
+        
         <div class="col-12 col-sm-12 col-md-6" style="padding:20px!important;">
             <div style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:0.8em;">
-                <h1 style="font-size:2.5em;">{{ product.name }}</h1>
-                <div class="row" style="font-size:2.5em;font-weight:800;">
-                    {% if brand is not empty %}
-                        <div class="col-6"> 
-                            <a href="{{ path('brand.index') }}/{{ brand.id }}">{{ brand.name }}</a>
-                        </div>
-                    {% endif %}
-                    <div class="col-6 text-center">
-                        {% if product.salePrice %}
-                            <div style="text-decoration: line-through;font-size:0.8em;font-weight:500,font-style:italic;">{{ product.regularPrice }} FCFA</div>
-                        {% else %}
-                            {{ product.regularPrice }} FCFA
+                <div class="row">
+                    <div class="col-8">  
+                        {# -------------------------- NAME -------------------------- #}
+                        <div class="spkdv_title">{{ product.name }}</div>
+                        {# -------------------------- BRAND -------------------------- #}
+                        {% if brand is not empty %}
+                            <a href="{{ path('brand.index') }}/{{ brand.id }}">
+                                <div class="spkdv_subtitle">{{ brand.name }}</div>                                
+                            </a> 
                         {% endif %}
-                            {% if product.salePrice %}
-                            {{ product.salePrice }} FCFA
-                        {% endif %}
+                        {# -------------------------- BRAND -------------------------- #}
                     </div>
- 
-
+                    {# --------------------------REGULAR AND SALE PRICE -------------------------- #}
+                    <div class="col-4">
+                        <div class="card-text">
+                            {% if product.salePrice %}
+                                <div class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
+                                <div class="fw-bold fs-3">
+                                    {{ (product.salePrice / 100) | number_format(2, ',', '.') }} FCFA
+                                </div>
+                            {% else %}
+                                <div class="fw-bold fs-3">
+                                    {{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div class="row text-center my-3" style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:1.1em;">
                 {% if product.headNote %}
-                <div class="col-4">
-                    <div class="card-text">
-                        <strong>Tête</strong><br>
-                        {{ product.headNote }}
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Tête</strong><br>
+                            {{ product.headNote }}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
                 {% if product.heartNote %}
-                <div class="col-4">
-                    <div class="card-text">
-                        <strong>Coeur</strong><br>
-                        {{ product.heartNote }}
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Coeur</strong><br>
+                            {{ product.heartNote }}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
                 {% if product.backgroundNote %}
-                <div class="col-4">
-                    <div class="card-text">
-                        <strong>Fond</strong><br>
-                        {{ product.backgroundNote }}
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Fond</strong><br>
+                            {{ product.backgroundNote }}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             </div>
             <div class="row text-center" style="font-weight:800;">
                 {% if product.stockQuantity is not null %}
-                <div class="col-6"> 
-                    <strong>Quantité disponible : </strong> <br>{{ product.stockQuantity }}    
-                </div>
+                    <div class="col-6"> 
+                        <strong>Quantité disponible : </strong> <br>{{ product.stockQuantity }}    
+                    </div>
                 {% endif %}
                 {% if product.capacity %}
-                <div class="col-6"> 
-                    <strong>Contenance : </strong> <br>{{ product.capacity }}    
-                </div>
+                    <div class="col-6"> 
+                        <strong>Contenance : </strong> <br>{{ product.capacity }}    
+                    </div>
                 {% endif %}
             </div>
             <div class="row">
@@ -85,110 +94,103 @@
                 </div>
             </div>
         </div>
-        <div class="col-8 text-center p-4">
+    
+        <div class="col-12 text-center p-4">
             <h1>Description</h1>
-            {{ product.description | raw }}
+            <div>{{ product.description | raw }}</div>
         </div>
     </div>
 
-    <div class="row text-center my-3" style=" padding-bottom: 4em; font-size:1.1em;">
-        <h2 class="text-center">Notes olfactives</h2>
-        {% if product.headNote %}
-        <div class="col-4">
-            <div class="card-text">
-                <strong>Tête</strong><br>
-                {{ product.headNote }}
-                <br>
-                <img src="{{ asset('img/olfactory_notes/' ~ product.headNote.imageUrl) }}" 
-                     alt="{{ product.headNote.name }}" 
-                     style="width: 100px; height: 100px; border-radius: 100px; border: 4px solid #fce8e7; object-fit: cover;"/>
+    <div class="row text-center my-3">
+        <h2>Notes olfactives</h2>
+        {% if product.getHeadNote() %}
+            <div class="col-4">
+                <div class="card-text">
+                    <strong>Tête</strong><br>
+                    {{ product.getHeadNote() }}
+                    <br>
+                    <img src="{{ asset('img/olfactory_notes/' ~ product.getHeadNote().imageUrl) }}"
+                         alt="{{ product.getHeadNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
+                         style="width: 100px; height: 100px; object-fit: cover;"/>
+                </div>
             </div>
-        </div>
         {% endif %}
-        {% if product.heartNote %}
-        <div class="col-4">
-            <div class="card-text">
-                <strong>Coeur</strong><br>
-                {{ product.heartNote }}
-                <br>
-                <img src="{{ asset('img/olfactory_notes/' ~ product.heartNote.imageUrl) }}" 
-                     alt="{{ product.heartNote.name }}" 
-                     style="width: 100px; height: 100px; border-radius: 100px; border: 4px solid #fce8e7; object-fit: cover;"/>
+        {% if product.getHeartNote() %}
+            <div class="col-4">
+                <div class="card-text">
+                    <strong>Coeur</strong><br>
+                    {{ product.getHeartNote() }}
+                    <br>
+                    <img src="{{ asset('img/olfactory_notes/' ~ product.getHeartNote().imageUrl) }}"
+                         alt="{{ product.getHeartNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
+                         style="width: 100px; height: 100px; object-fit: cover;"/>
+                </div>
             </div>
-        </div>
         {% endif %}
-        {% if product.backgroundNote %}
-        <div class="col-4">
-            <div class="card-text">
-                <strong>Fond</strong><br>
-                {{ product.backgroundNote }}
-                <br>
-                <img src="{{ asset('img/olfactory_notes/' ~ product.backgroundNote.imageUrl) }}" 
-                     alt="{{ product.backgroundNote.name }}" 
-                     style="width: 100px; height: 100px; border-radius: 100px; border: 4px solid #fce8e7; object-fit: cover;"/>
+        {% if product.getBackgroundNote() %}
+            <div class="col-4">
+                <div class="card-text">
+                    <strong>Fond</strong><br>
+                    {{ product.getBackgroundNote() }}
+                    <br>
+                    <img src="{{ asset('img/olfactory_notes/' ~ product.getBackgroundNote().imageUrl) }}"
+                         alt="{{ product.getBackgroundNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
+                         style="width: 100px; height: 100px; object-fit: cover;"/>
+                </div>
             </div>
-        </div>
         {% endif %}
     </div>
 
-   <!-- Profil Olfactif Section -->
-<div id="section-3" class="section-profil-olfactif my-4 col-md-6 mx-auto border p-4">
-    <h2 class="text-center">Profil olfactif</h2>
-
-    <div class="container">
-        <div class="text-center my-4" style="font-size:2em;">Intensité </div>
-
+    <div id="section-3" class="section-profil-olfactif my-4 col-md-6 mx-auto border p-4">
+        <h2 class="text-center">Profil olfactif</h2>
+        <div class="text-center my-4" style="font-size: 2em;">Intensité</div>
         <div class="progress">
-            {% if product.intensity == 'Discret' %}
-                <div class="progress-bar" style="background:#5b1823!important; border-left: 2px solid #5b1823; width: 33.33%;" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar" style="background:#ededed!important; border-left: 2px solid #ededed; width: 33.33%;" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar" style="background:#ededed!important; border-left: 2px solid #ededed; width: 33.33%;" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            {% elseif product.intensity == 'Modéré' %}
-                <div class="progress-bar" style="background:#5b1823!important; border-left: 2px solid #5b1823; width: 66.66%;" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar" style="background:#ededed!important; border-left: 2px solid #ededed; width: 33.33%;" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            {% elseif product.intensity == 'Puissant' %}
-                <div class="progress-bar bg-danger" style="border-left: 2px solid #dc3545; width: 100%;" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            {% else %}
-                <div class="progress-bar bg-light" style="border-left: 2px solid #dcdcdc; width: 100%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            {% set intensity_map = {
+                'Discret': 33.33,
+                'Modéré': 66.66,
+                'Puissant': 100
+            } %}
+            {% set intensity = product.getIntensity() %}
+            {% set progress_width = intensity_map[intensity] ?? 0 %}
+            <div class="progress-bar" style="background:#5b1823; width: {{ progress_width }}%" role="progressbar" aria-valuenow="{{ progress_width }}" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar" style="background:#ededed; width: {{ 100 - progress_width }}%" role="progressbar" aria-valuenow="{{ 100 - progress_width }}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="progress-bar bg-danger" style="width: {{ product.intensity | default(0) }}%"></div>
+        <div class="text-center my-4" style="font-size: 1.3em;">Sillage {{ product.intensity }}</div>
+
+        <div class="row text-center mt-5">
+            {% if product.getSeason() %}
+                <div class="col-4">
+                    <div class="item">
+                        <div class="icon">
+                            <img src="{{ asset('img/olfactory_profile/season.svg') }}" height="50px" alt="Saison">
+                        </div>
+                        <div class="value">{{ product.getSeason() }}</div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if product.getOccasion() %}
+                <div class="col-4">
+                    <div class="item">
+                        <div class="icon">
+                            <img src="{{ asset('img/olfactory_profile/perfume.svg') }}" height="50px" alt="Occasion">
+                        </div>
+                        <div class="value">{{ product.getOccasion() }}</div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if product.getGender() %}
+                <div class="col-4">
+                    <div class="item">
+                        <div class="icon">
+                            <img src="{{ asset('img/olfactory_profile/gender.svg') }}" height="50px" alt="Genre">
+                        </div>
+                        <div class="value">{{ product.getGender() }}</div>
+                    </div>
+                </div>
             {% endif %}
         </div>
-        <div class="text-center my-4" style="font-size:1.3em;">Sillage  {{ product.intensity }} </div>
-
     </div>
-
-    <div class="row text-center mt-5">
-        {% if product.season %}
-            <div class="col-4">
-                <div class="item">
-                    <div class="icon">
-                        <img src="{{ asset('img/olfactory_profile/season.svg') }}" height="50px" alt="Genre">
-                    </div>
-                    <div class="value">{{ product.season }}</div>
-                </div>
-            </div>
-        {% endif %}
-        {% if product.occasion %}
-            <div class="col-4">
-                <div class="item">
-                    <div class="icon">
-                        <img src="{{ asset('img/olfactory_profile/perfume.svg') }}" height="50px" alt="Genre">
-                    </div>
-                    <div class="value">{{ product.occasion }}</div>
-                </div>
-            </div>
-        {% endif %}
-        {% if product.gender %}
-            <div class="col-4">
-                <div class="item">
-                    <div class="icon">
-                        <img src="{{ asset('img/olfactory_profile/gender.svg') }}" height="50px" alt="Genre">
-                    </div>
-                    <div class="value">{{ product.gender }}</div>
-                </div>
-            </div>
-        {% endif %}
-    </div>
-</div>
 
 </div>
 {% endblock %}

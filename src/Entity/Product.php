@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -24,11 +25,16 @@ class Product
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
-
-    #[ORM\Column]
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Assert\NotNull(message: "Le prix régulier ne peut pas être nul.")]
     private ?float $regular_price = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Assert\NotNull(message: "Le prix promotionnel ne peut pas être nul.")]
+    #[Assert\LessThan(
+        propertyPath: 'regular_price',
+        message: "Le prix promotionnel doit être inférieur au prix régulier."
+    )]
     private ?float $sale_price = null;
 
     #[ORM\Column]

@@ -92,6 +92,18 @@ footer a {
 }
 
 /* -------------------------------------- TITRES -------------------------------------- */
+.spkdv_title {
+    font-size: 4em;
+    font-family: 'Cormorant Garamond' !important;
+    font-weight: 800;
+}
+
+.spkdv_subtitle {
+    font-size: 3em;
+    font-family: 'DM Sans' !important;
+    font-weight: 800;
+}
+
 h1,
 h2,
 h3,
@@ -125,6 +137,7 @@ h5 {
 h6 {
     font-size: 1em !important;
 }
+
 
 /* -------------------------------------- PAGINATION -------------------------------------- */
 .spkdv_pagination .pagination {
@@ -283,4 +296,49 @@ h6 {
     color: #5b1823;
     /* Couleur pour les éléments utilisant la classe text-primary */
 }
+/* -------------------------------------- WHATSAPP -------------------------------------- */
+.whatsapp-button {
+    position: fixed;
+    bottom: 5%;
+    right: 3%;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    /* Couleur WhatsApp */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
 
+.whatsapp-button img {
+    width: 35px;
+    height: 35px;
+}
+
+
+
+/* ----------------------------------------------------------- */
+@media (max-width: 767px) {
+
+    .spkdv_title {
+        font-size: 3em;
+    }
+
+    .spkdv_subtitle {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .spkdv_title {
+        font-size: 2em;
+    }
+
+    .spkdv_subtitle {
+        font-size: 1em;
+    }
+}

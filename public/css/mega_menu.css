@@ -3,41 +3,30 @@
     display: none;
     position: absolute;
     top: 100%;
-    /* Positionner le menu juste sous l'élément parent */
-    width: 70vw;
-    /* Prendre 70% de la largeur de la fenêtre */
+    left: 0;
+    width: 100%;
+    /* S'assure que le dropdown prend toute la largeur */
     padding: 1rem;
     background-color: #f8f9fa;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     border-radius: 0px;
-    left: 50%;
-    /* Positionner le menu à partir du centre de l'élément parent */
-    margin-left: -35vw;
-    /* Décaler de la moitié de la largeur du menu pour centrer */
 }
 
 /* Affichage du menu au survol */
 .dropdown:hover .dropdown-menu {
     display: block;
     display: flex;
-    justify-content: center;
-    /* Centrer les éléments enfants du mega-menu */
+    left: 10%;
+    width: 70vw;
+    /* S'assure que le mega-menu prend 100% de la largeur du dropdown */
 }
 
-/* Styling du mega-menu */
 .mega-menu {
-    width: 100%;
-    /* Prend toute la largeur du dropdown */
-    display: flex;
-    justify-content: space-around;
-    /* Répartir les éléments à l'intérieur du menu */
-    flex-wrap: wrap;
-    /* Permet au contenu de se placer en lignes, si nécessaire */
+    width: 80%;
 }
 
-/* Styling des éléments du mega-menu */
 .mega-menu h5 {
     font-size: 16px;
     font-weight: bold;
@@ -62,7 +51,7 @@
     text-decoration: underline;
 }
 
-/* Styling de la navbar */
+
 .navbar-nav {
     background-color: #fce8e7;
 }
