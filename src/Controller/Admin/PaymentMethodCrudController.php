@@ -34,9 +34,12 @@ class PaymentMethodCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Méthode de Paiement')
-            ->setEntityLabelInPlural('Méthodes de Paiement')
-            ->setPageTitle(Crud::PAGE_INDEX, 'Gestion des Méthodes de Paiement') // Ajout du titre de la page
-            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier la Méthode de Paiement');
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des méthodes de paiement')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une méthode de paiement')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier la méthode de paiement")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de la méthode de paiement")
+            ->setEntityLabelInSingular('Méthode de paiement')
+            ->setEntityLabelInPlural('Méthodes de paiement');
     }
 }

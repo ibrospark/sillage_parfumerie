@@ -110,6 +110,9 @@ class Product
     #[ORM\OneToMany(targetEntity: ProductVariation::class, mappedBy: 'product', cascade: ['remove'])]
     private Collection $productVariations;
 
+    #[ORM\Column(length: 255)]
+    private ?string $concentration = null;
+
     public function __construct()
     {
         // Initialisation des timestamps
@@ -439,6 +442,18 @@ class Product
                 $productVariation->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getConcentration(): ?string
+    {
+        return $this->concentration;
+    }
+
+    public function setConcentration(string $concentration): static
+    {
+        $this->concentration = $concentration;
 
         return $this;
     }

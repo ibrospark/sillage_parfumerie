@@ -55,12 +55,16 @@ class BlogCrudController extends AbstractCrudController
                 ->hideOnIndex(),
         ];
     }
-
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des articles')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter un article')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier l'article")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de l'article")
             ->setEntityLabelInSingular('Article')
-            ->setEntityLabelInPlural('Articles')
-            ->setDefaultSort(['created_at' => 'DESC']);
+            ->setEntityLabelInPlural('Articless')
+            ->setDefaultSort(['created_at' => 'DESC']);;
     }
 }

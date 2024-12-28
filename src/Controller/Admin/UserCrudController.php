@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use App\Form\AddressType;
 use App\Form\BlogType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -60,5 +61,16 @@ class UserCrudController extends AbstractCrudController
 
 
         ];
+    }
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des utilisateurs')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter un utilisateur')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier l'utilisateur")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de l'utilisateur")
+            ->setEntityLabelInSingular('Utilisateur')
+            ->setEntityLabelInPlural('Utilisateurs');
     }
 }

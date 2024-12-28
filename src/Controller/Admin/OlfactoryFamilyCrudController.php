@@ -36,10 +36,16 @@ class OlfactoryFamilyCrudController extends AbstractCrudController
         ];
     }
 
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Famille Olfactive')
-            ->setEntityLabelInPlural('Familles Olfactives');
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des familles olfactives')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une famille olfactive')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier la famille olfactive')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de la famille olfactive')
+            ->setEntityLabelInSingular('famille olfactive')
+            ->setEntityLabelInPlural('familles olfactives');
     }
 }

@@ -70,6 +70,11 @@ class BrandCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des marques')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une marque')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier la marque")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de la marque")
             ->setEntityLabelInSingular('Marque')
             ->setEntityLabelInPlural('Marques');
     }

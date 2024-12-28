@@ -41,7 +41,12 @@ class OlfactoryNoteCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Note Olfactive')
-            ->setEntityLabelInPlural('Familles Olfactives');
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des notes olfactives')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une note olfactive')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier la note olfactive")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de la note olfactive")
+            ->setEntityLabelInSingular('Note olfactive')
+            ->setEntityLabelInPlural('Notes olfactives');
     }
 }

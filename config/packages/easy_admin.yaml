@@ -4,10 +4,10 @@
 #     # Configuration du tableau de bord
 #     role: "ROLE_ADMIN"
 easy_admin:
-    entities:
-        Post:
-            class: App\Entity\Post
-            form:
-                fields:
-                    - { property: 'title' }
-                    - { property: 'content', type: 'fos_ckeditor' }
+  entities:
+    Post:
+      class: App\Entity\Post
+      form:
+        fields:
+          - { property: "title" }
+          - { property: "content", type: "fos_ckeditor" }

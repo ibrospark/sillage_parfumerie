@@ -52,11 +52,16 @@ class CategoryCrudController extends AbstractCrudController
         ];
     }
 
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Catégorie') // Label au singulier
-            ->setEntityLabelInPlural('Catégories') // Label au pluriel
-            ->setSearchFields(['name', 'description']); // Permet la recherche par nom et description
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des categories')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une categorie')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier la categorie")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de la categorie")
+            ->setEntityLabelInSingular('Categorie')
+            ->setEntityLabelInPlural('Categories');
     }
 }

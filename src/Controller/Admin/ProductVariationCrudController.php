@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class ProductVariationCrudController extends AbstractCrudController
 {
@@ -23,6 +24,7 @@ class ProductVariationCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('product', "Nom du produit principal"),
+
             // CAPACITY
             TextField::new('capacity', 'Contenance')
                 ->setFormTypeOption('empty_data', '')
@@ -57,11 +59,11 @@ class ProductVariationCrudController extends AbstractCrudController
     {
         return $crud
             ->setPaginatorPageSize(100)  // Définir 100 éléments par page
-            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des variations de produits')  // Titre de la page d'index
-            ->setDefaultSort(['created_at' => 'DESC']) // Trier par 'created_at' de manière décroissante
-            ->setSearchFields(['id', 'name', 'description', 'capacity', 'regular_price', 'sale_price', 'stock_quantity'])  // Champs de recherche
-            ->setEntityLabelInSingular('Variation de produit')  // Label de l'entité en singulier
-            ->setEntityLabelInPlural('Variations de produits');  // Label de l'entité en pluriel
-
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des variations de parfums')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une variation de parfum')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier une variation de parfum')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de la variation de parfum')
+            ->setEntityLabelInSingular('variation de Parfum')
+            ->setEntityLabelInPlural('variations de Parfums');
     }
 }

@@ -34,8 +34,12 @@ class CarrierCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des transporteurs')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter un transporteur')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier le transporteur")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails du transporteur")
             ->setEntityLabelInSingular('Transporteur')
-            ->setEntityLabelInPlural('Transporteurs')
-            ->setSearchFields(['name', 'description']); // Champs de recherche
+            ->setEntityLabelInPlural('Transporteurs');
     }
 }

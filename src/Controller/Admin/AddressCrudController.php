@@ -36,6 +36,11 @@ class AddressCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des adresses')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une adresse')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier l'adresse")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de l'adresse")
             ->setEntityLabelInSingular('Adresse')
             ->setEntityLabelInPlural('Adresses');
     }

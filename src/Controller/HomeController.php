@@ -6,9 +6,12 @@ use App\Repository\BrandRepository;
 use App\Repository\SliderRepository;
 use App\Repository\HeadersRepository;
 use App\Repository\ProductRepository;
+use App\Repository\OlfactoryFamilyRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 
 class HomeController extends AbstractController
 {
@@ -50,6 +53,40 @@ class HomeController extends AbstractController
         shuffle($brands);
 
         return $this->render('brand/exclusive.html.twig', [
+            'brands' => $brands,
+        ]);
+    }
+
+    #[Route('/box-sillage', name: 'box_sillage.index', methods: ['GET', 'POST'])]
+    public function box_sillage(
+        Request $request,
+        ProductRepository $productRepository,
+        OlfactoryFamilyRepository $olfactoryFamilyRepository,
+        BrandRepository $brandRepository,
+        PaginatorInterface $paginator
+    ): Response {
+        // Exemple de tableau de types de visibilité
+        $visibilityTypes = ['Box Sillage'];
+
+        // Récupération des produits correspondants
+        $products = $productRepository->findByVisibilityTypes($visibilityTypes);
+
+        // Récupération des familles olfactives et des marques
+        $olfactoryFamilies = $olfactoryFamilyRepository->findAll();
+        $brands = $brandRepository->findAll();
+
+        // Pagination des produits sans filtre
+        $pagination = $paginator->paginate(
+            $productRepository->createQueryBuilder('p')
+                ->where('p.id IN (:productIds)')
+                ->setParameter('productIds', array_map(fn($product) => $product->getId(), $products)),
+            $request->query->getInt('page', 1),
+            26
+        );
+
+        return $this->render('product/box_sillage.html.twig', [
+            'pagination' => $pagination,
+            'olfactoryFamilies' => $olfactoryFamilies,
             'brands' => $brands,
         ]);
     }

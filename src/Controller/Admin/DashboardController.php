@@ -64,26 +64,157 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        // #64748b
+        yield MenuItem::subMenu(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/products.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                     Produits
+                </div>
+            </div>'
+        )
 
-        yield MenuItem::subMenu('Gestion des produits', 'fas fa-box')->setSubItems([
-            MenuItem::linkToCrud('Produits', 'fas fa-box', Product::class),
-            MenuItem::linkToCrud('Variations', 'fas fa-box', ProductVariation::class),
-        ]);;
+            ->setSubItems([
+                MenuItem::linkToCrud(
+                    '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/perfume.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Produits
+                </div>
+            </div>',
+                    '',
+                    Product::class
+                ),
+                MenuItem::linkToCrud(
+                    '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/perfumes.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Variations de produits  
+                </div>
+            </div>',
+                    '',
+                    ProductVariation::class
+                ),
+            ]);
 
-        yield MenuItem::subMenu('Taxonomies', 'fas fa-tags')->setSubItems([
+        yield MenuItem::subMenu(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/taxonomy2.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Taxonomies
+                </div>
+            </div>',
+            ''
+        )->setSubItems([
             MenuItem::linkToCrud('Catégories', 'fas fa-folder', Category::class),
             MenuItem::linkToCrud('Familles olfactives', 'fas fa-leaf', OlfactoryFamily::class),
-            MenuItem::linkToCrud('Notes olfactives', 'fa fa-flask', OlfactoryNote::class),
-            MenuItem::linkToCrud('Marques', 'fas fa-flag', Brand::class),
+            MenuItem::linkToCrud('Notes olfactives', 'fas fa-leaf', OlfactoryNote::class),
+            MenuItem::linkToCrud('Marques', 'fas fa-tags', Brand::class),
         ]);
-        yield MenuItem::linkToCrud('Adresses', 'fa fa-map-marker', Address::class);
-        yield MenuItem::linkToCrud('Transporteurs', 'fas fa-truck', Carrier::class);
-        yield MenuItem::linkToCrud('Moyens de Paiement', 'fas fa-credit-card', PaymentMethod::class);
-        yield MenuItem::linkToCrud('Commandes', 'fas fa-receipt', Order::class);
-        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Blog', 'fas fa-book-open', Blog::class);
-        yield MenuItem::linkToCrud('Page', 'fas fa-file', Page::class);
-        yield MenuItem::linkToCrud('Sliders', 'fas fa-sliders-h', Slider::class);
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/address.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Adresses
+                </div>
+            </div>',
+            '',
+            Address::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/deliver.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Transporteurs
+                </div>
+            </div>',
+            '',
+            Carrier::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/payment.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Moyens de paiement
+                </div>
+            </div>',
+            '',
+            PaymentMethod::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/order.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Commandes
+                </div>
+            </div>',
+            '',
+            Order::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/user.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Utilisateurs
+                </div>
+            </div>',
+            '',
+            User::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/blog.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Blog
+                </div>
+            </div>',
+            '',
+            Blog::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/page.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Pages
+                </div>
+            </div>',
+            '',
+            Page::class
+        );
+        yield MenuItem::linkToCrud(
+            '<div class="d-flex justify-content-start">
+                <div>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/carousel.svg" height="20px"></object>
+                </div>
+                <div class="mx-1">
+                    Sliders
+                </div>
+            </div>',
+            '',
+            Slider::class
+        );
         yield MenuItem::linkToUrl('Retourner sur le site', 'fas fa-arrow-left', '/');
         yield MenuItem::linkToLogout('Déconnexion', 'fa fa-power-off');
     }

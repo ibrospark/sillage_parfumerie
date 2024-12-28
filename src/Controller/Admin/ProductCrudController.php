@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -29,14 +30,23 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-
+            FormField::addColumn('col-md-12'),
+            FormField::addPanel('INFORMATIONS DE BASE')
+                ->collapsible()
+                ->setCssClass('row my-2'),
             // ID 
             IntegerField::new('id')->onlyOnIndex(),
+
             // NAME
-            TextField::new('name', 'Nom du produit'),
+            TextField::new('name', 'Nom du produit')
+                ->setColumns('col-md-6 p-1'),
+
 
             SlugField::new('slug')
-                ->setTargetFieldName('name'),
+                ->setTargetFieldName('name')
+                ->setColumns('col-md-6 p-1')
+                ->hideOnIndex(true), // Ajoute 'col-md-4' pour occuper 4 colonnes
+
             // SHORT DESCRIPTION
             // DESCRIPTION
             TextEditorField::new('description', 'Description')
@@ -49,69 +59,106 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir('public/img/products')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            // VARIATIONS
+
+
+
+
+
+
+            // REGULAR PRICE
+            MoneyField::new('regular_price', 'Prix régulier')
+                ->setFormTypeOption('empty_data', "0.0")
+                ->setCurrency('XOF')
+                ->setRequired(false)
+                ->setColumns('col-6 p-1'),
+            // SALE PRICE
+            MoneyField::new('sale_price', 'Prix promotionnel')
+                ->setFormTypeOption('empty_data', "0.0")
+                ->setCurrency('XOF')
+                ->setRequired(false)->setColumns('col-6 p-1'),
+
+
+            // STOCK QUANTITY
+            IntegerField::new('stock_quantity', 'Qté.Stock')
+                ->setFormTypeOption('empty_data', "0")
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
+            // CAPACITY
+            TextField::new('capacity', 'Contenance')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
+            // WEIGHT
+            TextField::new('weight', 'Poids')
+                ->hideOnIndex()
+                ->setFormTypeOption('empty_data', '')
+                ->setRequired(false)
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
+
+
+
+            // VARIATIONS SECTION -----------------------------------------------------------------------------------------------
+            FormField::addFieldset('VARIATIONS')
+                ->collapsible()
+                ->setCssClass('row my-2'),
             AssociationField::new('productVariations') // Ajout de la gestion des variations
                 ->setCrudController(ProductVariationCrudController::class) // Lien vers le CRUD de ProductVariation
                 ->setFormTypeOption('by_reference', false) // Permet d'ajouter des variations sans quitter la page
                 ->setFormTypeOption('required', false) // Le champ n'est pas obligatoire
                 ->onlyOnForms(),
 
-            // REGULAR PRICE
-            MoneyField::new('regular_price', 'Prix régulier')
-                ->setFormTypeOption('empty_data', "0.0")
-                ->setCurrency('XOF')
-                ->setRequired(false),
-            // SALE PRICE
-            MoneyField::new('sale_price', 'Prix promotionnel')
-                ->setFormTypeOption('empty_data', "0.0")
-                ->setCurrency('XOF')
-                ->setRequired(false),
-            // STOCK QUANTITY
-            IntegerField::new('stock_quantity', 'Qté.Stock')
-                ->setFormTypeOption('empty_data', "0")
-                ->setRequired(false),
-
-            // CAPACITY
-            TextField::new('capacity', 'Contenance')
-                ->hideOnIndex()
-                ->setFormTypeOption('empty_data', '')
-                ->setRequired(false),
-
-            // WEIGHT
-            TextField::new('weight', 'Poids')
-                ->hideOnIndex()
-                ->setFormTypeOption('empty_data', '')
-                ->setRequired(false),
 
 
+            // TAXONOMIES SECTION -----------------------------------------------------------------------------------------------
+            FormField::addFieldset('TAXONOMIES')
+                ->collapsible()
+                ->setCssClass('row my-2'),
+            AssociationField::new('brand', 'Marque')
+                ->setColumns('col-md-4 p-1'),
+            AssociationField::new('category', 'Catégorie')
+                ->setColumns('col-md-4 p-1'),
+            AssociationField::new('olfactoryFamily', 'Famille.olf')
+                ->setColumns('col-md-4 p-1'),
+            // NOTES OLFACTIVE SECTION -----------------------------------------------------------------------------------------------
+            FormField::addFieldset('NOTES OLFACTIVES')
+                ->collapsible()
+                ->setCssClass('row my-2'),
 
-            // TAXONOMIES
-            AssociationField::new('brand', 'Marque'),
-            AssociationField::new('category', 'Catégorie'),
-            AssociationField::new('olfactoryFamily', 'Famille.olf'),
             // OLFACTORIES NOTES
             AssociationField::new('head_note', 'Note de tête')
-                ->hideOnIndex(),
+                ->hideOnIndex()
+                ->setColumns('col-md-4 p-1'),
             AssociationField::new('heart_note', 'Note de cœur')
-                ->hideOnIndex(),
+                ->hideOnIndex()
+                ->setColumns('col-md-4 p-1'),
             AssociationField::new('background_note', 'Note de fond')
-                ->hideOnIndex(),
-            // PRODUCT VISIBILITY
-            ChoiceField::new('visibilityTypes', 'Visibilité')
+                ->hideOnIndex()
+                ->setColumns('col-md-4 p-1'),
+            // PROFIL OLFACTIF SECTION -----------------------------------------------------------------------------------------------
+            FormField::addFieldset('PROFIL OLFACTIF')
+                ->collapsible()
+                ->setCssClass('row my-2'),
+
+            // CONCENTRATION
+            ChoiceField::new('concentration', 'Concentration')
                 ->setChoices([
-                    'Aucun' => 'Aucun',
-                    'Dans la page d\'accueil' => 'is_in_home',
-                    'Exclusivité' => 'Exclusivité',
-                    'Promotion' => 'Promotion',
-                    'Édition limitée' => 'Édition limitée',
-                    'Nouveauté' => 'Nouveauté',
-                    'Sélection du mois' => 'month_selection',
-                    'Best-seller' => 'best_seller',
-                    'En vedette' => 'featured',
+                    'Attar/Huile' => 'Attar/Huile',
+                    'Eau de Cologne' => 'Eau de Cologne',
+                    'Eau de Parfum' => 'Eau de Parfum',
+                    'Eau de Toilette' => 'Eau de Toilette',
+                    'Extrait de Parfum' => 'Extrait de Parfum',
+                    'Autre' => 'Autre',
+
                 ])
-                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
-                ->allowMultipleChoices()
-                ->autocomplete(),
+                ->setHelp('Sélectionnez la concentration.')
+                ->autocomplete()
+                ->setFormTypeOption('empty_data', ['Autre'])
+                ->hideOnIndex(true)
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
+
             // SEASON
             ChoiceField::new('season', 'Saison')
                 ->setChoices([
@@ -125,7 +172,8 @@ class ProductCrudController extends AbstractCrudController
                 ->autocomplete()
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', ['Autre'])
-                ->setRequired(false),
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
 
 
             // OCCASION
@@ -140,7 +188,8 @@ class ProductCrudController extends AbstractCrudController
                 ->autocomplete()
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', ['Autre'])
-                ->setRequired(false),
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
 
 
             // INTENSITY
@@ -155,7 +204,8 @@ class ProductCrudController extends AbstractCrudController
                 ->autocomplete()
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', ['Autre'])
-                ->setRequired(false),
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
 
 
 
@@ -171,9 +221,33 @@ class ProductCrudController extends AbstractCrudController
                 ->autocomplete()
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', ['Autre'])
-                ->setRequired(false),
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
 
+            // VISIBILITY SECTION -----------------------------------------------------------------------------------------------
+            FormField::addFieldset('VISIBILITÉ')
+                ->collapsible()
+                ->setCssClass('row my-2'),
 
+            // PRODUCT VISIBILITY
+            ChoiceField::new('visibilityTypes', 'Visibilité')
+                ->setChoices([
+                    'Aucun' => 'Aucun',
+                    'Dans la page d\'accueil' => 'is_in_home',
+                    'Exclusivité' => 'Exclusivité',
+                    'Promotion' => 'Promotion',
+                    'Édition limitée' => 'Édition limitée',
+                    'Nouveauté' => 'Nouveauté',
+                    'Sélection du mois' => 'month_selection',
+                    'Best-seller' => 'best_seller',
+                    'Box Sillage' => 'Box Sillage',
+
+                    'En vedette' => 'featured',
+                ])
+                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+                ->allowMultipleChoices()
+                ->autocomplete()
+                ->setColumns('col-md-6 p-1'),
             // STATUS
             ChoiceField::new('status', 'Statut')
                 ->setChoices([
@@ -183,7 +257,8 @@ class ProductCrudController extends AbstractCrudController
                 ])
                 ->setHelp('Sélectionnez le statut.')
                 ->autocomplete()
-                ->setFormTypeOption('empty_data', ['0']),
+                ->setFormTypeOption('empty_data', ['0'])
+                ->setColumns('col-md-6 p-1'),
 
             // CREATED AND UPDATED DATE
             DateTimeField::new('created_at', 'Créé le')->onlyOnIndex(),
@@ -196,6 +271,12 @@ class ProductCrudController extends AbstractCrudController
         return $crud
             ->setPaginatorPageSize(100)  // Définir 100 éléments par page
             ->setPageTitle(Crud::PAGE_INDEX, 'Liste des parfums')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter un parfum')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier un parfum')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails du parfum')
+            ->setEntityLabelInSingular('Parfum')
+            ->setEntityLabelInPlural('Parfums')
+            ->setDateTimeFormat('dd/MM/yyyy HH:mm:ss')
             ->setDefaultSort(['created_at' => 'DESC']);  // Trier par 'created_at' de manière décroissante
     }
 }

@@ -37,6 +37,7 @@ class ProductVariation
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+
     public function __construct()
     {
         // Initialisation des timestamps

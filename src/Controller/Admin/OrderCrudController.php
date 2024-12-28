@@ -22,23 +22,16 @@ class OrderCrudController extends AbstractCrudController
         return Order::class;
     }
 
-    public function configureActions(Actions $actions): Actions 
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add('index', 'detail')
             ->remove(Crud::PAGE_INDEX, Action::NEW)
-            ;
+        ;
     }
 
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setEntityLabelInSingular('Commande')
-            ->setEntityLabelInPlural('Commandes')
-            ->setDefaultSort(['id' => 'DESC']);
-    }
- 
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -47,15 +40,27 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('user.fullname', 'Acheteur'),
             MoneyField::new('total')->setCurrency('EUR')->hideOnForm(),
             MoneyField::new('carrierPrice', 'Frais livraison')->setCurrency('EUR'),
-            ChoiceField::new('state', 'Etat')->setChoices([
-                'Non payée' => 0,
-                'Payée' => 1,
-                'Préparation en cours' => 2,
-                'Expédiée' => 3,
-            ]
+            ChoiceField::new('state', 'Etat')->setChoices(
+                [
+                    'Non payée' => 0,
+                    'Payée' => 1,
+                    'Préparation en cours' => 2,
+                    'Expédiée' => 3,
+                ]
             ),
             ArrayField::new('orderDetails', 'Produits achetés')->hideOnIndex()->hideOnForm()
         ];
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des commandes')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter une commande')
+            ->setPageTitle(Crud::PAGE_EDIT, "Modifier la commande")
+            ->setPageTitle(Crud::PAGE_DETAIL, "Détails de la commande")
+            ->setEntityLabelInSingular('Commande')
+            ->setEntityLabelInPlural('Commandes');
+    }
 }

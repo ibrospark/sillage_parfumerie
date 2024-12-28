@@ -30,7 +30,12 @@ class SliderCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Slider')
-            ->setEntityLabelInPlural('Sliders');
+            ->setPaginatorPageSize(100)  // Définir 100 éléments par page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des slides')
+            ->setPageTitle(Crud::PAGE_NEW, 'Ajouter un slide')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier un slide')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails du slide')
+            ->setEntityLabelInSingular('Slide')
+            ->setEntityLabelInPlural('Slides');
     }
 }
