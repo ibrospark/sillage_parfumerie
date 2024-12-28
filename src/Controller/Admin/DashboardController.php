@@ -92,7 +92,7 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud(
                     '<div class="d-flex justify-content-start">
                 <div>
-                    <object class="icon_menu" type="image/svg+xml" data="img/menu/perfumes.svg" height="20px"></object>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/variant.svg" height="20px"></object>
                 </div>
                 <div class="mx-1">
                     Variations de produits  
@@ -122,7 +122,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud(
             '<div class="d-flex justify-content-start">
                 <div>
-                    <object class="icon_menu" type="image/svg+xml" data="img/menu/address.svg" height="20px"></object>
+                    <object class="icon_menu" type="image/svg+xml" data="img/menu/map.svg" height="20px"></object>
                 </div>
                 <div class="mx-1">
                     Adresses
