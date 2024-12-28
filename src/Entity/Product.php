@@ -50,12 +50,17 @@ class Product
     private ?string $image_url = '';
 
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Brand $brand = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
+    private ?Category $category = null;
+
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?OlfactoryFamily $olfactoryFamily = null;
 
     #[ORM\Column(type: "string", nullable: true)]
@@ -72,15 +77,19 @@ class Product
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'products_head_note')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?OlfactoryNote $head_note = null;
 
     #[ORM\ManyToOne(inversedBy: 'products_heart_note')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?OlfactoryNote $heart_note = null;
 
     #[ORM\ManyToOne(inversedBy: 'products_background_note')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?OlfactoryNote $background_note = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private Collection $orderItems; // À ajouter dans Product
 
     #[ORM\Column(type: 'string', length: 50)]
