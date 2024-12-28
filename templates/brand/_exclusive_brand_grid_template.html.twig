@@ -1,34 +1,32 @@
 {# templates/components/brand_card.html.twig #}
-        <a href="{{ path('brand.show', { 'id': brand.id }) }}">
-
-<div style="position:relative;">
+<a href="{{ path('brand.show', { 'id': brand.id }) }}">
     <div>
+        <div style="position:relative; ">
             <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" class="img-fluid" alt="{{ brand.name }}">
-    </div>
-    <!-- Contenu texte au-dessus de l'image -->
-    <div style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #ffffff;
-        color: #000;
-        padding: 20px;
-        minwidth: 70%;
-        z-index: 1;
-        width: auto;">
-        <img src="{{ asset('img/brands/' ~ brand.logoUrl) }}" style="max-height:150px" class="img-fluid" alt="{{ brand.name }}">
-    </div>
-    <div>
+                    <!-- Contenu texte au-dessus de l'image -->
+        <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            color: #000;
+            padding: 20px;
+            max-height:100px
+            z-index: 1;
+            width: auto;">
+            <img src="{{ asset('img/brands/' ~ brand.logoUrl) }}" class="img-fluid" alt="{{ brand.name }}">
+        </div>
+        </div>
+
         <div>
-            <a href="{{ path('brand.show', { 'id': brand.id }) }}">
-                {% include 'components/_title_responsive.html.twig' with {
-                    'content': brand.name
-                } %}
-            </a>
-            <a href="{{ path('brand.show', { 'id': brand.id }) }}" class="spkdv_primary_btn_outline">Découvrir <i class='fa fa-arrow-right'></i></a>
+            <div>
+                <a href="{{ path('brand.show', { 'id': brand.id }) }}">
+                    <h5 class="py-3">{{ brand.name }}</h5>
+                </a>
+                <a href="{{ path('brand.show', { 'id': brand.id }) }}" class="spkdv_primary_btn_outline">Découvrir <i class='fa fa-arrow-right'></i></a>
+            </div>
         </div>
     </div>
-</div>
-        </a>
-<!-- templates/brand/_exclusive_brand_grid_template.html.twig -->
+</a>
+{# templates/brand/_exclusive_brand_grid_template.html.twig #}

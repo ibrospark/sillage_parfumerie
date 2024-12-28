@@ -1,19 +1,21 @@
 {# templates/components/_header.html.twig #}
 
 <div class="px-3 py-1 spkdv_header_top">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="row">
         <!-- Menu de navigation pour petites et grandes tailles d'écrans -->
-        <div class="d-block d-md-block"> <!-- Rendre le menu visible sur toutes les tailles d'écrans -->
+        <div class="col-md-8"> <!-- Rendre le menu visible sur toutes les tailles d'écrans -->
             <ul class="nav mb-2 mb-md-0">
-                <li><a href="{{ path('contact') }}" class="nav-link px-4 link-secondary">Contact</a></li>
-                <li><a href="{{ path('blog.index') }}" class="nav-link px-4 link-secondary">Blog</a></li>
-                <li><a href="{{ path('page.show', {slug: 'sillage-parfumerie'}) }}" class="nav-link px-4 link-secondary">Sillage parfumerie</a></li>
+                <li><a href="{{ path('contact') }}" class="nav-link px-2 link-secondary">Contact</a></li>
+                <li><a href="{{ path('blog.index') }}" class="nav-link px-2 link-secondary">Blog</a></li>
+                <li><a href="{{ path('page.show', {slug: 'sillage-parfumerie'}) }}" class="nav-link px-2 link-secondary">Sillage parfumerie</a></li>
             </ul>
         </div>
 
         <!-- Message de bienvenue pour les utilisateurs connectés -->
         {% if is_granted('ROLE_USER') %}
-            <div class="text-white" style="font-size:0.8em;">Bienvenue {{ app.user.firstname }}, vous êtes actuellement connecté(e)!</div>
+            <div class="text-white col-md-4 my-auto" style="font-size:0.8em;">
+                Bienvenue {{ app.user.firstname }}, vous êtes actuellement connecté(e)!
+            </div>
         {% endif %}
     </div>
 </div>
@@ -21,12 +23,12 @@
 <div class="p-3 pt-4 spkdv_header_middle">
     <header class="d-flex flex-wrap align-items-center justify-content-between">
         <!-- Recherche (Mobile et Tablette) -->
-        <div class="col-12 col-md-4 mb-2 mb-md-0">
+        <div class="col-md-4 mb-2 mb-md-0">
             {% include 'components/_search_form.html.twig' %}
         </div>
 
         <!-- Logo centré -->
-        <div class="col-12 col-md-4 text-center">
+        <div class="col-md-4 text-center">
             <a href="{{ path('home.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
                 <img src="{{ asset('img/logo_sillage_parfumerie.svg') }}" width="200" alt="Logo Sillage"/>
             </a>
