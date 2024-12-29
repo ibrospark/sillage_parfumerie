@@ -4,21 +4,23 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -78,15 +80,17 @@ class ProductCrudController extends AbstractCrudController
                 ->setRequired(false)->setColumns('col-6 p-1'),
 
 
-            // STOCK QUANTITY
-            IntegerField::new('stock_quantity', 'Qté.Stock')
-                ->setFormTypeOption('empty_data', "0")
-                ->setRequired(false)
-                ->setColumns('col-md-4 p-1'),
             // CAPACITY
             TextField::new('capacity', 'Contenance')
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', '')
+                ->setRequired(false)
+                ->setColumns('col-md-4 p-1'),
+
+
+            // STOCK QUANTITY
+            IntegerField::new('stock_quantity', 'Qté.Stock')
+                ->setFormTypeOption('empty_data', "0")
                 ->setRequired(false)
                 ->setColumns('col-md-4 p-1'),
             // WEIGHT
@@ -96,8 +100,6 @@ class ProductCrudController extends AbstractCrudController
                 ->setRequired(false)
                 ->setRequired(false)
                 ->setColumns('col-md-4 p-1'),
-
-
 
             // VARIATIONS SECTION -----------------------------------------------------------------------------------------------
             FormField::addFieldset('VARIATIONS')
@@ -265,7 +267,19 @@ class ProductCrudController extends AbstractCrudController
             DateTimeField::new('updated_at', 'Mis à jour le')->onlyOnIndex(),
         ];
     }
-
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(TextFilter::new('name', 'Nom du produit'))
+            ->add(EntityFilter::new('brand', 'Marque'))
+            ->add(EntityFilter::new('category', 'Catégorie'))
+            ->add(EntityFilter::new('olfactoryFamily', 'Famille olfactive'))
+            ->add(NumericFilter::new('regular_price', 'Prix régulier'))
+            ->add(NumericFilter::new('sale_price', 'Prix promotionnel'))
+            ->add(BooleanFilter::new('status', 'Statut'))
+            ->add(DateTimeFilter::new('created_at', 'Créé le'))
+            ->add(DateTimeFilter::new('updated_at', 'Mis à jour le'));
+    }
     public function configureCrud(Crud $crud): Crud
     {
         return $crud

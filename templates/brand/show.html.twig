@@ -18,11 +18,11 @@
     
     <div class="row">
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-            <img src='{{ asset('img/brands/' ~ brand.coverUrl) }}' style="width:100%;"/>
+            <img src='{{ asset('img/brands/' ~ brand.coverUrl) }}' loading="lazy" style="width:100%;"/>
         </div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             <center> 
-                <img src='{{ asset('img/brands/' ~ brand.logoUrl) }}'style="max-width:80%;max-height:100px;"/>
+                <img src='{{ asset('img/brands/' ~ brand.logoUrl) }}' loading="lazy"style="max-width:80%;max-height:100px;"/>
                 <h1 class="text-center">{{ brand.name }}</h1>
             </center>
              <p class="p-4">

@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;  // Importation de CheckboxListField
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
@@ -26,14 +25,22 @@ class PageCrudController extends AbstractCrudController
         return [
             TextField::new('title'),
             SlugField::new('slug')->setTargetFieldName('title'),
-            TextEditorField::new('content'),
+
+            // Ajout de CKEditor sur le champ 'content'
+            TextEditorField::new('content')
+                ->setLabel('Contenu')  // Vous pouvez personnaliser le label
+                ->setHelp('Utilisez l\'éditeur pour ajouter le contenu de la page.'),
+
             ImageField::new('image_url', 'Image')
                 ->setBasePath('img/pages')
                 ->setUploadDir('public/img/pages')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(true),
+
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
+
+            // Exemple de champ avec choix multiples
             ChoiceField::new('visibilityTypes', 'Visibilité')
                 ->setChoices([
                     'Aucun' => 'Aucun',
@@ -47,7 +54,7 @@ class PageCrudController extends AbstractCrudController
                     'Best-seller' => 'best_seller',
                     'En vedette' => 'featured',
                 ])
-                ->setHelp('Sélectionnez les types de visibilité pour ce produit.')
+                ->setHelp('Sélectionnez les types de visibilité pour cette page.')
                 ->allowMultipleChoices()
                 ->autocomplete(),
         ];

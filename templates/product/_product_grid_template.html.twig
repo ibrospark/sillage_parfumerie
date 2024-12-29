@@ -1,7 +1,7 @@
 <a href="{{ path('product.show', {'id': product.id}) }}">
     <div class="card">
         <div class="image_container position-relative">
-            <img src="{{ asset('img/products/' ~ product.imageUrl) }}" class="card-img-top w-100" alt="{{ product.name }}">
+            <img src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="card-img-top w-100" alt="{{ product.name }}">
             <div class="hover_buttons">
                 <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn">Ajouter au panier</a>
             </div>

@@ -457,4 +457,18 @@ class Product
 
         return $this;
     }
+    /**
+     * @ORM\PreRemove
+     */
+    public function removeImageFile(): void
+    {
+        // Vérifier si le fichier image est présent et supprimer le fichier
+        if ($this->image_url && $this->image_url !== 'empty.jpg') {
+            // Le chemin du fichier image dans le répertoire public
+            $imageFilePath = __DIR__ . '/../../public/img/products/' . $this->image_url;
+            if (file_exists($imageFilePath)) {
+                unlink($imageFilePath);  // Supprimer le fichier image
+            }
+        }
+    }
 }

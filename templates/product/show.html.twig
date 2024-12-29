@@ -17,7 +17,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-6 p-4 text-center">
-            <img src="{{ asset('img/products/' ~ product.imageUrl) }}" class="img-fluid" />
+            <img src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="img-fluid" />
         </div>
         
         <div class="col-12 col-sm-12 col-md-6" style="padding:20px!important;">
@@ -113,7 +113,7 @@
                     <br>
                     <img src="{{ asset('img/olfactory_notes/' ~ product.getHeadNote().imageUrl) }}"
                          alt="{{ product.getHeadNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
-                         style="width: 100px; height: 100px; object-fit: cover;"/>
+                         style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
                 </div>
             </div>
         {% endif %}
@@ -125,7 +125,7 @@
                     <br>
                     <img src="{{ asset('img/olfactory_notes/' ~ product.getHeartNote().imageUrl) }}"
                          alt="{{ product.getHeartNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
-                         style="width: 100px; height: 100px; object-fit: cover;"/>
+                         style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
                 </div>
             </div>
         {% endif %}
@@ -137,7 +137,7 @@
                     <br>
                     <img src="{{ asset('img/olfactory_notes/' ~ product.getBackgroundNote().imageUrl) }}"
                          alt="{{ product.getBackgroundNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
-                         style="width: 100px; height: 100px; object-fit: cover;"/>
+                         style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
                 </div>
             </div>
         {% endif %}
@@ -165,7 +165,7 @@
                 <div class="col-4">
                     <div class="item">
                         <div class="icon">
-                            <img src="{{ asset('img/olfactory_profile/season.svg') }}" height="50px" alt="Saison">
+                            <img src="{{ asset('img/olfactory_profile/season.svg') }}" loading="lazy" height="50px" alt="Saison">
                         </div>
                         <div class="value">{{ product.getSeason() }}</div>
                     </div>
@@ -175,7 +175,7 @@
                 <div class="col-4">
                     <div class="item">
                         <div class="icon">
-                            <img src="{{ asset('img/olfactory_profile/perfume.svg') }}" height="50px" alt="Occasion">
+                            <img src="{{ asset('img/olfactory_profile/perfume.svg') }}" loading="lazy" height="50px" alt="Occasion">
                         </div>
                         <div class="value">{{ product.getOccasion() }}</div>
                     </div>
@@ -185,7 +185,7 @@
                 <div class="col-4">
                     <div class="item">
                         <div class="icon">
-                            <img src="{{ asset('img/olfactory_profile/gender.svg') }}" height="50px" alt="Genre">
+                            <img src="{{ asset('img/olfactory_profile/gender.svg') }}" loading="lazy" height="50px" alt="Genre">
                         </div>
                         <div class="value">{{ product.getGender() }}</div>
                     </div>

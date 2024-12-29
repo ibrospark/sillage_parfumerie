@@ -18,7 +18,7 @@
         'subtitle': ''
     } %}
 
-    <img src="{{ asset('img/blog/' ~ blog.imageUrl) }}" class="img-fluid mb-4" alt="{{ blog.title }}">
+    <img src="{{ asset('img/blog/' ~ blog.imageUrl) }}" loading="lazy" class="img-fluid mb-4" alt="{{ blog.title }}">
     <p>{{ blog.content | raw }}</p>
     <p class="text-muted">Publié le {{ blog.createdAt | date('d/m/Y') }}</p>
 

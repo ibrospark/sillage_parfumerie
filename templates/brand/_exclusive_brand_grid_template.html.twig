@@ -2,7 +2,7 @@
 <a href="{{ path('brand.show', { 'id': brand.id }) }}">
     <div>
         <div style="position:relative; ">
-            <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" class="img-fluid" alt="{{ brand.name }}">
+            <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" loading="lazy" class="img-fluid" alt="{{ brand.name }}">
                     <!-- Contenu texte au-dessus de l'image -->
         <div style="
             position: absolute;
@@ -15,7 +15,7 @@
             max-height:100px
             z-index: 1;
             width: auto;">
-            <img src="{{ asset('img/brands/' ~ brand.logoUrl) }}" class="img-fluid" alt="{{ brand.name }}">
+            <img src="{{ asset('img/brands/' ~ brand.logoUrl) }}" loading="lazy" class="img-fluid" alt="{{ brand.name }}">
         </div>
         </div>
 

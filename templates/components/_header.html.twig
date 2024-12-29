@@ -30,7 +30,7 @@
         <!-- Logo centré -->
         <div class="col-12 col-md-4 text-center">
             <a href="{{ path('home.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
-                <img src="{{ asset('img/logo_sillage_parfumerie.svg') }}" width="200" alt="Logo Sillage"/>
+                <img src="{{ asset('img/logo_sillage_parfumerie.svg') }}" loading="lazy" width="200" alt="Logo Sillage"/>
             </a>
         </div>
 
@@ -48,20 +48,20 @@
                 {% if is_granted('ROLE_USER') %}
                     <div class="mx-4">
                         <a href="{{ path('account.index') }}">
-                            <img src="{{ asset('svg/user.svg') }}" width="20px"/>
+                            <img src="{{ asset('svg/user.svg') }}" loading="lazy" width="20px"/>
                         </a>
                     </div>
                 {% else %}
                     <div class="mx-4">
                         <a href="{{ path('app_login') }}">
-                            <img src="{{ asset('svg/user.svg') }}" width="20px"/>
+                            <img src="{{ asset('svg/user.svg') }}" loading="lazy" width="20px"/>
                         </a>
                     </div>
                 {% endif %}
 
                 <div class="mx-4">
                     <a href="{{ path('cart.index') }}">
-                        <img src="{{ asset('svg/shopping_bag.svg') }}" width="20px"/>
+                        <img src="{{ asset('svg/shopping_bag.svg') }}" loading="lazy" width="20px"/>
                     </a>
                 </div>
             </div>

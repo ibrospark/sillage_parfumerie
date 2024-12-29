@@ -3,7 +3,7 @@
     <div class="row g-0">
         <div>
             <a href="{{path('brand.show', { 'id':brand.id }) }}">
-                <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" class="img-fluid rounded-start" alt="{{ brand.name }}">
+                <img src="{{ asset('img/brands/' ~ brand.coverUrl) }}" loading="lazy" class="img-fluid rounded-start" alt="{{ brand.name }}">
             </a>
         </div>
         <div>

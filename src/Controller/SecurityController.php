@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
 
         // Ajoutez un message flash pour les erreurs de connexion
         if ($error) {
-            $this->addFlash('error', 'Identifiants incorrects. Veuillez réessayer.');
+            $this->addFlash('error', 'Identifiants ou mot de passe incorrects. Veuillez réessayer.');
         }
 
         return $this->render('security/login.html.twig', [

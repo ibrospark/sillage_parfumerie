@@ -91,7 +91,7 @@ footer a {
 
 .footer_top {
     /* background-color: #fce8e7; */
-    background-color: #f1f5fd;
+    background-color: var(--tertiary-color);
 }
 
 .footer_middle {

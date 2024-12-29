@@ -1,0 +1,17 @@
+# vich_uploader:
+#     db_driver: orm
+
+#mappings:
+#    products:
+#        uri_prefix: /images/products
+#        upload_destination: '%kernel.project_dir%/public/images/products'
+#        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+vich_uploader:
+  db_driver: orm
+  mappings:
+    slider_videos:
+      uri_prefix: /videos
+      upload_destination: "%kernel.project_dir%/public/videos"
+      namer: Vich\UploaderBundle\Naming\UniqidNamer
+      inject_on_load: false

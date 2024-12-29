@@ -2,10 +2,25 @@
 :root {
   /* make the backend contents as wide as the browser window */
   --body-max-width: 100%;
-  --link-color: #5c1823!important;
-  --color-primary: #5c1823;
+  --link-color: var(--quaternary-color)!important;
+    --color-primary: var(--secondary-color);
+--font-family-base: 'DM Sans', sans-serif !important;
+
+  --primary-color: #5b1823;
+  --secondary-color: #ad928b;
+  --tertiary-color: #fce8e7;
+  --quaternary-color: #334155;
+
+  --bs-body-font-family: var(--font-family-base);
+
 }
 
-a {
+a:hover{
   text-decoration: none;
+  color: var(--secondary-color);
+}
+.spkdv_menu_icon{
+  font-size: 1.1em;
+      font-weight: 500;
+
 }
