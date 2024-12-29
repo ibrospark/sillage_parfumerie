@@ -1,3 +1,10 @@
+:root{
+    --primary-color: #5b1823;
+    --secondary-color: #bc9d95;
+    --tertiary-color: #fce8e7;
+    --quaternary-color: #f1f5fd;
+    
+}
 /* -------------------------------------- BODY -------------------------------------- */
 html,
 body {
@@ -16,7 +23,7 @@ a {
 
 a:hover,
 .link-secondary {
-    color: #5b1823 !important;
+    color: var(--primary-color) !important;
 }
 
 /* -------------------------------------- TABLEAU -------------------------------------- */
@@ -33,7 +40,7 @@ table {
 }
 
 .spkdv_primary_btn {
-    background: #5b1823;
+    background: var(--primary-color);
     color: #fff !important;
 }
 
@@ -44,12 +51,12 @@ table {
 
 .spkdv_primary_btn_outline {
     background: transparent;
-    border: 1px solid #5b1823 !important;
-    color: #5b1823 !important;
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
 }
 
 .spkdv_primary_btn_outline:hover {
-    background: #5b1823;
+    background: var(--primary-color);
     /* Change le fond lors du survol */
     color: #fff !important;
     /* Garde le texte blanc lors du survol */
@@ -57,7 +64,7 @@ table {
 
 /* -------------------------------------- EN-TÊTE -------------------------------------- */
 .spkdv_header_top {
-    background-color: #5b1823;
+    background-color: var(--primary-color);
     text-transform: uppercase;
     font-size: 0.9em;
 }
@@ -67,12 +74,12 @@ table {
 }
 
 .spkdv_header_middle {
-    background-color: #fce8e7;
+    background-color: var(--tertiary-color);
 }
 
 /* -------------------------------------- PIED DE PAGE -------------------------------------- */
 footer {
-    background-color: #bc9d95;
+    background-color: var(--primary-color);
     color: #fff;
 }
 
@@ -87,8 +94,8 @@ footer a {
     background-color: #f1f5fd;
 }
 
-.footer_top2 {
-    background-color: #5b1823;
+.footer_middle {
+    background-color: var(--tertiary-color);
 }
 
 /* -------------------------------------- TITRES -------------------------------------- */
@@ -146,8 +153,8 @@ h6 {
 }
 
 .spkdv_pagination .current {
-    border: 1px solid #5b1823;
-    background-color: #5b1823;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
     color: white !important;
     padding: 1em;
     margin: 5px;
@@ -164,8 +171,8 @@ h6 {
 }
 
 .spkdv_pagination a:hover {
-    border: 1px solid #5b1823;
-    background-color: #5b1823;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
     color: white !important;
 }
 
@@ -213,7 +220,7 @@ h6 {
 }
 
 .spkdv_product_grid .card:hover {
-    border: 1px solid #5b1823;
+    border: 1px solid var(--primary-color);
 }
 
 .spkdv_product_grid .regular_price {
@@ -281,9 +288,9 @@ h6 {
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:focus {
-    background-color: #5b1823;
+    background-color: var(--primary-color);
     /* Couleur primaire */
-    border-color: #5b1823;
+    border-color: var(--primary-color);
     /* Couleur primaire */
 }
 
@@ -293,29 +300,8 @@ h6 {
 }
 
 .text-primary {
-    color: #5b1823;
+    color: var(--primary-color);
     /* Couleur pour les éléments utilisant la classe text-primary */
-}
-/* -------------------------------------- WHATSAPP -------------------------------------- */
-.whatsapp-button {
-    position: fixed;
-    bottom: 5%;
-    right: 3%;
-    width: 60px;
-    height: 60px;
-    background-color: #25d366;
-    /* Couleur WhatsApp */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-}
-
-.whatsapp-button img {
-    width: 35px;
-    height: 35px;
 }
 
 
