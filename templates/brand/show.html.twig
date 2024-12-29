@@ -7,7 +7,10 @@
 {# BREADCRUMBS ------------------------------------------------------------------------------------------------ #}
     {% set breadcrumbs = [
         {"page_name": "Accueil", "route_path": path('home.index')},
+
         {"page_name": "Marques", "route_path": path('brand.index')},
+        {"page_name": brand.name, "route_path": null},
+
     ] %}
     {% include 'components/_breadcrumb.html.twig' 
         with {'breadcrumbs': breadcrumbs ? breadcrumbs : null} 

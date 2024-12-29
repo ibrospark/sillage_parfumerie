@@ -7,7 +7,9 @@
 
     {% set breadcrumbs = [
         {"page_name": "Accueil", "route_path": path('home.index')},
-        {"page_name": "Parfums", "route_path": path('product.index')},
+                        {"page_name": "Parfums", "route_path": path('product.index')},
+
+        {"page_name": brand.name ?? " ", "route_path": brand.name ? path('brand.show', { 'id': brand.id }) : null },
         {"page_name": product.name, "route_path": path('product.show', { 'id': product.id })}
     ] %}
 

@@ -2,41 +2,41 @@
 
 <div class="px-3 py-1 spkdv_header_top">
     <div class="row">
-        <!-- Menu de navigation pour petites et grandes tailles d'écrans -->
-        <div class="col-md-8"> <!-- Rendre le menu visible sur toutes les tailles d'écrans -->
-            <ul class="nav mb-2 mb-md-0">
-                <li><a href="{{ path('contact') }}" class="nav-link px-2 link-secondary">Contact</a></li>
-                <li><a href="{{ path('blog.index') }}" class="nav-link px-2 link-secondary">Blog</a></li>
-                <li><a href="{{ path('page.show', {slug: 'sillage-parfumerie'}) }}" class="nav-link px-2 link-secondary">Sillage parfumerie</a></li>
-            </ul>
-        </div>
+<!-- Menu de navigation pour petites et grandes tailles d'écrans -->
+<div class="col-md-8 text-center text-md-left px-0"> <!-- Menu centré sur mobile, aligné à gauche sur desktop -->
+    <ul class="nav justify-content-center justify-content-md-start"> <!-- Centrer le menu sur mobile -->
+        <li><a href="{{ path('contact') }}" class="nav-link px-2 link-secondary">Contact</a></li>
+        <li><a href="{{ path('blog.index') }}" class="nav-link px-2 link-secondary">Blog</a></li>
+        <li><a href="{{ path('page.show', {slug: 'sillage-parfumerie'}) }}" class="nav-link px-2 link-secondary">Sillage parfumerie</a></li>
+    </ul>
+</div>
+
 
         <!-- Message de bienvenue pour les utilisateurs connectés -->
         {% if is_granted('ROLE_USER') %}
-            <div class="text-white col-md-4 my-auto" style="font-size:0.8em;">
+            <div class="text-white col-md-4 my-auto  text-center text-md-right" style="font-size:0.8em;">
                 Bienvenue {{ app.user.firstname }}, vous êtes actuellement connecté(e)!
             </div>
         {% endif %}
     </div>
 </div>
-
 <div class="p-3 pt-4 spkdv_header_middle">
     <header class="d-flex flex-wrap align-items-center justify-content-between">
         <!-- Recherche (Mobile et Tablette) -->
-        <div class="col-md-4 mb-2 mb-md-0">
+        <div class="col-12 col-md-4 mb-2 mb-md-0 text-center text-md-left">
             {% include 'components/_search_form.html.twig' %}
         </div>
 
         <!-- Logo centré -->
-        <div class="col-md-4 text-center">
+        <div class="col-12 col-md-4 text-center">
             <a href="{{ path('home.index') }}" class="d-inline-flex link-body-emphasis text-decoration-none">
                 <img src="{{ asset('img/logo_sillage_parfumerie.svg') }}" width="200" alt="Logo Sillage"/>
             </a>
         </div>
 
-        <!-- Icônes à droite -->
-        <div class="col-12 col-md-4 text-center">
-            <div class="d-flex justify-content-end">
+        <!-- Icônes à droite, centrées sur mobile -->
+        <div class="col-12 col-md-4 text-center text-md-right py-2 py-md-0">
+            <div class="d-flex justify-content-center justify-content-md-end">
                 <div class="mx-4">
                     <a href="#">
                         <object type="image/svg+xml" data="{{ asset('svg/heart.svg') }}" width="20px" aria-label="Favoris">
@@ -68,6 +68,7 @@
         </div>
     </header>
 </div>
+
 
 {# Navbar - incluse ici pour être à l'extérieur du header #}
 {% include 'components/_navbar.html.twig' %}
