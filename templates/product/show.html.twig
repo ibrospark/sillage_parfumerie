@@ -217,59 +217,44 @@
         'Toute occasion': 'toute_occasion',
         'Parfum de jour': 'parfum_de_jour',
         'Parfum de soirée': 'parfum_de_soiree',
-        'Autre': 'occasion',
-        'default': 'default'
+        'Autre': 'occasion'
     } %}
     {% set season_map = {
         'Printemps': 'printemps',
         'Été': 'ete',
         'Automne': 'automne',
         'Hiver': 'hiver',
-        'Toutes saisons': 'season',
-        'default': 'default'
+        'Toutes saisons': 'season'
     } %}
     {% set gender_map = {
         'Homme': 'homme',
         'Femme': 'femme',
-        'Unisexe': 'unisexe',
-        'default': 'default'
+        'Unisexe': 'unisexe'
     } %}
 
     {% for attribute in ['Season', 'Occasion', 'Gender'] %}
         {% set value = attribute(product, 'get' ~ attribute) %}
-        {% if value %}
-            <div class="col-4">
-                <div class="item">
-                    <div class="icon">
-                        {% if attribute == 'Occasion' %}
-                            <img src="{{ asset('img/olfactory_profile/' ~ (occasion_map[value] ?? 'default') ~ '.svg') }}" 
-                                 loading="lazy" height="50px" 
-                                 alt="{{ value|default('Inconnu') }}">
-                        {% elseif attribute == 'Season' %}
-                            <img src="{{ asset('img/olfactory_profile/' ~ (season_map[value] ?? 'default') ~ '.svg') }}" 
-                                 loading="lazy" height="50px" 
-                                 alt="{{ value|default('Inconnu') }}">
-                        {% elseif attribute == 'Gender' %}
-                            <img src="{{ asset('img/olfactory_profile/' ~ (gender_map[value] ?? 'default') ~ '.svg') }}" 
-                                 loading="lazy" height="50px" 
-                                 alt="{{ value|default('Inconnu') }}">
-                        {% endif %}
-                    </div>
-                    <div class="value">{{ value is defined and value in (attribute == 'Occasion' ? occasion_map : attribute == 'Season' ? season_map : gender_map) ? value : 'Indisponible' }}</div>
+        <div class="col-4">
+            <div class="item">
+                <div class="icon">
+                    {% if attribute == 'Occasion' %}
+                        {% set icon = occasion_map[value] ?? 'default' %}
+                    {% elseif attribute == 'Season' %}
+                        {% set icon = season_map[value] ?? 'default' %}
+                    {% elseif attribute == 'Gender' %}
+                        {% set icon = gender_map[value] ?? 'default' %}
+                    {% else %}
+                        {% set icon = 'default' %}
+                    {% endif %}
+                    <img src="{{ asset('img/olfactory_profile/' ~ icon ~ '.svg') }}" 
+                         loading="lazy" height="50px" 
+                         alt="{{ value|default('Inconnu') }}">
+                </div>
+                <div class="value">
+                    {{ value is defined and icon != 'default' ? value : 'Indisponible' }}
                 </div>
             </div>
-        {% else %}
-            <div class="col-4">
-                <div class="item">
-                    <div class="icon">
-                        <img src="{{ asset('img/olfactory_profile/default.svg') }}" 
-                             loading="lazy" height="50px" 
-                             alt="Indisponible">
-                    </div>
-                    <div class="value">Indisponible</div>
-                </div>
-            </div>
-        {% endif %}
+        </div>
     {% endfor %}
 </div>
 
