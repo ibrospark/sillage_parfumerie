@@ -124,16 +124,16 @@
         </div>
     </div>
 
-    <div class="my-5 col-md-8 mx-auto border p-4 position-relative">
-       <h3 class="text-center text-uppercase" style="position:absolute; top:-15%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
+    <div class="my-5 col-md-8 mx-auto p-4 text-center">
+        <h3 class="text-uppercase">
             Description
         </h3>
 
         <div class="my-4">{{ product.description is not empty ? product.description | raw : 'Aucune description disponible' }}</div>
     </div>
 
-    <div class="my-5 col-md-8 mx-auto border p-4 position-relative">
-        <h3 class="text-center text-uppercase" style="position:absolute; top:-15%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
+    <div class="my-5 col-md-8 mx-auto p-4 text-center">
+        <h3 class=" text-uppercase">
             Notes olfactives
         </h3>
 
@@ -141,43 +141,49 @@
             {% if product.getHeadNote() %}
             <div class="col-4">
                 <div class="card-text">
-                    <strong>Tête</strong><br>
-                    {{ product.getHeadNote() }}
-                    <br>
+
                     <img src="{{ asset('img/olfactory_notes/' ~ product.getHeadNote().imageUrl) }}"
                          alt="{{ product.getHeadNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
                          style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                                                  <br>
+                    <strong>Tête</strong><br>
+                    {{ product.getHeadNote() }}
+           
                 </div>
             </div>
         {% endif %}
         {% if product.getHeartNote() %}
             <div class="col-4">
                 <div class="card-text">
-                    <strong>Coeur</strong><br>
-                    {{ product.getHeartNote() }}
-                    <br>
                     <img src="{{ asset('img/olfactory_notes/' ~ product.getHeartNote().imageUrl) }}"
                          alt="{{ product.getHeartNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
                          style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                                                 <br>
+
+                    <strong>Coeur</strong><br>
+                    {{ product.getHeartNote() }}
+            
                 </div>
             </div>
         {% endif %}
         {% if product.getBackgroundNote() %}
             <div class="col-4">
                 <div class="card-text">
-                    <strong>Fond</strong><br>
-                    {{ product.getBackgroundNote() }}
-                    <br>
-                    <img src="{{ asset('img/olfactory_notes/' ~ product.getBackgroundNote().imageUrl) }}"
+                  <img src="{{ asset('img/olfactory_notes/' ~ product.getBackgroundNote().imageUrl) }}"
                          alt="{{ product.getBackgroundNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
                          style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                                             <br>
+
+                    <strong>Fond</strong><br>
+                    {{ product.getBackgroundNote() }}
+                  
                 </div>
             </div>
         {% endif %}
         </div>
     </div>
     <div id="section-3" class="section-profil-olfactif my-5 col-md-8 mx-auto border p-4 position-relative">
-        <h3 class="text-center text-uppercase" style="position:absolute; top:-15%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
+        <h3 class="text-center text-uppercase" style="position:absolute; top:-10%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
             Profil olfactif
         </h3>
         <div class="text-center my-4 " style="font-size: 2em;">Intensité</div>
@@ -196,26 +202,50 @@
 
         <div class="row text-center mt-5">
             {% for attribute in ['Season', 'Occasion', 'Gender'] %}
-                {% set value = attribute(product, 'get' ~ attribute) %}
-                {% if value %}
-                    <div class="col-4">
-                        <div class="item">
-                            <div class="icon">
-                                <img src="{{ asset('img/olfactory_profile/' ~ attribute|lower ~ '.svg') }}" loading="lazy" height="50px" alt="{{ attribute|trans }}">
-                            </div>
-                            <div class="value">{{ value }}</div>
-                        </div>
+            {% set value = attribute(product, 'get' ~ attribute) %}
+            {% if value %}
+                <div class="col-4">
+                <div class="item">
+                    <div class="icon">
+                    {% if attribute == 'Occasion' %}
+                        {% set occasion_map = {
+                        'Toute occasion': 'toute_occasion',
+                        'Parfum de jour': 'parfum_de_jour',
+                        'Parfum de soirée': 'parfum_de_soiree',
+                        'Autre': 'occasion'
+                        } %}
+                        <img src="{{ asset('img/olfactory_profile/' ~ occasion_map[value] ~ '.svg') }}" loading="lazy" height="50px" alt="{{ value }}">
+                    {% elseif attribute == 'Season' %}
+                        {% set season_map = {
+                        'Printemps': 'printemps',
+                        'Été': 'ete',
+                        'Automne': 'automne',
+                        'Hiver': 'hiver',
+                        'Toutes saisons': 'season'
+                        } %}
+                        <img src="{{ asset('img/olfactory_profile/' ~ season_map[value] ~ '.svg') }}" loading="lazy" height="50px" alt="{{ value }}">
+                    {% elseif attribute == 'Gender' %}
+                        {% set gender_map = {
+                        'Homme': 'homme',
+                        'Femme': 'femme',
+                        'Unisexe': 'unisexe',
+                        } %}
+                        <img src="{{ asset('img/olfactory_profile/' ~ gender_map[value] ~ '.svg') }}" loading="lazy" height="50px" alt="{{ value }}">
+                    {% endif %}
                     </div>
-                {% else %}
-                    <div class="col-4">
-                        <div class="item">
-                            <div class="icon">
-                                <img src="{{ asset('img/olfactory_profile/' ~ attribute|lower ~ '.svg') }}" loading="lazy" height="50px" alt="{{ attribute|trans }}">
-                            </div>
-                            <div class="value">Indisponible</div>
-                        </div>
+                    <div class="value">{{ value }}</div>
+                </div>
+                </div>
+            {% else %}
+                <div class="col-4">
+                <div class="item">
+                    <div class="icon">
+                    <img src="{{ asset('img/olfactory_profile/' ~ attribute|lower ~ '.svg') }}" loading="lazy" height="50px" alt="{{ attribute|trans }}">
                     </div>
-                {% endif %}
+                    <div class="value">Indisponible</div>
+                </div>
+                </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

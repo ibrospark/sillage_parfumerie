@@ -201,12 +201,12 @@ class ProductCrudController extends AbstractCrudController
                     'Été' => 'Été',
                     'Automne' => 'Automne',
                     'Hiver' => 'Hiver',
-                    'Autre' => 'Autre',
+                    'Toutes saisons' => 'Toutes saisons',
                 ])
                 ->setHelp('Sélectionnez la saison.')
                 ->autocomplete()
                 ->hideOnIndex()
-                ->setFormTypeOption('empty_data', ['Autre'])
+                ->setFormTypeOption('empty_data', ['Toutes saisons'])
                 ->setRequired(false)
                 ->setColumns('col-md-4 p-1'),
 
@@ -250,7 +250,6 @@ class ProductCrudController extends AbstractCrudController
                     'Homme' => 'Homme',
                     'Femme' => 'Femme',
                     'Unisexe' => 'Unisexe',
-                    'Autre' => 'Autre',
                 ])
                 ->setHelp('Sélectionnez le genre.')
                 ->autocomplete()
