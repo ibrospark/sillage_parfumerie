@@ -151,7 +151,7 @@ class ProductVariation
         $productName = $this->product ? $this->product->getName() : 'Produit inconnu';
 
         // Combiner le nom du produit, la capacité et le prix
-        return $productName . ' - ' . $this->capacity . ' - ' . $this->regular_price . ' Fcfa';
+        return $productName . ' - ' . $this->capacity . ' - ' . $this->regular_price . ' F';
     }
     /**
      * @ORM\PreRemove

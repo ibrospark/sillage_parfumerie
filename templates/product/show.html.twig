@@ -27,7 +27,7 @@
                 <div class="col-lg-15 mx-auto">
                      <div style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:0.8em;">
                         <div class="row  align-items-end">
-                            <div class="col-8 px-md-4">  
+                            <div class="col-7 px-md-4">  
                                 <div class="spkdv_title">{{ product.name }}</div>
                                 {% if brand is not empty %}
                                     <a href="{{ path('brand.index') }}/{{ brand.id }}">
@@ -36,16 +36,16 @@
                                 {% endif %}
                             </div>
 
-                            <div class="col-4 text-center">
+                            <div class="col-5 text-center">
                                 <div class="card-text">
                                     {% if product.salePrice != 0 and product.salePrice %}
-                                        <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA</div>
+                                        <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', ' ') }} F</div>
                                         <div id="product-price" class="fw-bold fs-3">
-                                            {{ (product.salePrice / 100) | number_format(product.salePrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
+                                            {{ (product.salePrice / 100) | number_format(product.salePrice % 100 == 0 ? 0 : 2, ',', ' ') }} F
                                         </div>
                                     {% elseif product.regularPrice > 0 %}
                                         <div id="product-price" class="fw-bold fs-3">
-                                            {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
+                                            {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', ' ') }} F
                                         </div>
                                     {% else %}
                                         <div id="product-price" class="fw-bold fs-3">Prix indisponible</div>
@@ -302,8 +302,8 @@
                 const capacity = chip.getAttribute('data-capacity');
 
                 // Update price, image, quantity and capacity
-                productPrice.textContent = `${price.toFixed(price % 1 === 0 ? 0 : 2).replace('.', ',')} FCFA`;
-                regularPrice.textContent = regularPriceValue ? `${regularPriceValue.toFixed(regularPriceValue % 1 === 0 ? 0 : 2).replace('.', ',')} FCFA` : '';
+                productPrice.textContent = `${price.toFixed(price % 1 === 0 ? 0 : 2).replace(' ', ',')} F`;
+                regularPrice.textContent = regularPriceValue ? `${regularPriceValue.toFixed(regularPriceValue % 1 === 0 ? 0 : 2).replace(' ', ',')} F` : '';
                 productImage.src = imageUrl ? `{{ asset('img/products/') }}/${imageUrl}` : productImage.src;
                 quantityDisplay.textContent = stock ?? 'Indisponible';
                 capacityDisplay.textContent = capacity ?? 'Indisponible';

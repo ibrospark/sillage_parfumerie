@@ -21,7 +21,7 @@ class PaymentController extends AbstractController
   public function pay(): Response
   {
     try {
-      $amount = 10000; // Montant en FCFA
+      $amount = 10000; // Montant en F
       $description = 'Achat de produit'; // Description du produit
       $storeName = 'Nom de la boutique'; // Nom de la boutique
 
