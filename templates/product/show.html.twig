@@ -5,12 +5,12 @@
 {% block body %}
 <div class="container p-4">
 
-    {% set breadcrumbs = [
-        {"page_name": "Accueil", "route_path": path('home.index')},
-        {"page_name": "Parfums", "route_path": path('product.index')},
-        {"page_name": brand.name ?? " ", "route_path": brand.name ? path('brand.show', { 'id': brand.id }) : null },
-        {"page_name": product.name, "route_path": path('product.show', { 'id': product.id })}
-    ] %}
+{% set breadcrumbs = [
+    {"page_name": "Accueil", "route_path": path('home.index')},
+    {"page_name": "Parfums", "route_path": path('product.index')},
+    {"page_name": brand is not null ? brand.name : " ", "route_path": brand is not null ? path('brand.show', { 'id': brand.id }) : null },
+    {"page_name": product.name, "route_path": path('product.show', { 'id': product.id })}
+] %}
 
     {% include 'components/_breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs} %}
 
@@ -19,8 +19,10 @@
             <img id="product-image" src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="img-fluid" />
         </div>
         
-        <div class="col-12 col-sm-12 col-md-6" style="padding:20px!important;">
-            <div style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:0.8em;">
+        <div class="col-12 col-sm-12 col-md-6 px-md-3" style="padding:20px!important;">
+           <div class="row">
+                <div class="col-lg-10 mx-auto">
+                     <div style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:0.8em;">
                 <div class="row">
                     <div class="col-8">  
                         <div class="spkdv_title">{{ product.name }}</div>
@@ -33,84 +35,24 @@
 
                     <div class="col-4">
                         <div class="card-text">
-                            {% if product.regularPrice == 0 and product.salePrice %}
-                                <div class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
-                                <div id="product-price"  class="fw-bold fs-3">
+                            {% if product.salePrice != 0 and product.salePrice %}
+                                <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
+                                <div id="product-price" class="fw-bold fs-3">
                                     {{ (product.salePrice / 100) | number_format(2, ',', '.') }} FCFA
                                 </div>
                             {% elseif product.regularPrice > 0 %}
-                                <div id="product-price"  class="fw-bold fs-3">
+                                <div id="product-price" class="fw-bold fs-3">
                                     {{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA
                                 </div>
+                            {% else %}
+                                <div id="product-price" class="fw-bold fs-3">Prix indisponible</div>
                             {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <label for="product-variant" class="form-label">Sélectionnez une contenance :</label>
-                    <div id="product-variant" class="d-flex flex-wrap">
-                        <div class="chip selected" data-id="{{ product.id }}" data-price="{{ product.salePrice ?? product.regularPrice }}" data-stock="{{ product.stockQuantity }}" data-image="{{ product.imageUrl }}" data-capacity="{{ product.capacity }}">
-                            {{ product.capacity }} - {{ ((product.salePrice ?? product.regularPrice) / 100) | number_format(2, ',', '.') }} FCFA
-                        </div>
-                        {% for variant in variants %}
-                            <div class="chip" data-id="{{ variant.id }}" data-price="{{ variant.salePrice > 0 ? variant.salePrice : variant.regularPrice }}" data-stock="{{ variant.stockQuantity }}" data-image="{{ variant.imageUrl }}" data-capacity="{{ variant.capacity }}">
-                                {{ variant.capacity }} - {{ ((variant.salePrice > 0 ? variant.salePrice : variant.regularPrice) / 100) | number_format(2, ',', '.') }} FCFA
-                            </div>
-                        {% endfor %}
-                    </div>
 
-                    <style>
-                        .chip {
-                            display: inline-block;
-                            padding: 10px;
-                            margin: 5px;
-                            border: 1px solid #ccc;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            transition: background-color 0.3s;
-                        }
-                        .chip:hover {
-                            background-color: #f0f0f0;
-                        }
-                        .chip.selected {
-                            background-color: #d0d0d0;
-                        }
-                    </style>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const chips = document.querySelectorAll('.chip');
-                            const productImage = document.getElementById('product-image');
-                            const productPrice = document.getElementById('product-price');
-                            const quantityDisplay = document.getElementById('variant-quantity');
-                            const capacityDisplay = document.getElementById('variant-capacity');
-
-                            chips.forEach(chip => {
-                                chip.addEventListener('click', () => {
-                                    chips.forEach(c => c.classList.remove('selected'));
-                                    chip.classList.add('selected');
-
-                                    const price = chip.getAttribute('data-price') / 100;
-                                    const imageUrl = chip.getAttribute('data-image');
-                                    const stock = chip.getAttribute('data-stock');
-                                    const capacity = chip.getAttribute('data-capacity');
-
-                                    // Update price, image, quantity and capacity
-                                    productPrice.textContent = `${price.toFixed(2).replace('.', ',')} FCFA`;
-                                    productImage.src = imageUrl ? `{{ asset('img/products/') }}/${imageUrl}` : productImage.src;
-                                    quantityDisplay.textContent = stock;
-                                    capacityDisplay.textContent = capacity;
-                                });
-                            });
-                        });
-                    </script>
-              
-                </div>
-            </div>
-
-            <div class="row text-center my-3" style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:1.1em;">
+            <div class="row text-center my-5">
                 {% if product.headNote %}
                     <div class="col-4">
                         <div class="card-text">
@@ -118,7 +60,14 @@
                             {{ product.headNote }}
                         </div>
                     </div>
+                {% else %}
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Tête</strong><br>Indisponible
+                        </div>
+                    </div>
                 {% endif %}
+                
                 {% if product.heartNote %}
                     <div class="col-4">
                         <div class="card-text">
@@ -126,7 +75,14 @@
                             {{ product.heartNote }}
                         </div>
                     </div>
+                {% else %}
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Coeur</strong><br>Indisponible
+                        </div>
+                    </div>
                 {% endif %}
+                
                 {% if product.backgroundNote %}
                     <div class="col-4">
                         <div class="card-text">
@@ -134,34 +90,44 @@
                             {{ product.backgroundNote }}
                         </div>
                     </div>
-                {% endif %}
-            </div>
-            <div class="row text-center" style="font-weight:800;">
-                {% if product.stockQuantity is not null %}
-                    <div class="col-6"> 
-                        <strong>Quantité disponible : </strong> <br><span id="variant-quantity">{{ product.stockQuantity }}</span>    
-                    </div>
-                {% endif %}
-                {% if product.capacity %}
-                    <div class="col-6"> 
-                        <strong>Contenance : </strong> <br><span id="variant-capacity">{{ product.capacity }}</span>    
+                {% else %}
+                    <div class="col-4">
+                        <div class="card-text">
+                            <strong>Fond</strong><br>Indisponible
+                        </div>
                     </div>
                 {% endif %}
             </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div id="product-variant" class="d-flex flex-wrap justify-content-between">
+                        <div class="chip selected text-center" data-id="{{ product.id }}" data-price="{{ product.salePrice != 0 and product.salePrice ? product.salePrice : product.regularPrice }}" data-regular-price="{{ product.regularPrice }}" data-stock="{{ product.stockQuantity }}" data-image="{{ product.imageUrl }}" data-capacity="{{ product.capacity }}">
+                            {{ product.capacity }}
+                        </div>
+                        {% for variant in variants %}
+                            <div class="chip text-center" data-id="{{ variant.id }}" data-price="{{ variant.salePrice != 0 and variant.salePrice ? variant.salePrice : variant.regularPrice }}" data-regular-price="{{ variant.regularPrice }}" data-stock="{{ variant.stockQuantity }}" data-image="{{ variant.imageUrl }}" data-capacity="{{ variant.capacity }}">
+                                {{ variant.capacity }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-12 p-5">
                     <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn" style="display:inline-block;width:100%;">Ajouter au panier</a>
                 </div>
             </div>
+                </div
+           </div>
         </div>
-
     </div>
 
-    
     <div class="col-12 col-md-8 text-center p-4 my-5 mx-auto">
         <h1>Description</h1>
-        <div>{{ product.description | raw }}</div>
+        <div>{{ product.description is not empty ? product.description | raw : 'Aucune description disponible' }}</div>
     </div>
+
     <div id="section-3" class="section-profil-olfactif my-5 col-md-6 mx-auto border p-4">
         <h2 class="text-center">Profil olfactif</h2>
         <div class="text-center my-4" style="font-size: 2em;">Intensité</div>
@@ -176,8 +142,7 @@
             <div class="progress-bar" style="background:#5b1823; width: {{ progress_width }}%" role="progressbar" aria-valuenow="{{ progress_width }}" aria-valuemin="0" aria-valuemax="100"></div>
             <div class="progress-bar" style="background:#ededed; width: {{ 100 - progress_width }}%" role="progressbar" aria-valuenow="{{ 100 - progress_width }}" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <div class="progress-bar bg-danger" style="width: {{ product.intensity | default(0) }}%"></div>
-        <div class="text-center my-4" style="font-size: 1.3em;">Sillage {{ product.intensity }}</div>
+        <div class="text-center my-4" style="font-size: 1.3em;">Sillage {{ product.intensity ?? 'Indisponible' }}</div>
 
         <div class="row text-center mt-5">
             {% for attribute in ['Season', 'Occasion', 'Gender'] %}
@@ -191,10 +156,66 @@
                             <div class="value">{{ value }}</div>
                         </div>
                     </div>
+                {% else %}
+                    <div class="col-4">
+                        <div class="item">
+                            <div class="icon">
+                                <img src="{{ asset('img/olfactory_profile/' ~ attribute|lower ~ '.svg') }}" loading="lazy" height="50px" alt="{{ attribute|trans }}">
+                            </div>
+                            <div class="value">Indisponible</div>
+                        </div>
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>
     </div>
 
 </div>
+
+<style>
+    .chip {
+        display: inline-block;
+        width: 45%;
+        padding: 10px;
+        margin: 5px;
+        border: 2px solid #bbb;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+   
+    .chip.selected {
+        border: 2px solid var(--primary-color);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chips = document.querySelectorAll('.chip');
+        const productImage = document.getElementById('product-image');
+        const productPrice = document.getElementById('product-price');
+        const regularPrice = document.getElementById('regular-price');
+        const quantityDisplay = document.getElementById('variant-quantity');
+        const capacityDisplay = document.getElementById('variant-capacity');
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => c.classList.remove('selected'));
+                chip.classList.add('selected');
+
+                const price = chip.getAttribute('data-price') / 100;
+                const regularPriceValue = chip.getAttribute('data-regular-price') / 100;
+                const imageUrl = chip.getAttribute('data-image');
+                const stock = chip.getAttribute('data-stock');
+                const capacity = chip.getAttribute('data-capacity');
+
+                // Update price, image, quantity and capacity
+                productPrice.textContent = `${price.toFixed(2).replace('.', ',')} FCFA`;
+                regularPrice.textContent = regularPriceValue ? `${regularPriceValue.toFixed(2).replace('.', ',')} FCFA` : '';
+                productImage.src = imageUrl ? `{{ asset('img/products/') }}/${imageUrl}` : productImage.src;
+                quantityDisplay.textContent = stock ?? 'Indisponible';
+                capacityDisplay.textContent = capacity ?? 'Indisponible';
+            });
+        });
+    });
+</script>
 {% endblock %}

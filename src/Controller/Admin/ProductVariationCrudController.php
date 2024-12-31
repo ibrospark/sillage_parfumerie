@@ -67,43 +67,48 @@ class ProductVariationCrudController extends AbstractCrudController
                 ->setCurrency('XOF')
                 ->setRequired(false)->setColumns('col-6 p-1'),
 
+
             // CAPACITY
             ChoiceField::new('capacity', 'Contenance')
                 ->setChoices([
-                    '10ml' => '10ml',
-                    '15ml' => '15ml',
-                    '25ml' => '25ml',
-                    '30ml' => '30ml',
-                    '50ml' => '50ml',
-                    '60ml' => '60ml',
-                    '75ml' => '75ml',
-                    '90ml' => '90ml',
-                    '100ml' => '100ml',
-                    '125ml' => '125ml',
-                    '150ml' => '150ml',
-                    '200ml' => '200ml',
-                    '250ml' => '250ml',
-                    '300ml' => '300ml',
-                    '350ml' => '350ml',
-                    '400ml' => '400ml',
-                    '450ml' => '450ml',
-                    '500ml' => '500ml',
-                    '550ml' => '550ml',
-                    '600ml' => '600ml',
-                    '650ml' => '650ml',
-                    '700ml' => '700ml',
-                    '750ml' => '750ml',
-                    '800ml' => '800ml',
-                    '850ml' => '850ml',
-                    '900ml' => '900ml',
-                    '950ml' => '950ml',
-                    '1000ml' => '1000ml',
+                    'Try me' => 'Try me',
+                    '10 ml' => '10 ml',
+                    '15 ml' => '15 ml',
+                    '25 ml' => '25 ml',
+                    '30 ml' => '30 ml',
+                    '50 ml' => '50 ml',
+                    '60 ml' => '60 ml',
+                    '75 ml' => '75 ml',
+                    '90 ml' => '90 ml',
+                    '100 ml' => '100 ml',
+                    '125 ml' => '125 ml',
+                    '150 ml' => '150 ml',
+                    '200 ml' => '200 ml',
+                    '250 ml' => '250 ml',
+                    '300 ml' => '300 ml',
+                    '350 ml' => '350 ml',
+                    '400 ml' => '400 ml',
+                    '450 ml' => '450 ml',
+                    '500 ml' => '500 ml',
+                    '550 ml' => '550 ml',
+                    '600 ml' => '600 ml',
+                    '650 ml' => '650 ml',
+                    '700 ml' => '700 ml',
+                    '750 ml' => '750 ml',
+                    '800 ml' => '800 ml',
+                    '850 ml' => '850 ml',
+                    '900 ml' => '900 ml',
+                    '950 ml' => '950 ml',
+                    '1000 ml' => '1000 ml',
                     'Autre' => 'Autre',
                 ])
                 ->hideOnIndex()
                 ->setFormTypeOption('empty_data', ['Autre'])
                 ->setRequired(false)
                 ->setColumns('col-md-4 p-1'),
+
+
+
 
             // STOCK QUANTITY
             IntegerField::new('stock_quantity', 'Qté.Stock')
@@ -112,12 +117,6 @@ class ProductVariationCrudController extends AbstractCrudController
                 ->setColumns('col-md-4 p-1'),
 
 
-            // IMAGE
-            ImageField::new('image_url', 'Image')
-                ->setBasePath('img/products')
-                ->setUploadDir('public/img/products')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
-                ->setRequired(false),
         ];
     }
     public function configureFilters(Filters $filters): Filters
