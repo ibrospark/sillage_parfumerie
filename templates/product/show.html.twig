@@ -16,7 +16,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-sm-12 col-md-6 p-4 text-center">
-            <img id="product-image" src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="img-fluid" />
+            <img id="product-image" src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="img-fluid" style="max-height: 600px;" />
         </div>
         
         <div class="col-12 col-sm-12 col-md-6 px-md-3" style="padding:20px!important;">
@@ -123,8 +123,20 @@
            </div>
         </div>
     </div>
-
-    <div class="my-5 col-md-8 mx-auto p-4 text-center">
+    <nav class="my-4 text-uppercase border-bottom">
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item px-md-4">
+                <a class="nav-link" href="#section-description">Description</a>
+            </li>
+            <li class="nav-item px-md-4">
+                <a class="nav-link" href="#section-notes">Notes olfactives</a>
+            </li>
+            <li class="nav-item px-md-4">
+                <a class="nav-link" href="#section-profile">Profil olfactif</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="my-5 col-md-8 mx-auto p-4 text-center" id="section-description">
         <h3 class="text-uppercase">
             Description
         </h3>
@@ -132,12 +144,12 @@
         <div class="my-4">{{ product.description is not empty ? product.description | raw : 'Aucune description disponible' }}</div>
     </div>
 
-    <div class="my-5 col-md-8 mx-auto p-4 text-center">
+    <div class="my-5 col-md-8 mx-auto p-4 text-center" id="section-notes">
         <h3 class=" text-uppercase">
             Notes olfactives
         </h3>
 
-        <div class="row my-4" >
+        <div class="row my-4" id="section-profile" >
             {% if product.getHeadNote() %}
             <div class="col-4">
                 <div class="card-text">
@@ -182,7 +194,7 @@
         {% endif %}
         </div>
     </div>
-    <div id="section-3" class="section-profil-olfactif my-5 col-md-8 mx-auto border p-4 position-relative">
+    <div id="section-3" class="section-profil-olfactif my-5 col-md-6 mx-auto border p-4 position-relative">
         <h3 class="text-center text-uppercase" style="position:absolute; top:-10%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
             Profil olfactif
         </h3>
@@ -200,54 +212,67 @@
         </div>
         <div class="text-center my-4" style="font-size: 1.3em;">Sillage {{ product.intensity ?? 'Indisponible' }}</div>
 
-        <div class="row text-center mt-5">
-            {% for attribute in ['Season', 'Occasion', 'Gender'] %}
-            {% set value = attribute(product, 'get' ~ attribute) %}
-            {% if value %}
-                <div class="col-4">
+      <div class="row text-center mt-5">
+    {% set occasion_map = {
+        'Toute occasion': 'toute_occasion',
+        'Parfum de jour': 'parfum_de_jour',
+        'Parfum de soirée': 'parfum_de_soiree',
+        'Autre': 'occasion',
+        'default': 'default'
+    } %}
+    {% set season_map = {
+        'Printemps': 'printemps',
+        'Été': 'ete',
+        'Automne': 'automne',
+        'Hiver': 'hiver',
+        'Toutes saisons': 'season',
+        'default': 'default'
+    } %}
+    {% set gender_map = {
+        'Homme': 'homme',
+        'Femme': 'femme',
+        'Unisexe': 'unisexe',
+        'default': 'default'
+    } %}
+
+    {% for attribute in ['Season', 'Occasion', 'Gender'] %}
+        {% set value = attribute(product, 'get' ~ attribute) %}
+        {% if value %}
+            <div class="col-4">
                 <div class="item">
                     <div class="icon">
-                    {% if attribute == 'Occasion' %}
-                        {% set occasion_map = {
-                        'Toute occasion': 'toute_occasion',
-                        'Parfum de jour': 'parfum_de_jour',
-                        'Parfum de soirée': 'parfum_de_soiree',
-                        'Autre': 'occasion'
-                        } %}
-                        <img src="{{ asset('img/olfactory_profile/' ~ occasion_map[value] ~ '.svg') }}" loading="lazy" height="50px" alt="{{ value }}">
-                    {% elseif attribute == 'Season' %}
-                        {% set season_map = {
-                        'Printemps': 'printemps',
-                        'Été': 'ete',
-                        'Automne': 'automne',
-                        'Hiver': 'hiver',
-                        'Toutes saisons': 'season'
-                        } %}
-                        <img src="{{ asset('img/olfactory_profile/' ~ season_map[value] ~ '.svg') }}" loading="lazy" height="50px" alt="{{ value }}">
-                    {% elseif attribute == 'Gender' %}
-                        {% set gender_map = {
-                        'Homme': 'homme',
-                        'Femme': 'femme',
-                        'Unisexe': 'unisexe',
-                        } %}
-                        <img src="{{ asset('img/olfactory_profile/' ~ gender_map[value] ~ '.svg') }}" loading="lazy" height="50px" alt="{{ value }}">
-                    {% endif %}
+                        {% if attribute == 'Occasion' %}
+                            <img src="{{ asset('img/olfactory_profile/' ~ (occasion_map[value] ?? 'default') ~ '.svg') }}" 
+                                 loading="lazy" height="50px" 
+                                 alt="{{ value|default('Inconnu') }}">
+                        {% elseif attribute == 'Season' %}
+                            <img src="{{ asset('img/olfactory_profile/' ~ (season_map[value] ?? 'default') ~ '.svg') }}" 
+                                 loading="lazy" height="50px" 
+                                 alt="{{ value|default('Inconnu') }}">
+                        {% elseif attribute == 'Gender' %}
+                            <img src="{{ asset('img/olfactory_profile/' ~ (gender_map[value] ?? 'default') ~ '.svg') }}" 
+                                 loading="lazy" height="50px" 
+                                 alt="{{ value|default('Inconnu') }}">
+                        {% endif %}
                     </div>
-                    <div class="value">{{ value }}</div>
+                    <div class="value">{{ value is defined and value in (attribute == 'Occasion' ? occasion_map : attribute == 'Season' ? season_map : gender_map) ? value : 'Indisponible' }}</div>
                 </div>
-                </div>
-            {% else %}
-                <div class="col-4">
+            </div>
+        {% else %}
+            <div class="col-4">
                 <div class="item">
                     <div class="icon">
-                    <img src="{{ asset('img/olfactory_profile/' ~ attribute|lower ~ '.svg') }}" loading="lazy" height="50px" alt="{{ attribute|trans }}">
+                        <img src="{{ asset('img/olfactory_profile/default.svg') }}" 
+                             loading="lazy" height="50px" 
+                             alt="Indisponible">
                     </div>
                     <div class="value">Indisponible</div>
                 </div>
-                </div>
-            {% endif %}
-            {% endfor %}
-        </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
     </div>
 
 </div>
