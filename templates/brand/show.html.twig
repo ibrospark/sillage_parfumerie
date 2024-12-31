@@ -17,16 +17,15 @@
     %} 
     
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-2">
             <img src='{{ asset('img/brands/' ~ brand.coverUrl) }}' loading="lazy" style="width:100%;"/>
         </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-2 text-center">
             <center> 
                 <img src='{{ asset('img/brands/' ~ brand.logoUrl) }}' loading="lazy"style="max-width:80%;max-height:100px;"/>
-                <h1 class="text-center">{{ brand.name }}</h1>
             </center>
-             <p class="p-4">
-                {{ brand.excerpt | raw }}
+             <p class="my-5">
+                {{ brand.description | raw }}
             </p>
         </div>
         <div class="spkdv_product_grid">
@@ -46,12 +45,7 @@
                 {% endfor %} 
             </div>
         </div>
-        <div class="col-12 text-center p-5">
-            <h1> Tout savoir de {{ brand.name }}  </h1>
-            <p>
-                {{ brand.description | raw }}
-            </p>
-        </div>
+
     </div>
 
 </div>

@@ -2,6 +2,9 @@
     <div class="card">
         <div class="image_container position-relative">
             <img src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="card-img-top w-100" alt="{{ product.name }}">
+              <div class="position-absolute" style="bottom: 5%; left: 50%; transform: translateX(-50%);font-size:0.9em;font-family:var(--font-family);color:#000;">
+                {{ product.olfactoryFamily ?? 'Indisponible' }}
+            </div>
             <div class="hover_buttons">
                 <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn">Ajouter au panier</a>
             </div>
@@ -16,16 +19,18 @@
                     {# ---------------------- PRIX RÉGULIER ET PROMOTION ---------------------- #}
                     <div class="card-text fs-5 regular_price">
                         {% if product.salePrice %}
-                            <div class="text-decoration-line-through text-muted fs-6">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
-                            {{ (product.salePrice / 100) | number_format(2, ',', '.') }} FCFA
+                            <div class="text-decoration-line-through text-muted fs-6">
+                                {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
+                            </div>
+                            {{ (product.salePrice / 100) | number_format(product.salePrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
                         {% else %}
-                            {{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA
+                            {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
                         {% endif %}
                     </div>
                 </div> 
             </div>
             {# -------------------------- NOTES OLFACTIVES -------------------------- #}
-            <div class="row text-center mt-auto border-top pt-3 fs-6">
+            <div class="row text-center mt-auto border-top pt-3 " style="font-size:0.8em;">
                 <div class="col-4">
                     <div class="card-text">
                         <strong>Tête</strong><br>

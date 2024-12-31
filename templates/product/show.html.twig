@@ -15,8 +15,11 @@
     {% include 'components/_breadcrumb.html.twig' with {'breadcrumbs': breadcrumbs} %}
 
     <div class="row justify-content-center">
-        <div class="col-12 col-sm-12 col-md-6 p-4 text-center">
+        <div class="col-12 col-sm-12 col-md-6 p-4 text-center position-relative">
             <img id="product-image" src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="img-fluid" style="max-height: 600px;" />
+            <div class="position-absolute" style="bottom: 5%; left: 50%; transform: translateX(-50%);font-family:var(--font-family);">
+                {{ product.olfactoryFamily ?? 'Indisponible' }}
+            </div>
         </div>
         
         <div class="col-12 col-sm-12 col-md-6 px-md-3" style="padding:20px!important;">
@@ -36,13 +39,13 @@
                             <div class="col-4">
                                 <div class="card-text">
                                     {% if product.salePrice != 0 and product.salePrice %}
-                                        <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
+                                        <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA</div>
                                         <div id="product-price" class="fw-bold fs-3">
-                                            {{ (product.salePrice / 100) | number_format(2, ',', '.') }} FCFA
+                                            {{ (product.salePrice / 100) | number_format(product.salePrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
                                         </div>
                                     {% elseif product.regularPrice > 0 %}
                                         <div id="product-price" class="fw-bold fs-3">
-                                            {{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA
+                                            {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', '.') }} FCFA
                                         </div>
                                     {% else %}
                                         <div id="product-price" class="fw-bold fs-3">Prix indisponible</div>
@@ -299,8 +302,8 @@
                 const capacity = chip.getAttribute('data-capacity');
 
                 // Update price, image, quantity and capacity
-                productPrice.textContent = `${price.toFixed(2).replace('.', ',')} FCFA`;
-                regularPrice.textContent = regularPriceValue ? `${regularPriceValue.toFixed(2).replace('.', ',')} FCFA` : '';
+                productPrice.textContent = `${price.toFixed(price % 1 === 0 ? 0 : 2).replace('.', ',')} FCFA`;
+                regularPrice.textContent = regularPriceValue ? `${regularPriceValue.toFixed(regularPriceValue % 1 === 0 ? 0 : 2).replace('.', ',')} FCFA` : '';
                 productImage.src = imageUrl ? `{{ asset('img/products/') }}/${imageUrl}` : productImage.src;
                 quantityDisplay.textContent = stock ?? 'Indisponible';
                 capacityDisplay.textContent = capacity ?? 'Indisponible';

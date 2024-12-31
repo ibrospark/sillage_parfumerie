@@ -59,10 +59,10 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('<div class="spkdv_menu_icon">Taxonomies</div>', 'fas fa-tags')
             ->setSubItems([
+                MenuItem::linkToCrud('<div class="spkdv_menu_icon">Marques</div>', 'fas fa-flag', Brand::class),
                 MenuItem::linkToCrud('<div class="spkdv_menu_icon">Catégories</div>', 'fas fa-folder', Category::class),
                 MenuItem::linkToCrud('<div class="spkdv_menu_icon">Familles olfactives</div>', 'fas fa-leaf', OlfactoryFamily::class),
                 MenuItem::linkToCrud('<div class="spkdv_menu_icon">Notes olfactives</div>', 'fas fa-flask', OlfactoryNote::class),
-                MenuItem::linkToCrud('<div class="spkdv_menu_icon">Marques</div>', 'fas fa-flag', Brand::class),
             ]);
 
         yield MenuItem::section('Gestion des contenus');
