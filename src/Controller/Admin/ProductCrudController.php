@@ -182,6 +182,7 @@ class ProductCrudController extends AbstractCrudController
                     'Eau de Parfum' => 'Eau de Parfum',
                     'Eau de Toilette' => 'Eau de Toilette',
                     'Extrait de Parfum' => 'Extrait de Parfum',
+                    'Parfum' => 'Parfum',
                     'Autre' => 'Autre',
 
                 ])
