@@ -48,11 +48,11 @@
                                 <td class="align-middle">
                                     {% if item.product.salePrice %}
                                         <div class="text-muted" style="text-decoration: line-through;">
-                                            {{ item.product.regularPrice|number_format(2, ',', '.') }} €
+                                            {{ item.product.regularPrice|number_format(2, ',', '.') }} FCFA
                                         </div>
-                                        <strong>{{ item.product.salePrice|number_format(2, ',', '.') }} €</strong>
+                                        <strong>{{ item.product.salePrice|number_format(2, ',', '.') }} FCFA</strong>
                                     {% else %}
-                                        <strong>{{ item.product.regularPrice|number_format(2, ',', '.') }} €</strong>
+                                        <strong>{{ item.product.regularPrice|number_format(2, ',', '.') }} FCFA</strong>
                                     {% endif %}
                                 </td>
                                 <td class="text-center align-middle">
@@ -66,9 +66,9 @@
                                 </td>
                                 <td class="align-middle">
                                     {% if item.product.salePrice %}
-                                        {{ (item.quantity * item.product.salePrice)|number_format(2, ',', '.') }} €
+                                        {{ (item.quantity * item.product.salePrice)|number_format(2, ',', '.') }} FCFA
                                     {% else %}
-                                        {{ (item.quantity * item.product.regularPrice)|number_format(2, ',', '.') }} €
+                                        {{ (item.quantity * item.product.regularPrice)|number_format(2, ',', '.') }} FCFA
                                     {% endif %}
                                 </td>
                                 <td class="align-middle">
@@ -100,7 +100,7 @@
                     <tbody>
                         <tr>
                             <td>{{ totalQuantity }} article(s)</td>
-                            <td class="text-end">{{ totalPrice|number_format(2, ',', '.') }} €</td>
+                            <td class="text-end">{{ totalPrice|number_format(2, ',', '.') }} FCFA</td>
                         </tr>
                         {% if totalQuantity > 0 %}
                         <tr>
@@ -110,7 +110,7 @@
                         {% endif %}
                         <tr>
                             <td>TOTAL TTC</td>
-                            <td class="text-end">{{ totalPrice|number_format(2, ',', '.') }} €</td>
+                            <td class="text-end">{{ totalPrice|number_format(2, ',', '.') }} FCFA</td>
                         </tr>
                         <tr>
                             <td colspan="2">

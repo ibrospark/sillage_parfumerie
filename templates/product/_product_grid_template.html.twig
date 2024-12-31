@@ -20,11 +20,11 @@
                     <div class="card-text regular_price" style="font-size:0.9em;">
                         {% if product.salePrice %}
                             <div class="text-decoration-line-through text-muted" style="font-size:0.7em;">
-                                {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', ' ') }} F
+                                {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', ' ') }} FCFA
                             </div>
-                            {{ (product.salePrice / 100) | number_format(product.salePrice % 100 == 0 ? 0 : 2, ',', ' ') }} F
+                            {{ (product.salePrice / 100) | number_format(product.salePrice % 100 == 0 ? 0 : 2, ',', ' ') }} FCFA
                         {% else %}
-                            {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', ' ') }} F
+                            {{ (product.regularPrice / 100) | number_format(product.regularPrice % 100 == 0 ? 0 : 2, ',', ' ') }} FCFA
                         {% endif %}
                     </div>
                 </div> 

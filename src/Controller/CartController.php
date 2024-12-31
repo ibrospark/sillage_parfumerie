@@ -29,9 +29,7 @@ class CartController extends AbstractController
     #[Route('/add/{id}', name: 'cart.add')]
     public function add(int $id, CartService $cartService, SessionInterface $session): RedirectResponse
     {
-        $quantity = 1;
-
-        $cartService->add($id, $quantity, $session);
+        $cartService->add($id, $session);
         return $this->redirectToRoute('cart.index');
     }
 
