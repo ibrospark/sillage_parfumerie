@@ -81,9 +81,40 @@ class ProductCrudController extends AbstractCrudController
 
 
             // CAPACITY
-            TextField::new('capacity', 'Contenance')
+            ChoiceField::new('capacity', 'Contenance')
+                ->setChoices([
+                    '10ml' => '10ml',
+                    '15ml' => '15ml',
+                    '25ml' => '25ml',
+                    '30ml' => '30ml',
+                    '50ml' => '50ml',
+                    '60ml' => '60ml',
+                    '75ml' => '75ml',
+                    '90ml' => '90ml',
+                    '100ml' => '100ml',
+                    '125ml' => '125ml',
+                    '150ml' => '150ml',
+                    '200ml' => '200ml',
+                    '250ml' => '250ml',
+                    '300ml' => '300ml',
+                    '350ml' => '350ml',
+                    '400ml' => '400ml',
+                    '450ml' => '450ml',
+                    '500ml' => '500ml',
+                    '550ml' => '550ml',
+                    '600ml' => '600ml',
+                    '650ml' => '650ml',
+                    '700ml' => '700ml',
+                    '750ml' => '750ml',
+                    '800ml' => '800ml',
+                    '850ml' => '850ml',
+                    '900ml' => '900ml',
+                    '950ml' => '950ml',
+                    '1000ml' => '1000ml',
+                    'Autre' => 'Autre',
+                ])
                 ->hideOnIndex()
-                ->setFormTypeOption('empty_data', '')
+                ->setFormTypeOption('empty_data', ['Autre'])
                 ->setRequired(false)
                 ->setColumns('col-md-4 p-1'),
 

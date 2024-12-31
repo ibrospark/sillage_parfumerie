@@ -64,6 +64,7 @@ final class ProductController extends AbstractController
     {
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'variants' => $product->getProductVariations(),
             'brand' => $product->getBrand(), // Directly access the brand
         ]);
     }

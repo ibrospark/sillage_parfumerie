@@ -24,7 +24,9 @@ class SliderCrudController extends AbstractCrudController
         $videoSourceField = ChoiceField::new('videoSourceType', 'Source Vidéo')
             ->setChoices([
                 'URL' => 'url',
+                // 'Lien youtube' => 'youtube',
                 'Upload' => 'upload'
+
             ])
             ->setHelp('Choisissez le type de source vidéo.');
 

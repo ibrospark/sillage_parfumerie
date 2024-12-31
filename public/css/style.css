@@ -100,15 +100,17 @@ footer a {
 
 /* -------------------------------------- TITRES -------------------------------------- */
 .spkdv_title {
-    font-size: 4em;
+    font-size: 2em;
     font-family: 'Cormorant Garamond' !important;
     font-weight: 800;
+    text-transform: uppercase;
 }
 
 .spkdv_subtitle {
-    font-size: 3em;
+    font-size: 2.5em;
     font-family: 'DM Sans' !important;
     font-weight: 800;
+    text-transform: capitalize;
 }
 
 h1,
@@ -309,22 +311,8 @@ h6 {
 /* ----------------------------------------------------------- */
 @media (max-width: 767px) {
 
-    .spkdv_title {
-        font-size: 3em;
-    }
-
-    .spkdv_subtitle {
-        font-size: 1em;
-    }
 }
 
 @media (max-width: 480px) {
 
-    .spkdv_title {
-        font-size: 2em;
-    }
-
-    .spkdv_subtitle {
-        font-size: 1em;
-    }
 }
