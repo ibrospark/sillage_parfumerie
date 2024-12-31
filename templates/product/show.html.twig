@@ -21,116 +21,166 @@
         
         <div class="col-12 col-sm-12 col-md-6 px-md-3" style="padding:20px!important;">
            <div class="row">
-                <div class="col-lg-10 mx-auto">
+                <div class="col-lg-15 mx-auto">
                      <div style="border-bottom: 1px solid #eae9e9; padding-bottom: 15px; font-size:0.8em;">
-                <div class="row">
-                    <div class="col-8">  
-                        <div class="spkdv_title">{{ product.name }}</div>
-                        {% if brand is not empty %}
-                            <a href="{{ path('brand.index') }}/{{ brand.id }}">
-                                <div class="spkdv_subtitle">{{ brand.name }}</div>                                
-                            </a> 
+                        <div class="row">
+                            <div class="col-8">  
+                                <div class="spkdv_title">{{ product.name }}</div>
+                                {% if brand is not empty %}
+                                    <a href="{{ path('brand.index') }}/{{ brand.id }}">
+                                        <div class="spkdv_subtitle">{{ brand.name }}</div>                                
+                                    </a> 
+                                {% endif %}
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card-text">
+                                    {% if product.salePrice != 0 and product.salePrice %}
+                                        <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
+                                        <div id="product-price" class="fw-bold fs-3">
+                                            {{ (product.salePrice / 100) | number_format(2, ',', '.') }} FCFA
+                                        </div>
+                                    {% elseif product.regularPrice > 0 %}
+                                        <div id="product-price" class="fw-bold fs-3">
+                                            {{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA
+                                        </div>
+                                    {% else %}
+                                        <div id="product-price" class="fw-bold fs-3">Prix indisponible</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row text-center my-5">
+                        {% if product.headNote %}
+                            <div class="col-4">
+                                <div class="card-text">
+                                    <strong>Tête</strong><br>
+                                    {{ product.headNote }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-4">
+                                <div class="card-text">
+                                    <strong>Tête</strong><br>Indisponible
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        {% if product.heartNote %}
+                            <div class="col-4">
+                                <div class="card-text">
+                                    <strong>Coeur</strong><br>
+                                    {{ product.heartNote }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-4">
+                                <div class="card-text">
+                                    <strong>Coeur</strong><br>Indisponible
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        {% if product.backgroundNote %}
+                            <div class="col-4">
+                                <div class="card-text">
+                                    <strong>Fond</strong><br>
+                                    {{ product.backgroundNote }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-4">
+                                <div class="card-text">
+                                    <strong>Fond</strong><br>Indisponible
+                                </div>
+                            </div>
                         {% endif %}
                     </div>
 
-                    <div class="col-4">
-                        <div class="card-text">
-                            {% if product.salePrice != 0 and product.salePrice %}
-                                <div id="regular-price" class="text-decoration-line-through text-muted fs-5">{{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA</div>
-                                <div id="product-price" class="fw-bold fs-3">
-                                    {{ (product.salePrice / 100) | number_format(2, ',', '.') }} FCFA
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div id="product-variant" class="d-flex flex-wrap justify-content-between">
+                                <div class="chip selected text-center" data-id="{{ product.id }}" data-price="{{ product.salePrice != 0 and product.salePrice ? product.salePrice : product.regularPrice }}" data-regular-price="{{ product.regularPrice }}" data-stock="{{ product.stockQuantity }}" data-image="{{ product.imageUrl }}" data-capacity="{{ product.capacity }}">
+                                    {{ product.capacity }}
                                 </div>
-                            {% elseif product.regularPrice > 0 %}
-                                <div id="product-price" class="fw-bold fs-3">
-                                    {{ (product.regularPrice / 100) | number_format(2, ',', '.') }} FCFA
-                                </div>
-                            {% else %}
-                                <div id="product-price" class="fw-bold fs-3">Prix indisponible</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row text-center my-5">
-                {% if product.headNote %}
-                    <div class="col-4">
-                        <div class="card-text">
-                            <strong>Tête</strong><br>
-                            {{ product.headNote }}
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="col-4">
-                        <div class="card-text">
-                            <strong>Tête</strong><br>Indisponible
-                        </div>
-                    </div>
-                {% endif %}
-                
-                {% if product.heartNote %}
-                    <div class="col-4">
-                        <div class="card-text">
-                            <strong>Coeur</strong><br>
-                            {{ product.heartNote }}
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="col-4">
-                        <div class="card-text">
-                            <strong>Coeur</strong><br>Indisponible
-                        </div>
-                    </div>
-                {% endif %}
-                
-                {% if product.backgroundNote %}
-                    <div class="col-4">
-                        <div class="card-text">
-                            <strong>Fond</strong><br>
-                            {{ product.backgroundNote }}
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="col-4">
-                        <div class="card-text">
-                            <strong>Fond</strong><br>Indisponible
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div id="product-variant" class="d-flex flex-wrap justify-content-between">
-                        <div class="chip selected text-center" data-id="{{ product.id }}" data-price="{{ product.salePrice != 0 and product.salePrice ? product.salePrice : product.regularPrice }}" data-regular-price="{{ product.regularPrice }}" data-stock="{{ product.stockQuantity }}" data-image="{{ product.imageUrl }}" data-capacity="{{ product.capacity }}">
-                            {{ product.capacity }}
-                        </div>
-                        {% for variant in variants %}
-                            <div class="chip text-center" data-id="{{ variant.id }}" data-price="{{ variant.salePrice != 0 and variant.salePrice ? variant.salePrice : variant.regularPrice }}" data-regular-price="{{ variant.regularPrice }}" data-stock="{{ variant.stockQuantity }}" data-image="{{ variant.imageUrl }}" data-capacity="{{ variant.capacity }}">
-                                {{ variant.capacity }}
+                                {% for variant in variants %}
+                                    <div class="chip text-center" data-id="{{ variant.id }}" data-price="{{ variant.salePrice != 0 and variant.salePrice ? variant.salePrice : variant.regularPrice }}" data-regular-price="{{ variant.regularPrice }}" data-stock="{{ variant.stockQuantity }}" data-image="{{ variant.imageUrl }}" data-capacity="{{ variant.capacity }}">
+                                        {{ variant.capacity }}
+                                    </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 py-4">
+                            <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn" style="display:inline-block;width:100%;">Ajouter au panier</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 p-5">
-                    <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn" style="display:inline-block;width:100%;">Ajouter au panier</a>
-                </div>
-            </div>
-                </div
            </div>
         </div>
     </div>
 
-    <div class="col-12 col-md-8 text-center p-4 my-5 mx-auto">
-        <h1>Description</h1>
-        <div>{{ product.description is not empty ? product.description | raw : 'Aucune description disponible' }}</div>
+    <div class="my-5 col-md-8 mx-auto border p-4 position-relative">
+       <h3 class="text-center text-uppercase" style="position:absolute; top:-15%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
+            Description
+        </h3>
+
+        <div class="my-4">{{ product.description is not empty ? product.description | raw : 'Aucune description disponible' }}</div>
     </div>
 
-    <div id="section-3" class="section-profil-olfactif my-5 col-md-6 mx-auto border p-4">
-        <h2 class="text-center">Profil olfactif</h2>
-        <div class="text-center my-4" style="font-size: 2em;">Intensité</div>
+    <div class="my-5 col-md-8 mx-auto border p-4 position-relative">
+        <h3 class="text-center text-uppercase" style="position:absolute; top:-15%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
+            Notes olfactives
+        </h3>
+
+        <div class="row my-4" >
+            {% if product.getHeadNote() %}
+            <div class="col-4">
+                <div class="card-text">
+                    <strong>Tête</strong><br>
+                    {{ product.getHeadNote() }}
+                    <br>
+                    <img src="{{ asset('img/olfactory_notes/' ~ product.getHeadNote().imageUrl) }}"
+                         alt="{{ product.getHeadNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
+                         style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                </div>
+            </div>
+        {% endif %}
+        {% if product.getHeartNote() %}
+            <div class="col-4">
+                <div class="card-text">
+                    <strong>Coeur</strong><br>
+                    {{ product.getHeartNote() }}
+                    <br>
+                    <img src="{{ asset('img/olfactory_notes/' ~ product.getHeartNote().imageUrl) }}"
+                         alt="{{ product.getHeartNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
+                         style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                </div>
+            </div>
+        {% endif %}
+        {% if product.getBackgroundNote() %}
+            <div class="col-4">
+                <div class="card-text">
+                    <strong>Fond</strong><br>
+                    {{ product.getBackgroundNote() }}
+                    <br>
+                    <img src="{{ asset('img/olfactory_notes/' ~ product.getBackgroundNote().imageUrl) }}"
+                         alt="{{ product.getBackgroundNote().name }}" class="img-fluid rounded-circle border border-4 border-light"
+                         style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    <div id="section-3" class="section-profil-olfactif my-5 col-md-8 mx-auto border p-4 position-relative">
+        <h3 class="text-center text-uppercase" style="position:absolute; top:-15%; left:50%; transform:translateX(-50%); padding:10px; background:#fff;">
+            Profil olfactif
+        </h3>
+        <div class="text-center my-4 " style="font-size: 2em;">Intensité</div>
         <div class="progress">
             {% set intensity_map = {
                 'Discret': 33.33,
