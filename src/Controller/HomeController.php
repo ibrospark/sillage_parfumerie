@@ -24,6 +24,8 @@ class HomeController extends AbstractController
 
         // Récupération des produits correspondants
         $products = $productRepository->findByVisibilityTypes($visibilityTypes);
+        shuffle($products);
+
         $brands = $brandsRepository->findAll();
         $slides = $sliderRepository->findAll();
 
