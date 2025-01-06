@@ -38,6 +38,14 @@ class ProductVariationCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $choices = ['Try me' => 'Try me'];
+
+        for ($i = 10; $i <= 5000; $i += 5) {
+            $choices["{$i} ml"] = "{$i} ml";
+        }
+
+        $choices['Autre'] = 'Autre';
+
         return [
 
             FormField::addColumn('col-md-12'),
@@ -70,43 +78,11 @@ class ProductVariationCrudController extends AbstractCrudController
 
             // CAPACITY
             ChoiceField::new('capacity', 'Contenance')
-                ->setChoices([
-                    'Try me' => 'Try me',
-                    '10 ml' => '10 ml',
-                    '15 ml' => '15 ml',
-                    '25 ml' => '25 ml',
-                    '30 ml' => '30 ml',
-                    '50 ml' => '50 ml',
-                    '60 ml' => '60 ml',
-                    '75 ml' => '75 ml',
-                    '90 ml' => '90 ml',
-                    '100 ml' => '100 ml',
-                    '125 ml' => '125 ml',
-                    '150 ml' => '150 ml',
-                    '200 ml' => '200 ml',
-                    '250 ml' => '250 ml',
-                    '300 ml' => '300 ml',
-                    '350 ml' => '350 ml',
-                    '400 ml' => '400 ml',
-                    '450 ml' => '450 ml',
-                    '500 ml' => '500 ml',
-                    '550 ml' => '550 ml',
-                    '600 ml' => '600 ml',
-                    '650 ml' => '650 ml',
-                    '700 ml' => '700 ml',
-                    '750 ml' => '750 ml',
-                    '800 ml' => '800 ml',
-                    '850 ml' => '850 ml',
-                    '900 ml' => '900 ml',
-                    '950 ml' => '950 ml',
-                    '1000 ml' => '1000 ml',
-                    'Autre' => 'Autre',
-                ])
+                ->setChoices($choices)
                 ->hideOnIndex()
-                ->setFormTypeOption('empty_data', ['Autre'])
+                ->setFormTypeOption('empty_data', 'Autre') // 'Autre' doit être une chaîne de caractères, pas un tableau
                 ->setRequired(false)
                 ->setColumns('col-md-4 p-1'),
-
 
 
 
