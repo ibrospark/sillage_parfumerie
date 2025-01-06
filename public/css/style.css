@@ -155,7 +155,6 @@ h6 {
     justify-content: center;
     align-items: center;
 }
-
 .spkdv_pagination .current {
     border: 1px solid var(--primary-color);
     background-color: var(--primary-color);
