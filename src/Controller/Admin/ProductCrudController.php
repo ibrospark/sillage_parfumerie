@@ -162,6 +162,7 @@ class ProductCrudController extends AbstractCrudController
                     'Eau de Toilette' => 'Eau de Toilette',
                     'Eau Forte' => 'Eau Forte',
                     'Extrait de Parfum' => 'Extrait de Parfum',
+                    'Essence' => 'Essence',
                     'Parfum' => 'Parfum',
                     'Déodorant' => 'Déodorant',
                     'Brume Parfumée' => 'Brume Parfumée',

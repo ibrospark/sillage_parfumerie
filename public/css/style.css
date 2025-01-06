@@ -153,6 +153,7 @@ h6 {
 .spkdv_pagination .pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .spkdv_pagination .current {
