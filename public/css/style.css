@@ -152,8 +152,8 @@ h6 {
 /* -------------------------------------- PAGINATION -------------------------------------- */
 .spkdv_pagination .pagination {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center!important;
+    align-items: center!important;
 }
 .spkdv_pagination .current {
     border: 1px solid var(--primary-color);
