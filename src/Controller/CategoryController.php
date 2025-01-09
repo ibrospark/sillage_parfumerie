@@ -30,24 +30,23 @@ final class CategoryController extends AbstractController
         // Get the current page number from the request (default is 1)
         $page = $request->query->getInt('page', 1);
         $limit = 24; // Number of items per page
-    
-        // Create a query builder for products by category
+
         $queryBuilder = $productRepository->createQueryBuilder('p')
-            ->where('p.category = :category')
-            ->setParameter('category', $category);
-    
+            ->innerJoin('p.category', 'c')  // Jointure avec la table "product_category"
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $category->getId());
+
         // Fetch paginated results
         $pagination = $paginator->paginate(
             $queryBuilder, // QueryBuilder
             $page, // Current page number
             $limit // Number of items per page
         );
-    
+
         return $this->render('category/show.html.twig', [
             'category' => $category,
             'pagination' => $pagination, // Pass paginated products
             'title_page' => 'Nos marques de parfums',
         ]);
     }
-    
 }

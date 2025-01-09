@@ -54,14 +54,9 @@ class Product
     private ?Brand $brand = null;
 
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
-    private ?Category $category = null;
 
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
-    private ?OlfactoryFamily $olfactoryFamily = null;
+
 
     #[ORM\Column(type: "string", nullable: true)]
     private ?string $status = null;
@@ -75,18 +70,6 @@ class Product
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products_head_note')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
-    private ?OlfactoryNote $head_note = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products_heart_note')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
-    private ?OlfactoryNote $heart_note = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products_background_note')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
-    private ?OlfactoryNote $background_note = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
@@ -113,6 +96,40 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $concentration = null;
 
+    /**
+     * @var Collection<int, OlfactoryNote>
+     */
+    #[ORM\ManyToMany(targetEntity: OlfactoryNote::class, inversedBy: 'products')]
+    #[ORM\JoinTable(name: 'product_head_note')]
+    private Collection $head_note;
+
+    /**
+     * @var Collection<int, OlfactoryNote>
+     */
+    #[ORM\ManyToMany(targetEntity: OlfactoryNote::class, inversedBy: 'products')]
+    #[ORM\JoinTable(name: 'product_heart_note')]
+    private Collection $heart_note;
+
+    /**
+     * @var Collection<int, OlfactoryNote>
+     */
+    #[ORM\ManyToMany(targetEntity: OlfactoryNote::class, inversedBy: 'products')]
+    #[ORM\JoinTable(name: 'product_background_note')]
+    private Collection $background_note;
+
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'products')]
+    private Collection $category;
+
+    /**
+     * @var Collection<int, OlfactoryFamily>
+     */
+    #[ORM\ManyToMany(targetEntity: OlfactoryFamily::class, inversedBy: 'products')]
+    private Collection $olfactoryFamily;
+
+
     public function __construct()
     {
         // Initialisation des timestamps
@@ -120,6 +137,11 @@ class Product
         $this->updated_at = new \DateTimeImmutable(); // Initialisé à la même valeur au départ
         $this->orderItems = new ArrayCollection();
         $this->productVariations = new ArrayCollection();
+        $this->head_note = new ArrayCollection();
+        $this->heart_note = new ArrayCollection();
+        $this->background_note = new ArrayCollection();
+        $this->category = new ArrayCollection();
+        $this->olfactoryFamily = new ArrayCollection();
     }
 
 
@@ -135,7 +157,14 @@ class Product
 
     public function setName(string $name): static
     {
+        // Mettre à jour le nom avec la concentration si elle est définie
         $this->name = $name;
+
+        // Si la concentration est définie, on s'assure que le format est "name - concentration"
+        if ($this->concentration) {
+            $this->name = $name . ' - ' . $this->concentration;
+        }
+
         return $this;
     }
 
@@ -240,27 +269,8 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
 
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-        return $this;
-    }
 
-    public function getOlfactoryFamily(): ?OlfactoryFamily
-    {
-        return $this->olfactoryFamily;
-    }
-
-    public function setOlfactoryFamily(?OlfactoryFamily $olfactoryFamily): static
-    {
-        $this->olfactoryFamily = $olfactoryFamily;
-        return $this;
-    }
 
     public function getStatus(): ?string
     {
@@ -306,43 +316,6 @@ class Product
         return $this;
     }
 
-    public function getHeadNote(): ?OlfactoryNote
-    {
-        return $this->head_note;
-    }
-
-    public function setHeadNote(?OlfactoryNote $head_note): static
-    {
-        $this->head_note = $head_note;
-        return $this;
-    }
-
-    public function getHeartNote(): ?OlfactoryNote
-    {
-        return $this->heart_note;
-    }
-
-    public function setHeartNote(?OlfactoryNote $heart_note): static
-    {
-        $this->heart_note = $heart_note;
-        return $this;
-    }
-
-    public function getBackgroundNote(): ?OlfactoryNote
-    {
-        return $this->background_note;
-    }
-
-    public function setBackgroundNote(?OlfactoryNote $background_note): static
-    {
-        $this->background_note = $background_note;
-        return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->name ?? 'Product'; // Fallback to 'Product' if name is null
-    }
 
     /**
      * @return Collection<int, OrderItem>
@@ -455,6 +428,12 @@ class Product
     {
         $this->concentration = $concentration;
 
+        // Si le nom existe déjà, on met à jour le nom pour être au format "name - concentration"
+        if ($this->name) {
+            // On utilise uniquement la partie avant le tiret (le nom) et ajoute la concentration
+            $this->name = explode(' - ', $this->name)[0] . ' - ' . $concentration;
+        }
+
         return $this;
     }
     /**
@@ -462,13 +441,136 @@ class Product
      */
     public function removeImageFile(): void
     {
-        // Vérifier si le fichier image est présent et supprimer le fichier
-        if ($this->image_url && $this->image_url !== 'empty.jpg') {
-            // Le chemin du fichier image dans le répertoire public
+        if ($this->image_url && $this->image_url !== 'empty.jpg' || $this->image_url !== 'empty.png') {
             $imageFilePath = __DIR__ . '/../../public/img/products/' . $this->image_url;
             if (file_exists($imageFilePath)) {
-                unlink($imageFilePath);  // Supprimer le fichier image
+                unlink($imageFilePath);
             }
         }
+    }
+
+    /**
+     * @return Collection<int, OlfactoryNote>
+     */
+    public function getHeadNote(): Collection
+    {
+        return $this->head_note;
+    }
+
+    public function addHeadNote(OlfactoryNote $headNote): static
+    {
+        if (!$this->head_note->contains($headNote)) {
+            $this->head_note->add($headNote);
+        }
+
+        return $this;
+    }
+
+    public function removeHeadNote(OlfactoryNote $headNote): static
+    {
+        $this->head_note->removeElement($headNote);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OlfactoryNote>
+     */
+    public function getHeartNote(): Collection
+    {
+        return $this->heart_note;
+    }
+
+    public function addHeartNote(OlfactoryNote $heartNote): static
+    {
+        if (!$this->heart_note->contains($heartNote)) {
+            $this->heart_note->add($heartNote);
+        }
+
+        return $this;
+    }
+
+    public function removeHeartNote(OlfactoryNote $heartNote): static
+    {
+        $this->heart_note->removeElement($heartNote);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OlfactoryNote>
+     */
+    public function getBackgroundNote(): Collection
+    {
+        return $this->background_note;
+    }
+
+    public function addBackgroundNote(OlfactoryNote $backgroundNote): static
+    {
+        if (!$this->background_note->contains($backgroundNote)) {
+            $this->background_note->add($backgroundNote);
+        }
+
+        return $this;
+    }
+
+    public function removeBackgroundNote(OlfactoryNote $backgroundNote): static
+    {
+        $this->background_note->removeElement($backgroundNote);
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name ?? '';
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->category->contains($category)) {
+            $this->category->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OlfactoryFamily>
+     */
+    public function getOlfactoryFamily(): Collection
+    {
+        return $this->olfactoryFamily;
+    }
+
+    public function addOlfactoryFamily(OlfactoryFamily $olfactoryFamily): static
+    {
+        if (!$this->olfactoryFamily->contains($olfactoryFamily)) {
+            $this->olfactoryFamily->add($olfactoryFamily);
+        }
+
+        return $this;
+    }
+
+    public function removeOlfactoryFamily(OlfactoryFamily $olfactoryFamily): static
+    {
+        $this->olfactoryFamily->removeElement($olfactoryFamily);
+
+        return $this;
     }
 }

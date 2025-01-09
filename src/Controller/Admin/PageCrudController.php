@@ -34,7 +34,7 @@ class PageCrudController extends AbstractCrudController
             ImageField::new('image_url', 'Image')
                 ->setBasePath('img/pages')
                 ->setUploadDir('public/img/pages')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(true),
 
             DateTimeField::new('createdAt')->hideOnForm(),

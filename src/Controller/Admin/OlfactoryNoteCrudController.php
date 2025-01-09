@@ -30,7 +30,7 @@ class OlfactoryNoteCrudController extends AbstractCrudController
             ImageField::new('imageUrl', 'URL de l\'Image')
                 ->setBasePath('img/olfactory_notes/')
                 ->setUploadDir('public/img/olfactory_notes/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
             // AssociationField::new('products_head_note', 'Produits (Tête)')->hideOnForm(), // Adjust relationship names as needed
             // AssociationField::new('products_heart_note', 'Produits (Cœur)')->hideOnForm(),

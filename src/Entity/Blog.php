@@ -182,6 +182,6 @@ class Blog
 
     public function __toString(): string
     {
-        return $this->title ?? 'Titre non disponible';
+        return $this->title ?? '';
     }
 }

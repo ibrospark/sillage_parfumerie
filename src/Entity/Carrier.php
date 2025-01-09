@@ -68,4 +68,8 @@ class Carrier
         $price = number_format($this->price / 100, 2);
         return "{$this->name}: [br]{$this->description}[br] $price € ";
     }
+    public function __toString()
+    {
+        return $this->name ?? '';
+    }
 }

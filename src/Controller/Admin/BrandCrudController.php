@@ -39,12 +39,12 @@ class BrandCrudController extends AbstractCrudController
             ImageField::new('cover_url', 'URL de la Couverture')
                 ->setBasePath('img/brands/')
                 ->setUploadDir('public/img/brands/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
             ImageField::new('logo_url', 'URL du Logo')
                 ->setBasePath('img/brands/')
                 ->setUploadDir('public/img/brands/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
             AssociationField::new('products', 'Produits')->hideOnForm(), // Assuming 'products' is the correct relation name
             ChoiceField::new('visibilityTypes', 'Visibilité')

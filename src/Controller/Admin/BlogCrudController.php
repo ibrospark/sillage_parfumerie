@@ -34,7 +34,7 @@ class BlogCrudController extends AbstractCrudController
             ImageField::new('image_url', 'URL de l\'Image')
                 ->setBasePath('img/blog/')
                 ->setUploadDir('public/img/blog/')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
             // AssociationField::new('author', 'Auteurs')
             //     ->setFormTypeOption('multiple', true)

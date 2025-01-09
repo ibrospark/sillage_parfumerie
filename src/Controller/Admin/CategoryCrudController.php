@@ -45,7 +45,7 @@ class CategoryCrudController extends AbstractCrudController
             ImageField::new('image_url', 'Image')
                 ->setBasePath('img/categories')
                 ->setUploadDir('public/img/categories')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
 
 

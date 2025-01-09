@@ -58,7 +58,7 @@ class ProductVariationCrudController extends AbstractCrudController
             ImageField::new('image_url', 'Image')
                 ->setBasePath('img/products')
                 ->setUploadDir('public/img/products')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
 
 

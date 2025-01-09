@@ -28,12 +28,14 @@ class OlfactoryFamily
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'olfactoryFamily')]
-    private Collection $product;
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'olfactoryFamily')]
+    private Collection $products;
+
+
 
     public function __construct()
     {
-        $this->product = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,19 +79,24 @@ class OlfactoryFamily
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
+
     /**
      * @return Collection<int, Product>
      */
-    public function getProduct(): Collection
+    public function getProducts(): Collection
     {
-        return $this->product;
+        return $this->products;
     }
 
     public function addProduct(Product $product): static
     {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-            $product->setOlfactoryFamily($this);
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->addOlfactoryFamily($this);
         }
 
         return $this;
@@ -97,17 +104,10 @@ class OlfactoryFamily
 
     public function removeProduct(Product $product): static
     {
-        if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getOlfactoryFamily() === $this) {
-                $product->setOlfactoryFamily(null);
-            }
+        if ($this->products->removeElement($product)) {
+            $product->removeOlfactoryFamily($this);
         }
 
         return $this;
-    }
-    public function __toString(): string
-    {
-        return $this->name ?? 'Unnamed Olfactory Family';
     }
 }

@@ -31,11 +31,11 @@ final class OlfactoryFamilyController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = 24; // Number of items per page
 
-        // Create a query builder for products by olfactory family
-        $queryBuilder = $productRepository->createQueryBuilder('p')
-            ->where('p.olfactoryFamily = :olfactoryFamily')
-            ->setParameter('olfactoryFamily', $olfactoryFamily);
 
+        $queryBuilder = $productRepository->createQueryBuilder('p')
+            ->innerJoin('p.olfactoryFamily', 'o')  // Jointure avec la table "product_category"
+            ->where('o.id = :olfactoryFamilyId')
+            ->setParameter('olfactoryFamilyId', $olfactoryFamily->getId());
         // Fetch paginated results
         $pagination = $paginator->paginate(
             $queryBuilder, // QueryBuilder

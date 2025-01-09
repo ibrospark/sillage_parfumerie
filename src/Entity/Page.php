@@ -141,4 +141,8 @@ class Page
         $this->visibility_types = $visibility_types;
         return $this;
     }
+    public function __toString()
+    {
+        return $this->name ?? '';
+    }
 }

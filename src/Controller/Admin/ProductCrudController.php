@@ -68,14 +68,8 @@ class ProductCrudController extends AbstractCrudController
             ImageField::new('image_url', 'Image')
                 ->setBasePath('img/products')
                 ->setUploadDir('public/img/products')
-                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setUploadedFileNamePattern('[randomhash].[day].[month].[year].[extension]')
                 ->setRequired(false),
-
-
-
-
-
-
             // REGULAR PRICE
             MoneyField::new('regular_price', 'Prix régulier')
                 ->setFormTypeOption('empty_data', "0.0")

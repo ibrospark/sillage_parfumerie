@@ -2,9 +2,12 @@
     <div class="card">
         <div class="image_container position-relative">
             <img src="{{ asset('img/products/' ~ product.imageUrl) }}" loading="lazy" class="card-img-top w-100" alt="{{ product.name }}">
-              <div class="position-absolute" style="bottom: 5%; left: 50%; transform: translateX(-50%);font-size:0.9em;font-family:var(--font-family);color:#000;">
-                {{ product.olfactoryFamily ?? 'Indisponible' }}
+            <div class="position-absolute text-center" style="bottom: 0%; left: 50%; transform: translateX(-50%); width: 90%; font-family:var(--font-family);">
+                {% for olfactoryFamily in product.olfactoryFamily %}
+                    <span class="badge" style="background:#bbb9">{{ olfactoryFamily ?? '' }}</span>
+                {% endfor %}
             </div>
+      
             <div class="hover_buttons">
                 <a href="{{ path('cart.add', {'id': product.id}) }}" class="spkdv_primary_btn">Ajouter au panier</a>
             </div>
@@ -30,23 +33,23 @@
                 </div> 
             </div>
             {# -------------------------- NOTES OLFACTIVES -------------------------- #}
-            <div class="row text-center mt-auto border-top pt-3 " style="font-size:0.8em;">
+            <div class="row text-center mt-auto border-top pt-3" style="font-size:0.8em;">
                 <div class="col-4">
                     <div class="card-text">
                         <strong>Tête</strong><br>
-                        {{ product.headNote }}
+                        {{ product.headNote.first ?? '' }}
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="card-text">
                         <strong>Coeur</strong><br>
-                        {{ product.heartNote }}
+                        {{ product.heartNote.first ?? '' }}
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="card-text">
                         <strong>Fond</strong><br>
-                        {{ product.backgroundNote }}
+                        {{ product.backgroundNote.first ?? '' }}
                     </div>
                 </div>
             </div>

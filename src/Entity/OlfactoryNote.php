@@ -28,29 +28,17 @@ class OlfactoryNote
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'head_note')]
-    private Collection $products_head_note;
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'head_note')]
+    private Collection $products;
 
-    /**
-     * @var Collection<int, Product>
-     */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'heart_note')]
-    private Collection $products_heart_note;
 
-    /**
-     * @var Collection<int, Product>
-     */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'background_note')]
-    private Collection $products_background_note;
 
 
 
 
     public function __construct()
     {
-        $this->products_head_note = new ArrayCollection();
-        $this->products_heart_note = new ArrayCollection();
-        $this->products_background_note = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,97 +81,37 @@ class OlfactoryNote
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProductsHeadNote(): Collection
-    {
-        return $this->products_head_note;
-    }
 
-    public function addProductsHeadNote(Product $productsHeadNote): static
-    {
-        if (!$this->products_head_note->contains($productsHeadNote)) {
-            $this->products_head_note->add($productsHeadNote);
-            $productsHeadNote->setHeadNote($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductsHeadNote(Product $productsHeadNote): static
-    {
-        if ($this->products_head_note->removeElement($productsHeadNote)) {
-            // set the owning side to null (unless already changed)
-            if ($productsHeadNote->getHeadNote() === $this) {
-                $productsHeadNote->setHeadNote(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Product>
      */
-    public function getProductsHeartNote(): Collection
+    public function getProducts(): Collection
     {
-        return $this->products_heart_note;
+        return $this->products;
     }
 
-    public function addProductsHeartNote(Product $productsHeartNote): static
+    public function addProduct(Product $product): static
     {
-        if (!$this->products_heart_note->contains($productsHeartNote)) {
-            $this->products_heart_note->add($productsHeartNote);
-            $productsHeartNote->setHeartNote($this);
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->addHeadNote($this);
         }
 
         return $this;
     }
 
-    public function removeProductsHeartNote(Product $productsHeartNote): static
+    public function removeProduct(Product $product): static
     {
-        if ($this->products_heart_note->removeElement($productsHeartNote)) {
-            // set the owning side to null (unless already changed)
-            if ($productsHeartNote->getHeartNote() === $this) {
-                $productsHeartNote->setHeartNote(null);
-            }
+        if ($this->products->removeElement($product)) {
+            $product->removeHeadNote($this);
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProductsBackgroundNote(): Collection
-    {
-        return $this->products_background_note;
-    }
-
-    public function addProductsBackgroundNote(Product $productsBackgroundNote): static
-    {
-        if (!$this->products_background_note->contains($productsBackgroundNote)) {
-            $this->products_background_note->add($productsBackgroundNote);
-            $productsBackgroundNote->setBackgroundNote($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductsBackgroundNote(Product $productsBackgroundNote): static
-    {
-        if ($this->products_background_note->removeElement($productsBackgroundNote)) {
-            // set the owning side to null (unless already changed)
-            if ($productsBackgroundNote->getBackgroundNote() === $this) {
-                $productsBackgroundNote->setBackgroundNote(null);
-            }
-        }
-
-        return $this;
-    }
     public function __toString()
     {
-        return $this->name ?? 'Unnamed Olfactory Note';
+        return $this->name ?? '';
     }
 }
