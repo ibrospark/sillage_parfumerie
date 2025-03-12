@@ -5,13 +5,6 @@ Parfumerie de luxe a Dakar
 # Description
 Ce projet est une plateforme e-commerce développée avec Symfony 7.1.10, permettant la gestion et la vente de produits en ligne, notamment des parfums. Il inclut un système de gestion des produits, des variations, des commandes et un module de paiement via PayDunya.
 
-# Fonctionnalités
-- Gestion des produits et des variations
-- Affichage dynamique des informations produit
-- Masquage des informations inutiles si non renseignées
-- Système de notifications pour le réapprovisionnement
-- Gestion des commandes et des paiements avec PayDunya
-- Administration du site avec EasyAdmin 4
 
 # Technologies utilisées
 - **Backend** : Symfony 7.1.10
@@ -20,7 +13,7 @@ Ce projet est une plateforme e-commerce développée avec Symfony 7.1.10, permet
 - **Administration** : EasyAdmin 4
 - **Paiement** : Intégration PayDunya
 
-# Entités opérationnelles
+# Entités
 - Address
 - Blog
 - Brand
