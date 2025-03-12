@@ -38,7 +38,7 @@ Ce projet est une plateforme e-commerce développée avec Symfony 7.1.10, permet
 - PHP 8.2+
 - Composer
 - Symfony CLI
-- MySQL ou MariaDB
+- MySQL
 
 ## Étapes
 1. Cloner le projet :
