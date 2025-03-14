@@ -43,8 +43,8 @@ Ce projet est une plateforme e-commerce développée avec Symfony 7.1.10, permet
 ## Étapes
 1. Cloner le projet :
    ```bash
-   git clone https://github.com/tonrepo/tonprojet.git
-   cd tonprojet
+   git clone https://github.com/ibrospark/sillage_parfumerie.git
+   cd sillage_parfumerie
    ```
 2. Installer les dépendances :
    ```bash
